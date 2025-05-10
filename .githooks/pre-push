@@ -1,0 +1,24 @@
+#!/bin/sh
+# colors
+RED='\033[0;31m'
+GREEN='\033[92m'
+YELLOW='\033[93m'
+NC='\033[0m' # No Color
+
+echo "${YELLOW}Running tests before push...${NC}"
+
+# Run Android/Kotlin tests
+echo ""
+echo "${GREEN}Running Android/Kotlin tests...${NC}"
+./gradlew testDebug
+TEST_RESULT=$?
+
+if [ $TEST_RESULT -ne 0 ]; then
+  echo ""
+  echo "${RED}Tests failed! Push canceled. Please fix failing tests before pushing.${NC}"
+  exit 1
+else
+  echo ""
+  echo "${GREEN}All tests passed successfully! Proceeding with push.${NC}"
+fi
+exit 0
