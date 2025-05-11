@@ -8,6 +8,11 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.room) apply false
     alias(libs.plugins.detekt)
+
+    // Convention plugins
+    alias(libs.plugins.conventionPlugin.composeCompiler) apply false
+    alias(libs.plugins.conventionPlugin.androidLibrary) apply false
+    alias(libs.plugins.conventionPlugin.kmpLibrary) apply false
 }
 
 dependencies {
@@ -52,20 +57,18 @@ val changeGitHooksDir by tasks.registering(Exec::class) {
         commandLine(*splitted.toTypedArray())
     }
 
-    fun execute(command: String) {
-        exec { executeStringCommand(command) }
-    }
-
     doFirst {
         logger.error("hooksPath before")
-        execute("git config core.hooksPath")
+        executeStringCommand("git config core.hooksPath")
     }
 
-    executeStringCommand("git config core.hooksPath .githooks")
+    exec {
+        commandLine("git", "config", "core.hooksPath", ".githooks")
+    }
 
     doLast {
         logger.error("hooksPath after")
-        execute("git config core.hooksPath")
+        executeStringCommand("git config core.hooksPath")
     }
 
     onlyIf {

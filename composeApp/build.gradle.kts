@@ -1,21 +1,14 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import extensions.implementations
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.conventionPlugin.kmpLibrary)
+    alias(libs.plugins.conventionPlugin.composeCompiler)
     alias(libs.plugins.room)
     alias(libs.plugins.ksp)
 }
 
 kotlin {
-
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
 
     listOf(
         iosX64(),
@@ -38,57 +31,44 @@ kotlin {
         }
 
         commonMain.dependencies {
-            implementation(libs.kotlin.corutines.core)
+            implementations(
+                libs.kotlin.corutines.core,
 
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+                compose.runtime,
+                compose.foundation,
+                compose.material3,
+                compose.ui,
+                compose.components.resources,
+                compose.components.uiToolingPreview,
 
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.compose.navigation)
+                libs.androidx.lifecycle.viewmodel,
+                libs.androidx.lifecycle.runtime.compose,
+                libs.compose.navigation,
 
-            implementation(libs.room.runtime)
+                libs.room.runtime,
 
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.composeViewModel)
+                libs.koin.core,
+                libs.koin.compose,
+                libs.koin.composeViewModel,
+            )
         }
     }
 }
 
 android {
     namespace = "dev.nonoxy.residetrack"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "dev.nonoxy.residetrack"
 
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.0.1"
     }
 
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.8.2"
 javaVersion = "17"
 
 # Kotlin
@@ -38,8 +38,16 @@ koin = "4.0.2"
 
 # Napier
 napier = "1.4.1"
+kotlinStdlib = "2.1.20"
+runner = "1.5.2"
+core = "1.5.0"
 
 [libraries]
+
+# Plugins for composite build
+gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # Test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -85,6 +93,10 @@ napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+
+conventionPlugin-composeCompiler = { id = "compose-compiler", version = "" }
+conventionPlugin-androidLibrary = { id = "android-library", version = "" }
+conventionPlugin-kmpLibrary = { id = "kmp-library", version = "" }
 
 # Compose
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
