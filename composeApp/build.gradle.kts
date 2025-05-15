@@ -1,3 +1,5 @@
+import extensions.androidMainDependencies
+import extensions.commonMainDependencies
 import extensions.implementations
 
 plugins {
@@ -8,48 +10,49 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
-kotlin {
+iosConfig {
+    xcFrameworkName = "ComposeApp"
+}
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
+androidMainDependencies {
+    implementations(
+        libs.kotlin.corutines.android,
+        libs.androidx.activity.compose
+    )
+}
+
+commonMainDependencies {
+    implementations(
+        libs.kotlin.corutines.core,
+
+        libs.androidx.lifecycle.viewmodel,
+        libs.androidx.lifecycle.runtime.compose,
+        libs.compose.navigation,
+
+        libs.room.runtime,
+
+        libs.koin.core,
+        libs.koin.compose,
+        libs.koin.composeViewModel,
+    )
+}
+
+kotlin {
 
     sourceSets {
 
         androidMain.dependencies {
-            implementation(libs.kotlin.corutines.android)
-
             implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
         }
 
         commonMain.dependencies {
             implementations(
-                libs.kotlin.corutines.core,
-
                 compose.runtime,
                 compose.foundation,
                 compose.material3,
                 compose.ui,
                 compose.components.resources,
-                compose.components.uiToolingPreview,
-
-                libs.androidx.lifecycle.viewmodel,
-                libs.androidx.lifecycle.runtime.compose,
-                libs.compose.navigation,
-
-                libs.room.runtime,
-
-                libs.koin.core,
-                libs.koin.compose,
-                libs.koin.composeViewModel,
+                compose.components.uiToolingPreview
             )
         }
     }

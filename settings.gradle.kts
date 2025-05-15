@@ -32,4 +32,9 @@ includeBuild("buildLogic")
 
 include(
     ":composeApp",
+
+    ":shared:common",
+    ":shared:core-navigation",
+
+    ":shared:template-module"
 )
