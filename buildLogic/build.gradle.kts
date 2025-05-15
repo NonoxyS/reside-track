@@ -34,5 +34,10 @@ gradlePlugin {
             id = "compose-compiler"
             implementationClass = "plugins.ComposeCompilerPlugin"
         }
+
+        register("KmpSerialization") {
+            id = "kmp-serialization"
+            implementationClass = "plugins.KmpSerializationPlugin"
+        }
     }
 }

@@ -6,20 +6,20 @@ import extensions.kotlinMultiplatformConfig
 import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.gradle.kotlin.dsl.create
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 class KmpLibraryPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            // val iosConfigExtension = extensions.create<IosConfig>("iosConfig")
+            val iosConfigExtension = extensions.create<IosConfig>("iosConfig")
 
             applyPlugins()
             configureKotlin()
             configureAndroid()
-            // configureIos(iosConfigExtension)
+            configureIos(iosConfigExtension)
         }
     }
 
@@ -121,13 +121,12 @@ class KmpLibraryPlugin : Plugin<Project> {
                         """
                     ╔════════ KMP ANDROID CONFIG: ${project.name} ════════╗
                     ║ namespace: $namespace
-                    ║ explicitApi: ${kotlinExtension.explicitApi == ExplicitApiMode.Strict}
                     ║ compileSdk: $compileSdk
                     ║ minSdk: ${defaultConfig.minSdk}
                     ║ targetSdk: ${defaultConfig.targetSdk ?: "not set"}
                     ║ buildTypes: ${buildTypes.names.joinToString(", ")}
                     ║ release minify: ${buildTypes.getByName("release").isMinifyEnabled}
-                    ║ compose enabled: ${buildFeatures.compose}
+                    ║ compose enabled: ${buildFeatures.compose == true}
                     ╚═════════════════════════════════════════════════════╝
                         """.trimIndent()
                     )
@@ -136,13 +135,13 @@ class KmpLibraryPlugin : Plugin<Project> {
         }
     }
 
-    /*
-        private fun Project.configureIos(config: IosConfig) {
-            kotlinMultiplatformConfig {
+    private fun Project.configureIos(config: IosConfig) {
+        kotlinMultiplatformConfig {
 
+            val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
+
+            afterEvaluate {
                 val xcFramework = XCFramework(config.xcFrameworkName)
-
-                val iosTargets = listOf(iosX64(), iosArm64(), iosSimulatorArm64())
 
                 iosTargets.forEach { iosTarget ->
                     iosTarget.binaries.framework {
@@ -151,39 +150,13 @@ class KmpLibraryPlugin : Plugin<Project> {
                         xcFramework.add(this)
                     }
                 }
-
-                if (config.enableCocoapods) {
-                    cocoapodsConfig {
-                        version = config.cocoapods.podVersion ?: libs.versions.ios.pod.version.get()
-                        summary = config.cocoapods.summary
-                        homepage = config.cocoapods.homepage
-                        ios.deploymentTarget = config.cocoapods.deploymentTarget
-                            ?: libs.versions.ios.deployment.target.get()
-
-                        framework {
-                            baseName = config.cocoapods.frameworkName
-                            isStatic = config.isStatic
-                        }
-                    }
-                }
             }
         }
-     */
+    }
 }
 
-/*open class IosConfig(
+open class IosConfig(
     var xcFrameworkName: String = "Shared",
-    var baseName: String = "Shared",
-    var isStatic: Boolean = true,
-    var enableCocoapods: Boolean = true,
-    var cocoapods: IosConfigCocaopods = IosConfigCocaopods()
-) {
-
-    class IosConfigCocaopods(
-        var frameworkName: String = "shared",
-        var summary: String = "Shared module",
-        var homepage: String = "Link to the Shared module homepage",
-        var podVersion: String? = null,
-        var deploymentTarget: String? = null,
-    )
-}*/
+    var baseName: String = xcFrameworkName,
+    var isStatic: Boolean = false,
+)

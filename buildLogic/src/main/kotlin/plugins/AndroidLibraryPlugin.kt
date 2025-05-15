@@ -6,9 +6,7 @@ import extensions.kotlinJvmCompilerOptions
 import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 
 class AndroidLibraryPlugin : Plugin<Project> {
 
@@ -57,13 +55,12 @@ class AndroidLibraryPlugin : Plugin<Project> {
                     """
                     ╔════════ ANDROID CONFIG: ${project.name} ════════════╗
                     ║ namespace: $namespace
-                    ║ explicitApi: ${kotlinExtension.explicitApi == ExplicitApiMode.Strict}
                     ║ compileSdk: $compileSdk
                     ║ minSdk: ${defaultConfig.minSdk}
                     ║ targetSdk: ${defaultConfig.targetSdk ?: "not set"}
                     ║ buildTypes: ${buildTypes.names.joinToString(", ")}
                     ║ release minify: ${buildTypes.getByName("release").isMinifyEnabled}
-                    ║ compose enabled: ${buildFeatures.compose}
+                    ║ compose enabled: ${buildFeatures.compose == true}
                     ╚═════════════════════════════════════════════════════╝
                     """.trimIndent()
                 )
