@@ -35,6 +35,10 @@ include(
 
     ":shared:common",
     ":shared:core-navigation",
+    ":shared:core-database",
+
+    // Features
+    ":shared:feature-rooms",
 
     ":shared:template-module"
 )

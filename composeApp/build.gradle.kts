@@ -1,13 +1,12 @@
 import extensions.androidMainDependencies
 import extensions.commonMainDependencies
 import extensions.implementations
+import plugins.composeBundle
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.conventionPlugin.kmpLibrary)
     alias(libs.plugins.conventionPlugin.composeCompiler)
-    alias(libs.plugins.room)
-    alias(libs.plugins.ksp)
 }
 
 iosConfig {
@@ -47,12 +46,8 @@ kotlin {
 
         commonMain.dependencies {
             implementations(
-                compose.runtime,
-                compose.foundation,
-                compose.material3,
-                compose.ui,
-                compose.components.resources,
-                compose.components.uiToolingPreview
+                *composeBundle,
+                projects.shared.coreDatabase
             )
         }
     }
@@ -77,13 +72,4 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-
-    add("kspAndroid", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }
