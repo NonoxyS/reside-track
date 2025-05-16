@@ -1,3 +1,5 @@
+rootProject.name = "buildLogic"
+
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {

@@ -31,6 +31,7 @@ compose-navigation = "2.9.0-beta01"
 
 # Room
 room = "2.7.1"
+sqliteBundled = "2.5.1"
 
 # Detekt
 detekt = "1.23.6"
@@ -46,6 +47,7 @@ napier = "1.4.1"
 # Plugins for composite build
 gradleplugin-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 gradleplugin-composeCompiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
+gradleplugin-composeMultiplatform = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-multiplatform" }
 gradleplugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # Test
@@ -68,9 +70,11 @@ detekt-libraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules
 # Room
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+sqliteBundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqliteBundled" }
 
 # Koin
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
 koin-composeViewModel = { group = "io.insert-koin", name = "koin-compose-viewmodel-navigation", version.ref = "koin" }
 
