@@ -22,6 +22,6 @@ data class StudentEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "roomId") val roomId: Long,
     val streamNumber: Int,
-    val checkInDate: Long,
-    val checkOutDate: Long
+    val checkInDateEpochMillis: Long,
+    val checkOutDateEpochMillis: Long
 )

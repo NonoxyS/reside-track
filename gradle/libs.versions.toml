@@ -6,7 +6,9 @@ javaVersion = "17"
 kotlin = "2.1.20"
 ksp = "2.1.20-2.0.1"
 kotlinCoroutines = "1.10.2"
-kotlinSerialization = "1.8.0"
+kotlinSerialization = "1.8.1"
+kotlinDateTime = "0.6.2"
+kotlinImmutableCollections = "0.4.0"
 
 android-compileSdk = "35"
 android-minSdk = "24"
@@ -26,8 +28,8 @@ androidx-test-junit = "1.2.1"
 junit = "4.13.2"
 
 # Compose
-compose-multiplatform = "1.8.0"
-compose-navigation = "2.9.0-beta01"
+compose-multiplatform = "1.8.1"
+compose-navigation = "2.9.0-beta02"
 
 # Room
 room = "2.7.1"
@@ -40,7 +42,7 @@ detekt = "1.23.6"
 koin = "4.0.2"
 
 # Napier
-napier = "1.4.1"
+napier = "2.7.1"
 
 [libraries]
 
@@ -85,6 +87,10 @@ kotlin-corutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-co
 kotlin-corutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutines" }
 ## Serialization
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
+## Date Time
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinDateTime" }
+## Immutable Collections
+kotlin-immutableCollections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinImmutableCollections" }
 ## Test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

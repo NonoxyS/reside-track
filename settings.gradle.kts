@@ -33,12 +33,15 @@ includeBuild("buildLogic")
 include(
     ":composeApp",
 
+    // Core / Common
     ":shared:common",
     ":shared:core-navigation",
     ":shared:core-database",
+    ":shared:design-system",
 
     // Features
-    ":shared:feature-rooms",
+    ":shared:feature-rooms:api",
+    ":shared:feature-rooms:impl",
 
     ":shared:template-module"
 )

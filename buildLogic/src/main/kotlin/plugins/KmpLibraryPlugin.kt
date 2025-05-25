@@ -2,6 +2,9 @@ package plugins
 
 import extensions.androidAppConfig
 import extensions.androidConfig
+import extensions.commonMainDependencies
+import extensions.implementations
+import extensions.isApiModule
 import extensions.kotlinMultiplatformConfig
 import extensions.libs
 import org.gradle.api.Plugin
@@ -18,6 +21,7 @@ class KmpLibraryPlugin : Plugin<Project> {
 
             applyPlugins()
             configureKotlin()
+            configureFeatureModuleDependencies()
             configureAndroid()
             configureIos(iosConfigExtension)
         }
@@ -42,6 +46,26 @@ class KmpLibraryPlugin : Plugin<Project> {
                     jvmTarget.set(JvmTarget.fromTarget(libs.versions.javaVersion.get()))
                 }
             }
+        }
+    }
+
+    private fun Project.configureFeatureModuleDependencies() {
+
+        val implModuleDependencies = when (project.isApiModule) {
+            true -> null
+            else ->
+                project
+                    .parent
+                    ?.childProjects
+                    ?.values
+                    ?.filter { project -> project.isApiModule }
+        }
+
+        commonMainDependencies {
+            implementations(
+                project(":shared:common"),
+                *implModuleDependencies?.toTypedArray().orEmpty(),
+            )
         }
     }
 

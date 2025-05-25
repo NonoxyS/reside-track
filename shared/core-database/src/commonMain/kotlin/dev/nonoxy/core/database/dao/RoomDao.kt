@@ -3,6 +3,7 @@ package dev.nonoxy.core.database.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
@@ -18,7 +19,7 @@ interface RoomDao {
     @Query("SELECT * FROM rooms WHERE id = :roomId")
     suspend fun getRoomById(roomId: Long): RoomEntity?
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     suspend fun insertRoom(room: RoomEntity)
 
     @Update
@@ -29,13 +30,21 @@ interface RoomDao {
 
     @Transaction
     @Query("SELECT * FROM rooms WHERE id = :roomId")
-    suspend fun getRoomWithStudents(roomId: Long): RoomWithStudents?
+    suspend fun getRoomWithStudentsById(roomId: Long): RoomWithStudents?
+
+    @Transaction
+    @Query("SELECT * FROM rooms WHERE roomNumber = :roomNumber")
+    suspend fun getRoomWithStudentsByRoomNumber(roomNumber: Int): RoomWithStudents?
 
     @Transaction
     @Query("SELECT * FROM rooms")
     suspend fun getAllRoomsWithStudents(): List<RoomWithStudents>
 
-    @Query("SELECT * FROM rooms WHERE bedsNumber > 0")
+    @Transaction
+    @Query("SELECT * FROM rooms WHERE floorNumber = :floor")
+    suspend fun getRoomsWithStudentsByFloor(floor: Int): List<RoomWithStudents>
+
+    @Query("SELECT * FROM rooms WHERE bedsCount > 0")
     suspend fun getRoomsWithAvailableBeds(): List<RoomEntity>
 
     @Query("SELECT * FROM rooms WHERE floorNumber = :floor")

@@ -89,6 +89,12 @@ fun <T> NavBackStackEntry.CheckNavigationResult(
         }
 }
 
+inline fun <reified T : Any> NavController.navigateOnResumed(
+    noinline builder: NavOptionsBuilder.() -> Unit = {},
+) {
+    navigateOnResumed(route = T::class, builder = builder)
+}
+
 fun <T : Any> NavController.navigateOnResumed(
     route: T,
     builder: NavOptionsBuilder.() -> Unit = {},

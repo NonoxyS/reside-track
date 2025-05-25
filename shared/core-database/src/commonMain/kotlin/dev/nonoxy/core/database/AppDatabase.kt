@@ -13,7 +13,7 @@ import dev.nonoxy.core.database.entities.StudentEntity
 
 @Database(entities = [RoomEntity::class, StudentEntity::class], version = 1)
 @ConstructedBy(AppDatabaseConstructor::class)
-abstract class AppDatabase : RoomDatabase() {
+internal abstract class AppDatabase : RoomDatabase() {
     abstract fun getRoomDao(): RoomDao
     abstract fun getStudentDao(): StudentDao
 
@@ -32,6 +32,6 @@ abstract class AppDatabase : RoomDatabase() {
 
 // The Room compiler generates the `actual` implementations.
 @Suppress("NO_ACTUAL_FOR_EXPECT")
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+internal expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
     override fun initialize(): AppDatabase
 }
