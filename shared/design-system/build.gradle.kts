@@ -16,3 +16,12 @@ commonMainDependencies {
         *composeBundle
     )
 }
+
+dependencies {
+    debugImplementation(compose.uiTooling)
+}
+
+compose.resources {
+    publicResClass = true
+    generateResClass = auto
+}

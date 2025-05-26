@@ -5,7 +5,7 @@ data class RoomsViewState(
 ) {
     companion object {
         val Initial: RoomsViewState = RoomsViewState(
-            data = 1
+            rooms = 1
         )
     }
 }
