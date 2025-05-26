@@ -2,6 +2,7 @@ import extensions.androidMainDependencies
 import extensions.commonMainDependencies
 import extensions.implementations
 import plugins.composeBundle
+import plugins.composeDeps
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -16,13 +17,17 @@ iosConfig {
 androidMainDependencies {
     implementations(
         libs.kotlin.corutines.android,
-        libs.androidx.activity.compose
+        libs.androidx.activity.compose,
+
+        composeDeps.preview
     )
 }
 
 commonMainDependencies {
     implementations(
         libs.kotlin.corutines.core,
+
+        *composeBundle,
 
         libs.androidx.lifecycle.viewmodel,
         libs.androidx.lifecycle.runtime.compose,
@@ -33,24 +38,12 @@ commonMainDependencies {
         libs.koin.core,
         libs.koin.compose,
         libs.koin.composeViewModel,
+
+        projects.shared.designSystem,
+        projects.shared.coreNavigation,
+
+        projects.shared.featureRooms.impl
     )
-}
-
-kotlin {
-
-    sourceSets {
-
-        androidMain.dependencies {
-            implementation(compose.preview)
-        }
-
-        commonMain.dependencies {
-            implementations(
-                *composeBundle,
-                projects.shared.coreDatabase
-            )
-        }
-    }
 }
 
 android {

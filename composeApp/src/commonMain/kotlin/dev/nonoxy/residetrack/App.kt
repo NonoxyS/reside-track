@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.composeapp.generated.resources.Res
-import residetrack.composeapp.generated.resources.compose_multiplatform
+import residetrack.shared.design_system.generated.resources.Res
+import residetrack.shared.design_system.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
