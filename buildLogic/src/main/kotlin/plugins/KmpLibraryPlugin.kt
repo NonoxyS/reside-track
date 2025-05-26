@@ -61,9 +61,13 @@ class KmpLibraryPlugin : Plugin<Project> {
                     ?.filter { project -> project.isApiModule }
         }
 
+        val commonDependencies = listOf(
+            project(":shared:common"),
+        ).takeIf { project.name != "common" }
+
         commonMainDependencies {
             implementations(
-                project(":shared:common"),
+                *commonDependencies?.toTypedArray().orEmpty(),
                 *implModuleDependencies?.toTypedArray().orEmpty(),
             )
         }
