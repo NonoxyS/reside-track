@@ -37,7 +37,7 @@ interface StudentDao {
     @Query("SELECT * FROM students WHERE streamNumber = :streamNumber")
     suspend fun getStudentsByStream(streamNumber: Int): List<StudentEntity>
 
-    @Query("SELECT * FROM students WHERE checkOutDate >= :timestamp")
+    @Query("SELECT * FROM students WHERE checkOutDateEpochMillis >= :timestamp")
     suspend fun getStudentsCheckingOutAfter(timestamp: Long): List<StudentEntity>
 
     @Query("SELECT COUNT(*) FROM students WHERE roomId = :roomId")
