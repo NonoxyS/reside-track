@@ -19,5 +19,10 @@ commonMainDependencies {
 
         projects.shared.coreNavigation,
         projects.shared.coreDatabase,
+        projects.shared.designSystem
     )
+}
+
+dependencies {
+    debugImplementation(compose.uiTooling)
 }
