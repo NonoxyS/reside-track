@@ -2,7 +2,8 @@ package dev.nonoxy.feature.rooms.ui.models
 
 import kotlinx.collections.immutable.ImmutableList
 
-data class UiRoom(
+internal data class UiRoom(
+    val id: Long,
     val floorNumber: String,
     val roomNumber: String,
     val bedsCount: String,

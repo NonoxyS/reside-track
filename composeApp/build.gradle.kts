@@ -18,6 +18,7 @@ androidMainDependencies {
     implementations(
         libs.kotlin.corutines.android,
         libs.androidx.activity.compose,
+        libs.koin.android,
 
         composeDeps.preview
     )
@@ -32,6 +33,7 @@ commonMainDependencies {
         libs.androidx.lifecycle.viewmodel,
         libs.androidx.lifecycle.runtime.compose,
         libs.compose.navigation,
+        libs.compose.navigation.material,
 
         libs.room.runtime,
 
@@ -39,8 +41,11 @@ commonMainDependencies {
         libs.koin.compose,
         libs.koin.composeViewModel,
 
+        libs.napier,
+
         projects.shared.designSystem,
         projects.shared.coreNavigation,
+        projects.shared.coreDatabase,
 
         projects.shared.featureRooms.impl
     )
@@ -59,6 +64,15 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }

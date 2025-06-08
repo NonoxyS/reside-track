@@ -18,6 +18,7 @@ data class ResideTrackTypography(
     val paragraphSM: TextStyle,
     val paragraph: TextStyle,
     val lead: TextStyle,
+    val head5: TextStyle,
     val head4: TextStyle,
     val head3: TextStyle,
     val head2: TextStyle,
@@ -52,6 +53,12 @@ internal val ResideTypography: ResideTrackTypography
             fontSize = text_size_16,
             lineHeight = text_size_24,
             letterSpacing = TextUnit(0.01F, TextUnitType.Sp)
+        ),
+        head5 = TextStyle(
+            fontFamily = fontPoppins,
+            fontWeight = FontWeight.Bold,
+            fontSize = text_size_12,
+            lineHeight = text_size_16
         ),
         head4 = TextStyle(
             fontFamily = fontPoppins,

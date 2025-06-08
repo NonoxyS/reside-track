@@ -17,6 +17,7 @@ android {
 commonMainDependencies {
     implementations(
         libs.androidx.lifecycle.viewmodel,
+        libs.kotlin.immutableCollections,
     )
 
     apis(

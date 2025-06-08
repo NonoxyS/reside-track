@@ -8,6 +8,11 @@ import kotlinx.datetime.toLocalDateTime
 fun Long.toLocalDate(): LocalDate {
     return Instant
         .fromEpochMilliseconds(this)
-        .toLocalDateTime(TimeZone.currentSystemDefault())
+        .toLocalDateTime(timeZone = TimeZone.currentSystemDefault())
+        .date
+}
+
+fun Instant.toLocalDate(): LocalDate {
+    return this.toLocalDateTime(timeZone = TimeZone.currentSystemDefault())
         .date
 }

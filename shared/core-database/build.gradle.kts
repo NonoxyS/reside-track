@@ -11,6 +11,11 @@ plugins {
 
 android {
     namespace = "dev.nonoxy.core.database"
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+        }
+    }
 }
 
 androidMainDependencies {

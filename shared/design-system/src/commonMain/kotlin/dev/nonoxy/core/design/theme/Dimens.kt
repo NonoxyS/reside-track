@@ -40,6 +40,7 @@ val padding_size_200: Dp = 200.dp
 val text_size_8: TextUnit = 8.sp
 val text_size_10: TextUnit = 10.sp
 val text_size_11: TextUnit = 11.sp
+val text_size_12: TextUnit = 12.sp
 val text_size_13: TextUnit = 13.sp
 val text_size_14: TextUnit = 14.sp
 val text_size_15: TextUnit = 15.sp

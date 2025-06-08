@@ -6,5 +6,6 @@ class Student(
     val id: Long,
     val streamNumber: Int,
     val checkInDate: LocalDate,
-    val checkOutDate: LocalDate
+    val checkOutDate: LocalDate,
+    val isCheckOutDateNearOrExpired: Boolean
 )

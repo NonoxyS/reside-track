@@ -17,10 +17,8 @@ android-targetSdk = "35"
 # Android
 androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.0"
-androidx-constraintlayout = "2.2.1"
 androidx-core-ktx = "1.16.0"
 androidx-lifecycle = "2.8.4"
-androidx-material = "1.12.0"
 
 # Test
 androidx-espresso-core = "3.6.1"
@@ -30,6 +28,7 @@ junit = "4.13.2"
 # Compose
 compose-multiplatform = "1.8.1"
 compose-navigation = "2.9.0-beta02"
+compose-navigation-material = "1.8.0-beta05"
 
 # Room
 room = "2.7.1"
@@ -39,7 +38,7 @@ sqliteBundled = "2.5.1"
 detekt = "1.23.6"
 
 # Koin
-koin = "4.0.2"
+koin = "4.1.0-RC1"
 
 # Napier
 napier = "2.7.1"
@@ -59,8 +58,6 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
-androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
@@ -97,6 +94,7 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 
 # Compose Navigation
 compose-navigation = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+compose-navigation-material = { module = "org.jetbrains.compose.material:material-navigation", version.ref = "compose-navigation-material" }
 
 # Napier
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }

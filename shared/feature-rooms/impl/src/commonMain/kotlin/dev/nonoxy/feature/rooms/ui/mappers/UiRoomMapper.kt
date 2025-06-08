@@ -13,6 +13,7 @@ internal class UiRoomMapperImpl(
 
     override fun map(item: Room): UiRoom = with(item) {
         return UiRoom(
+            id = id,
             floorNumber = floorNumber.toString(),
             roomNumber = roomNumber.toString(),
             bedsCount = bedsCount.toString(),

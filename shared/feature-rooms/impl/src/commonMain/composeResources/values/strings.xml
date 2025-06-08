@@ -1,0 +1,20 @@
+<resources>
+    <plurals name="rooms_total_places">
+        <item quantity='one'>Всего %1$d место</item>
+        <item quantity='few'>Всего %1$d места</item>
+        <item quantity='many'>Всего %1$d мест</item>
+        <item quantity='other'>Всего %1$d мест</item>
+    </plurals>
+    <plurals name="rooms_available_places">
+        <item quantity='one'>Свободно %1$d место</item>
+        <item quantity='few'>Свободно %1$d места</item>
+        <item quantity='many'>Свободно %1$d мест</item>
+        <item quantity='other'>Свободно %1$d мест</item>
+    </plurals>
+
+    <string name="rooms_stream">Поток</string>
+    <string name="rooms_floor">Этаж</string>
+    <string name="rooms_room">Комната</string>
+    <string name="rooms_check_in">Заезд</string>
+    <string name="rooms_check_out">Выезд</string>
+</resources>

@@ -12,7 +12,8 @@ internal class UiStudentMapperImpl : UiStudentMapper {
         UiStudent(
             streamNumber = streamNumber.toString(),
             checkInDate = checkInDate.toString(), // ISO-8601
-            checkOutDate = checkOutDate.toString() // ISO-8601
+            checkOutDate = checkOutDate.toString(), // ISO-8601
+            isCheckOutDateNearOrExpired = isCheckOutDateNearOrExpired
         )
     }
 }
