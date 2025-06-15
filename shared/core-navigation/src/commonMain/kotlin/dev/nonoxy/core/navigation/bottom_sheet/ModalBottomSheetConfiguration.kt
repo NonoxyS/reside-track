@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheetDefaults
@@ -20,10 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.nonoxy.core.design.theme.ResideTrackTheme
 
 data class ModalBottomSheetConfiguration
 @OptIn(ExperimentalMaterial3Api::class) constructor(
-    val modifier: Modifier = Modifier,
+    val modifier: Modifier = Modifier.statusBarsPadding(),
     val properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
     val contentTransition: AnimatedContentTransitionScope<*>.() -> ContentTransform = defaultContentTransition,
     val skipPartiallyExpanded: Boolean = true,
@@ -48,7 +50,7 @@ data class ModalBottomSheetConfiguration
 
         @OptIn(ExperimentalMaterial3Api::class)
         internal val defaultContainerColor: @Composable () -> Color
-            get() = { BottomSheetDefaults.ContainerColor }
+            get() = { ResideTrackTheme.colors.background }
 
         @OptIn(ExperimentalMaterial3Api::class)
         internal val defaultContentColor: @Composable (Color) -> Color
@@ -116,6 +118,13 @@ internal fun ModalBottomSheetConfiguration?.getContentWindowInsets(): (@Composab
 
 internal fun ModalBottomSheetConfiguration?.getModifier(): Modifier =
     this?.modifier ?: Modifier
+
+internal fun ModalBottomSheetConfiguration?.getSkipPartiallyExpanded(): Boolean =
+    this?.skipPartiallyExpanded ?: true
+
+@OptIn(ExperimentalMaterial3Api::class)
+internal fun ModalBottomSheetConfiguration?.getConfirmValueChange(): (SheetValue) -> Boolean =
+    this?.confirmValueChange ?: { true }
 
 @OptIn(ExperimentalMaterial3Api::class)
 internal fun ModalBottomSheetConfiguration?.getProperties(): ModalBottomSheetProperties =

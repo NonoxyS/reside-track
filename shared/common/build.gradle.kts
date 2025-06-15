@@ -23,6 +23,7 @@ commonMainDependencies {
     apis(
         libs.koin.core,
         libs.kotlin.corutines.core,
-        libs.kotlin.datetime
+        libs.kotlin.datetime,
+        libs.napier,
     )
 }

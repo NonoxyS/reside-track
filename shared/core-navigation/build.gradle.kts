@@ -19,6 +19,8 @@ commonMainDependencies {
     implementations(
         libs.compose.navigation,
         libs.androidx.lifecycle.runtime.compose,
-        compose.dependencies.material3
+        compose.dependencies.material3,
+
+        projects.shared.designSystem
     )
 }

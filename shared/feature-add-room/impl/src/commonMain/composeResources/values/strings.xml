@@ -1,0 +1,30 @@
+<resources>
+    <string name="add_room_title">Добавить новую комнату</string>
+    
+    <string name="add_room_floor_number_label">Номер этажа</string>
+    <string name="add_room_room_number_label">Номер комнаты</string>
+    <string name="add_room_beds_count_label">Количество кроватей</string>
+    
+    <string name="add_room_floor_number_placeholder">Введите номер этажа</string>
+    <string name="add_room_room_number_placeholder">Введите номер комнаты</string>
+    <string name="add_room_beds_count_placeholder">Введите количество кроватей</string>
+    
+    <string name="add_room_cancel_button">Отмена</string>
+    <string name="add_room_create_button">Создать</string>
+    
+    <string name="add_room_validation_floor_number_required">Введите номер этажа</string>
+
+    <string name="add_room_validation_room_number_required">Введите номер комнаты</string>
+
+    <string name="add_room_validation_beds_count_required">Введите количество кроватей</string>
+
+    <string name="add_room_available_floors">Доступные этажи: %1$s</string>
+    
+    <string name="add_room_new_floor_button">Новый этаж</string>
+    <string name="add_room_custom_beds_button">Другое</string>
+    <string name="add_room_hide_button">Скрыть</string>
+    <string name="add_room_select_floor_hint">Выберите этаж или добавьте новый</string>
+    <string name="add_room_select_beds_hint">Выберите количество кроватей</string>
+    
+    <string name="add_room_success_message">Комната %1$s успешно создана</string>
+</resources> 

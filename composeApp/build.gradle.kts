@@ -47,7 +47,8 @@ commonMainDependencies {
         projects.shared.coreNavigation,
         projects.shared.coreDatabase,
 
-        projects.shared.featureRooms.impl
+        projects.shared.featureRooms.impl,
+        projects.shared.featureAddRoom.impl,
     )
 }
 
