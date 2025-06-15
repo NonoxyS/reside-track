@@ -18,6 +18,7 @@ android {
 commonMainDependencies {
     implementations(
         libs.compose.navigation,
-        libs.androidx.lifecycle.runtime.compose
+        libs.androidx.lifecycle.runtime.compose,
+        compose.dependencies.material3
     )
 }

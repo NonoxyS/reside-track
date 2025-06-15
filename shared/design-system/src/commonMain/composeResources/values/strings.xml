@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Reside Track</string>
+
+    <string name="loading_data">Загрузка данных</string>
+
+    <string name="error_something_went_wrong">Что-то пошло не так</string>
+
+    <string name="button_update">Обновить</string>
+</resources>

@@ -2,6 +2,9 @@ package plugins
 
 import extensions.androidAppConfig
 import extensions.androidConfig
+import extensions.commonMainDependencies
+import extensions.implementations
+import extensions.isApiModule
 import extensions.kotlinMultiplatformConfig
 import extensions.libs
 import org.gradle.api.Plugin
@@ -18,6 +21,7 @@ class KmpLibraryPlugin : Plugin<Project> {
 
             applyPlugins()
             configureKotlin()
+            configureFeatureModuleDependencies()
             configureAndroid()
             configureIos(iosConfigExtension)
         }
@@ -45,6 +49,30 @@ class KmpLibraryPlugin : Plugin<Project> {
         }
     }
 
+    private fun Project.configureFeatureModuleDependencies() {
+
+        val implModuleDependencies = when (project.isApiModule) {
+            true -> null
+            else ->
+                project
+                    .parent
+                    ?.childProjects
+                    ?.values
+                    ?.filter { project -> project.isApiModule }
+        }
+
+        val commonDependencies = listOf(
+            project(":shared:common"),
+        ).takeIf { project.name != "common" }
+
+        commonMainDependencies {
+            implementations(
+                *commonDependencies?.toTypedArray().orEmpty(),
+                *implModuleDependencies?.toTypedArray().orEmpty(),
+            )
+        }
+    }
+
     private fun Project.configureAndroid() {
         if (pluginManager.hasPlugin(libs.plugins.androidApplication.get().pluginId)) {
             androidAppConfig {
@@ -59,7 +87,9 @@ class KmpLibraryPlugin : Plugin<Project> {
 
                 buildTypes {
                     release {
-                        isMinifyEnabled = true
+                        isMinifyEnabled = false
+                        isShrinkResources = false
+
                         proguardFiles(
                             getDefaultProguardFile("proguard-android-optimize.txt"),
                             "proguard-rules.pro"
@@ -103,7 +133,9 @@ class KmpLibraryPlugin : Plugin<Project> {
 
                 buildTypes {
                     release {
-                        isMinifyEnabled = true
+                        isMinifyEnabled = false
+                        isShrinkResources = false
+
                         proguardFiles(
                             getDefaultProguardFile("proguard-android-optimize.txt"),
                             "proguard-rules.pro"

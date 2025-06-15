@@ -1,13 +1,13 @@
 import extensions.androidMainDependencies
 import extensions.commonMainDependencies
 import extensions.implementations
+import plugins.composeBundle
+import plugins.composeDeps
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.conventionPlugin.kmpLibrary)
     alias(libs.plugins.conventionPlugin.composeCompiler)
-    alias(libs.plugins.room)
-    alias(libs.plugins.ksp)
 }
 
 iosConfig {
@@ -17,7 +17,10 @@ iosConfig {
 androidMainDependencies {
     implementations(
         libs.kotlin.corutines.android,
-        libs.androidx.activity.compose
+        libs.androidx.activity.compose,
+        libs.koin.android,
+
+        composeDeps.preview
     )
 }
 
@@ -25,37 +28,27 @@ commonMainDependencies {
     implementations(
         libs.kotlin.corutines.core,
 
+        *composeBundle,
+
         libs.androidx.lifecycle.viewmodel,
         libs.androidx.lifecycle.runtime.compose,
         libs.compose.navigation,
+        libs.compose.navigation.material,
 
         libs.room.runtime,
 
         libs.koin.core,
         libs.koin.compose,
         libs.koin.composeViewModel,
+
+        libs.napier,
+
+        projects.shared.designSystem,
+        projects.shared.coreNavigation,
+        projects.shared.coreDatabase,
+
+        projects.shared.featureRooms.impl
     )
-}
-
-kotlin {
-
-    sourceSets {
-
-        androidMain.dependencies {
-            implementation(compose.preview)
-        }
-
-        commonMain.dependencies {
-            implementations(
-                compose.runtime,
-                compose.foundation,
-                compose.material3,
-                compose.ui,
-                compose.components.resources,
-                compose.components.uiToolingPreview
-            )
-        }
-    }
 }
 
 android {
@@ -73,17 +66,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            signingConfig = signingConfigs.getByName("debug")
+        }
+    }
 }
 
 dependencies {
     debugImplementation(compose.uiTooling)
-
-    add("kspAndroid", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }
