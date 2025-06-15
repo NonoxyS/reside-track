@@ -9,14 +9,17 @@ import dev.nonoxy.core.database.relations.RoomWithStudents
 import dev.nonoxy.feature.rooms.data.mappers.RoomMapper
 import dev.nonoxy.feature.rooms.models.Room
 import dev.nonoxy.feature.rooms.repository.RoomsRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
 internal class RoomsRepositoryImpl(
     private val roomDao: RoomDao,
     private val roomMapper: RoomMapper,
+    private val ioDispatcher: CoroutineDispatcher = dev.nonoxy.common.coroutines.ioDispatcher
 ) : RoomsRepository {
 
-    override suspend fun getAllRooms(): Result<List<Room>> {
-        return coRunCatching(
+    override suspend fun getAllRooms(): Result<List<Room>> = withContext(ioDispatcher) {
+        coRunCatching(
             tryBlock = {
                 roomDao.getAllRoomsWithStudents()
                     .mapToDomain()
@@ -26,8 +29,10 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun getRoomsByFloor(floorNumber: Int): Result<List<Room>> {
-        return coRunCatching(
+    override suspend fun getRoomsByFloor(
+        floorNumber: Int
+    ): Result<List<Room>> = withContext(ioDispatcher) {
+        coRunCatching(
             tryBlock = {
                 roomDao.getRoomsWithStudentsByFloor(floor = floorNumber)
                     .mapToDomain()
@@ -37,8 +42,10 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun getRoomByNumber(roomNumber: Int): Result<Room?> {
-        return coRunCatching(
+    override suspend fun getRoomByNumber(
+        roomNumber: Int
+    ): Result<Room?> = withContext(ioDispatcher) {
+        coRunCatching(
             tryBlock = {
                 roomDao.getRoomWithStudentsByRoomNumber(roomNumber = roomNumber)
                     ?.mapToDomain()
@@ -48,8 +55,10 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun getRoomById(roomId: Long): Result<Room?> {
-        return coRunCatching(
+    override suspend fun getRoomById(
+        roomId: Long
+    ): Result<Room?> = withContext(ioDispatcher) {
+        coRunCatching(
             tryBlock = {
                 roomDao.getRoomWithStudentsById(roomId = roomId)
                     ?.mapToDomain()
@@ -59,11 +68,9 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun saveRoom(room: Room): Result<Unit> {
-        return coRunCatching(
-            tryBlock = {
-                roomDao.insertRoom(room = room.mapToEntity()).wrapSuccess()
-            },
+    override suspend fun saveRoom(room: Room): Result<Unit> = withContext(ioDispatcher) {
+        coRunCatching(
+            tryBlock = { roomDao.insertRoom(room = room.mapToEntity()).wrapSuccess() },
             catchBlock = { throwable -> throwable.wrapFailure() }
         )
     }

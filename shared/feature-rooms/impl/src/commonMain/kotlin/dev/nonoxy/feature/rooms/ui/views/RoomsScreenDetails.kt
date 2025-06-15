@@ -38,7 +38,7 @@ internal fun RoomsScreenDetails(
             modifier = Modifier.padding(horizontal = padding_size_16),
             totalPlaces = state.selectedFloorTotalBeds,
             availablePlaces = state.selectedFloorAvailableBeds,
-            onAddRoomClick = {}
+            onAddRoomClick = { onObtainEvent(RoomsEvent.OnAddRoomClick) }
         )
 
         if (state.roomsOnFloor.keys.size > 1) {

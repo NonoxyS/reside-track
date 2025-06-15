@@ -1,5 +1,6 @@
 package dev.nonoxy.feature.rooms.ui.views
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.nonoxy.core.design.theme.padding_size_16
 import dev.nonoxy.core.design.theme.padding_size_20
+import dev.nonoxy.core.design.theme.padding_size_8
 import dev.nonoxy.feature.rooms.ui.models.UiRoom
 import kotlinx.collections.immutable.ImmutableList
 
@@ -24,7 +26,8 @@ internal fun RoomList(
         contentPadding = PaddingValues(
             horizontal = padding_size_16,
             vertical = padding_size_20
-        )
+        ),
+        verticalArrangement = Arrangement.spacedBy(padding_size_8)
     ) {
         items(
             items = rooms,

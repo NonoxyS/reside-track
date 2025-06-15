@@ -11,8 +11,12 @@ fun NavController.navigateToRoomsScreen() {
     navigateOnResumed<Screen.Rooms>()
 }
 
-fun NavGraphBuilder.composableRoomsScreen() {
+fun NavGraphBuilder.composableRoomsScreen(
+    onNavigateToAddRoomScreen: () -> Unit
+) {
     composable<Screen.Rooms> {
-        RoomsScreen()
+        RoomsScreen(
+            onNavigateToAddRoomScreen = onNavigateToAddRoomScreen
+        )
     }
 }
