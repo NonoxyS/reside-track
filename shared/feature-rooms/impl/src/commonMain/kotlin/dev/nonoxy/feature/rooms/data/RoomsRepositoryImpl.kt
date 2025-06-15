@@ -9,6 +9,7 @@ import dev.nonoxy.core.database.relations.RoomWithStudents
 import dev.nonoxy.feature.rooms.data.mappers.RoomMapper
 import dev.nonoxy.feature.rooms.models.Room
 import dev.nonoxy.feature.rooms.repository.RoomsRepository
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -25,7 +26,10 @@ internal class RoomsRepositoryImpl(
                     .mapToDomain()
                     .wrapSuccess()
             },
-            catchBlock = { throwable -> throwable.wrapFailure() }
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on getting all rooms" }
+                throwable.wrapFailure()
+            }
         )
     }
 
@@ -38,7 +42,10 @@ internal class RoomsRepositoryImpl(
                     .mapToDomain()
                     .wrapSuccess()
             },
-            catchBlock = { throwable -> throwable.wrapFailure() }
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on getting rooms by floor: $floorNumber" }
+                throwable.wrapFailure()
+            }
         )
     }
 
@@ -51,7 +58,10 @@ internal class RoomsRepositoryImpl(
                     ?.mapToDomain()
                     .wrapSuccess()
             },
-            catchBlock = { throwable -> throwable.wrapFailure() }
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on getting room by number: $roomNumber" }
+                throwable.wrapFailure()
+            }
         )
     }
 
@@ -64,14 +74,20 @@ internal class RoomsRepositoryImpl(
                     ?.mapToDomain()
                     .wrapSuccess()
             },
-            catchBlock = { throwable -> throwable.wrapFailure() }
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on getting room by id: $roomId" }
+                throwable.wrapFailure()
+            }
         )
     }
 
     override suspend fun saveRoom(room: Room): Result<Unit> = withContext(ioDispatcher) {
         coRunCatching(
             tryBlock = { roomDao.insertRoom(room = room.mapToEntity()).wrapSuccess() },
-            catchBlock = { throwable -> throwable.wrapFailure() }
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on saving room: $room" }
+                throwable.wrapFailure()
+            }
         )
     }
 
