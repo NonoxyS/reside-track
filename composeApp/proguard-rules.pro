@@ -2,4 +2,4 @@
 -dontwarn dev.nonoxy.core.design.theme.ThemeKt
 -dontwarn dev.nonoxy.core.navigation.Screen$Rooms
 -dontwarn dev.nonoxy.feature.rooms.di.FeatureRoomsImplModuleKt
--dontwarn dev.nonoxy.feature.rooms.presentation.navigation.FeatureRoomsApiKt
+-dontwarn dev.nonoxy.feature.rooms.presentation.navigation.FeatureRoomsNavigationKt
