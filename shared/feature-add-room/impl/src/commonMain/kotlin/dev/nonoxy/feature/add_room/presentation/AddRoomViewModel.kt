@@ -16,6 +16,9 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import residetrack.shared.feature_add_room.impl.generated.resources.Res
+import residetrack.shared.feature_add_room.impl.generated.resources.add_room_error_room_already_exists
+import residetrack.shared.feature_add_room.impl.generated.resources.add_room_error_save_failed
+import residetrack.shared.feature_add_room.impl.generated.resources.add_room_error_unknown
 import residetrack.shared.feature_add_room.impl.generated.resources.add_room_success_message
 import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_beds_count_required
 import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_floor_number_required
@@ -153,9 +156,12 @@ internal class AddRoomViewModel(
 
                 if (roomExists) {
                     viewState = viewState.copy(isLoading = false)
-                    viewAction = AddRoomAction.ShowErrorMessage(
-                        "Комната $roomNumber на этаже $floorNumber уже существует"
+                    val errorMessage = getString(
+                        Res.string.add_room_error_room_already_exists,
+                        roomNumber,
+                        floorNumber
                     )
+                    viewAction = AddRoomAction.ShowErrorMessage(errorMessage)
                     return@launch
                 }
 
@@ -180,16 +186,14 @@ internal class AddRoomViewModel(
                     },
                     onFailure = { error ->
                         viewState = viewState.copy(isLoading = false)
-                        viewAction = AddRoomAction.ShowErrorMessage(
-                            error.message ?: "Ошибка при создании комнаты"
-                        )
+                        val errorMessage = getString(Res.string.add_room_error_save_failed)
+                        viewAction = AddRoomAction.ShowErrorMessage(errorMessage)
                     }
                 )
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 viewState = viewState.copy(isLoading = false)
-                viewAction = AddRoomAction.ShowErrorMessage(
-                    e.message ?: "Неизвестная ошибка при создании комнаты"
-                )
+                val errorMessage = getString(Res.string.add_room_error_unknown)
+                viewAction = AddRoomAction.ShowErrorMessage(errorMessage)
             }
         }
     }
