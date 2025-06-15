@@ -29,7 +29,10 @@ fun ModalBottomSheetHost(
         (currentEntry?.destination as? ModalBottomSheetNavigator.Destination)?.configuration
 
     val scope = rememberCoroutineScope()
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = configuration.getSkipPartiallyExpanded(),
+        confirmValueChange = configuration.getConfirmValueChange()
+    )
 
     LaunchedEffect(bottomSheetBackStack.size) {
         if (bottomSheetBackStack.isNotEmpty()) {
@@ -41,7 +44,7 @@ fun ModalBottomSheetHost(
 
     if (bottomSheetBackStack.isNotEmpty()) {
 
-        if (configuration?.properties?.shouldDismissOnBackPress == true) {
+        if (configuration.getProperties().shouldDismissOnBackPress) {
             BackHandler {
                 scope.launch {
                     sheetState.hide()
