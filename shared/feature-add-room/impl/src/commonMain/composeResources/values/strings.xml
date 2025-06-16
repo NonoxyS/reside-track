@@ -27,4 +27,8 @@
     <string name="add_room_select_beds_hint">Выберите количество кроватей</string>
     
     <string name="add_room_success_message">Комната %1$s успешно создана</string>
+    
+    <string name="add_room_error_room_already_exists">Комната %1$s на этаже %2$s уже существует</string>
+    <string name="add_room_error_save_failed">Ошибка при создании комнаты</string>
+    <string name="add_room_error_unknown">Неизвестная ошибка при создании комнаты</string>
 </resources> 
