@@ -11,6 +11,9 @@ import dev.nonoxy.feature.rooms.models.Room
 import dev.nonoxy.feature.rooms.repository.RoomsRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 
 internal class RoomsRepositoryImpl(
@@ -18,6 +21,8 @@ internal class RoomsRepositoryImpl(
     private val roomMapper: RoomMapper,
     private val ioDispatcher: CoroutineDispatcher = dev.nonoxy.common.coroutines.ioDispatcher
 ) : RoomsRepository {
+
+    private val _draftRoom = MutableStateFlow<Room?>(null)
 
     override suspend fun getAllRooms(): Result<List<Room>> = withContext(ioDispatcher) {
         coRunCatching(
@@ -90,6 +95,44 @@ internal class RoomsRepositoryImpl(
             }
         )
     }
+
+    override suspend fun saveDraftRoom(room: Room): Result<Unit> = withContext(ioDispatcher) {
+        coRunCatching(
+            tryBlock = {
+                _draftRoom.value = room
+                Unit.wrapSuccess()
+            },
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on saving draft room: $room" }
+                throwable.wrapFailure()
+            }
+        )
+    }
+
+    override suspend fun getDraftRoom(): Result<Room?> = withContext(ioDispatcher) {
+        coRunCatching(
+            tryBlock = { _draftRoom.value.wrapSuccess() },
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on getting draft room" }
+                throwable.wrapFailure()
+            }
+        )
+    }
+
+    override suspend fun clearDraftRoom(): Result<Unit> = withContext(ioDispatcher) {
+        coRunCatching(
+            tryBlock = {
+                _draftRoom.value = null
+                Unit.wrapSuccess()
+            },
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error occur on clearing draft room" }
+                throwable.wrapFailure()
+            }
+        )
+    }
+
+    override fun observeDraftRoom(): StateFlow<Room?> = _draftRoom.asStateFlow()
 
     private fun RoomWithStudents.mapToDomain(): Room = roomMapper.map(this)
     private fun List<RoomWithStudents>.mapToDomain(): List<Room> = map { it.mapToDomain() }
