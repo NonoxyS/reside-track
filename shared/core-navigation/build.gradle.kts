@@ -1,26 +1,24 @@
+import extensions.androidLibraryConfig
 import extensions.commonMainDependencies
 import extensions.implementations
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
-    alias(libs.plugins.conventionPlugin.composeCompiler)
-    alias(libs.plugins.conventionPlugin.kmpSerialization)
+    alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
+    alias(libs.plugins.conventionPlugin.jsonSerialization)
 }
 
-iosConfig {
-    xcFrameworkName = "core-navigation"
-}
-
-android {
+androidLibraryConfig {
     namespace = "dev.nonoxy.core.navigation"
 }
 
 commonMainDependencies {
     implementations(
-        libs.compose.navigation,
-        libs.androidx.lifecycle.runtime.compose,
-        compose.dependencies.material3,
-
-        projects.shared.designSystem
+        libs.compose.multiplatform.navigation,
+        libs.compose.navigation.material,
+        libs.androidx.lifecycle.runtimeCompose,
+        libs.compose.multiplatform.material3,
+        projects.shared.common,
+        projects.shared.designSystem,
     )
 }

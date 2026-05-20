@@ -1,30 +1,29 @@
+import extensions.androidLibraryConfig
 import extensions.commonMainDependencies
 import extensions.implementations
 import plugins.composeBundle
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
-    alias(libs.plugins.conventionPlugin.composeCompiler)
+    alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
 }
 
-android {
+androidLibraryConfig {
     namespace = "dev.nonoxy.feature.rooms.impl"
 }
 
 commonMainDependencies {
     implementations(
         *composeBundle,
-        libs.koin.composeViewModel,
+        libs.compose.multiplatform.resources,
+        libs.koin.composeMultiplatform.viewmodelNavigation,
         libs.kotlin.immutableCollections,
-
+        projects.shared.common,
         projects.shared.coreNavigation,
         projects.shared.coreDatabase,
-        projects.shared.designSystem
+        projects.shared.designSystem,
+        projects.shared.featureRooms.api,
     )
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
 }
 
 compose.resources {

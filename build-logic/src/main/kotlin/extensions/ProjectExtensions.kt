@@ -1,17 +1,22 @@
 package extensions
 
+import com.android.build.api.dsl.KotlinMultiplatformAndroidLibraryTarget
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.cocoapods.CocoapodsExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinAndroidTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
+val Project.libs: LibrariesForLibs
+    get() = the<LibrariesForLibs>()
 
 internal fun Project.androidConfig(configure: LibraryExtension.() -> Unit) {
     extensions.configure<LibraryExtension>(configure)
@@ -35,8 +40,10 @@ internal fun Project.kotlinMultiplatformConfig(configure: KotlinMultiplatformExt
     extensions.configure<KotlinMultiplatformExtension>(configure)
 }
 
-internal fun Project.kotlinAndroidTarget(configure: KotlinAndroidTarget.() -> Unit) {
-    kotlinMultiplatformConfig { androidTarget(configure) }
+fun Project.androidLibraryConfig(configure: KotlinMultiplatformAndroidLibraryTarget.() -> Unit) {
+    kotlinMultiplatformConfig {
+        extensions.configure<KotlinMultiplatformAndroidLibraryTarget>(configure)
+    }
 }
 
 internal fun KotlinMultiplatformExtension.cocoapodsConfig(configure: CocoapodsExtension.() -> Unit) {

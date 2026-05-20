@@ -21,6 +21,7 @@ class AndroidLibraryPlugin : Plugin<Project> {
     private fun Project.applyPlugins() {
         with(pluginManager) {
             apply(libs.plugins.androidLibrary.get().pluginId)
+            apply(libs.plugins.kotlin.android.get().pluginId)
         }
     }
 
@@ -50,22 +51,6 @@ class AndroidLibraryPlugin : Plugin<Project> {
             compileOptions {
                 sourceCompatibility(libs.versions.javaVersion.get().toInt())
                 targetCompatibility(libs.versions.javaVersion.get().toInt())
-            }
-
-            afterEvaluate {
-                println(
-                    """
-                    ╔════════ ANDROID CONFIG: ${project.name} ════════════╗
-                    ║ namespace: $namespace
-                    ║ compileSdk: $compileSdk
-                    ║ minSdk: ${defaultConfig.minSdk}
-                    ║ targetSdk: ${defaultConfig.targetSdk ?: "not set"}
-                    ║ buildTypes: ${buildTypes.names.joinToString(", ")}
-                    ║ release minify: ${buildTypes.getByName("release").isMinifyEnabled}
-                    ║ compose enabled: ${buildFeatures.compose == true}
-                    ╚═════════════════════════════════════════════════════╝
-                    """.trimIndent()
-                )
             }
         }
     }

@@ -1,7 +1,9 @@
+import extensions.androidLibraryConfig
+
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
 }
 
-android {
+androidLibraryConfig {
     namespace = "dev.nonoxy.template"
 }

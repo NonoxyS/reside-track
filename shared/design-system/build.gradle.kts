@@ -1,25 +1,24 @@
+import extensions.androidLibraryConfig
 import extensions.commonMainDependencies
 import extensions.implementations
 import plugins.composeBundle
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
-    alias(libs.plugins.conventionPlugin.composeCompiler)
+    alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
 }
 
-android {
+androidLibraryConfig {
     namespace = "dev.nonoxy.core.design"
 }
 
 commonMainDependencies {
     implementations(
         *composeBundle,
-        libs.compose.icons.core
+        libs.compose.multiplatform.resources,
+        libs.compose.icons.core,
+        projects.shared.common,
     )
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
 }
 
 compose.resources {

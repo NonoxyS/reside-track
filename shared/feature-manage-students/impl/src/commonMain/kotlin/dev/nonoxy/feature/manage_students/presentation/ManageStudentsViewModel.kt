@@ -15,7 +15,7 @@ import dev.nonoxy.feature.rooms.models.Student
 import dev.nonoxy.feature.rooms.repository.RoomsRepository
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats

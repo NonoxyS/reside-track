@@ -28,10 +28,11 @@ dependencyResolutionManagement {
     }
 }
 
-includeBuild("buildLogic")
+includeBuild("build-logic")
 
 include(
-    ":composeApp",
+    ":android:app",
+    ":shared:main",
 
     // Core / Common
     ":shared:common",

@@ -7,7 +7,7 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSUserDomainMask
 import platform.Foundation.NSFileManager
 
-fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+internal fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     val dbFilePath = documentDirectory() + "/reside_track.db"
     return Room.databaseBuilder<AppDatabase>(
         name = dbFilePath,

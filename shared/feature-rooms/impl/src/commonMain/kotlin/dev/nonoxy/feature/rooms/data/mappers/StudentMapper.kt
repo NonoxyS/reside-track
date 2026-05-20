@@ -4,7 +4,7 @@ import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.common.utils.toLocalDate
 import dev.nonoxy.core.database.entities.StudentEntity
 import dev.nonoxy.feature.rooms.models.Student
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlinx.datetime.minus
 
 internal interface StudentMapper : Mapper<StudentEntity, Student>
