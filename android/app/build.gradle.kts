@@ -1,3 +1,8 @@
+import com.android.build.api.variant.impl.VariantOutputImpl
+import com.android.build.gradle.internal.tasks.FinalizeBundleTask
+import utils.AppVersion
+import java.util.Locale
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.compose.multiplatform)
@@ -6,6 +11,13 @@ plugins {
 
 kotlin {
     jvmToolchain(libs.versions.javaVersion.get().toInt())
+
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-Xcontext-parameters",
+            "-Xexpect-actual-classes",
+        )
+    }
 }
 
 android {
@@ -16,13 +28,12 @@ android {
         applicationId = "dev.nonoxy.residetrack"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "0.0.1"
+        versionCode = AppVersion.getVersionCode(project).get()
+        versionName = AppVersion.getVersionName(project).get()
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
-        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+    buildFeatures {
+        buildConfig = true
     }
 
     packaging {
@@ -31,12 +42,48 @@ android {
         }
     }
 
+    signingConfigs {
+        named("debug").configure {
+            val DEBUG_STORE_PASSWORD: String by project
+            val DEBUG_KEY_ALIAS: String by project
+
+            storeFile = file("$rootDir/keystores/debug.keystore.jks")
+            storePassword = DEBUG_STORE_PASSWORD
+            keyAlias = DEBUG_KEY_ALIAS
+            keyPassword = DEBUG_STORE_PASSWORD
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-DEBUG"
+        }
+
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            // TODO: After create release signing config change "debug" -> "release"
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        register("dev") {
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-DEV"
+            dimension = "environment"
+        }
+
+        register("prod") {
+            dimension = "environment"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
 }
 
@@ -44,7 +91,38 @@ dependencies {
     implementation(projects.shared.main)
     implementation(libs.koin.android)
     implementation(libs.napier)
-    implementation(libs.androidx.activity.compose)
-    implementation(compose.preview)
+
     debugImplementation(compose.uiTooling)
+    implementation(compose.preview)
+    implementation(libs.androidx.activity.compose)
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        val flavorName = variant.flavorName.orEmpty().capitalize()
+        val buildTypeName = variant.buildType.orEmpty().capitalize()
+        val versionName = AppVersion.getVersionName(project).get()
+
+        // appDevRelease-1.0.0 -> app-dev-release-1.0.0
+        val appName = "${project.name}-$flavorName-$buildTypeName-$versionName"
+            .replace(Regex("([a-z])([A-Z])"), "$1-$2")
+            .lowercase(Locale.getDefault())
+
+        val outputAABTaskName = "sign${variant.name.capitalize()}Bundle"
+
+        afterEvaluate {
+            tasks.named<FinalizeBundleTask>(outputAABTaskName) {
+                val parentFile = finalBundleFile.asFile.get().parentFile
+                val finalFile = File(parentFile, "$appName.aab")
+                finalBundleFile.set(finalFile)
+            }
+        }
+
+        // Rename APK
+        variant.outputs.forEach { output ->
+            if (output is VariantOutputImpl) {
+                output.outputFileName.set("$appName.apk")
+            }
+        }
+    }
 }

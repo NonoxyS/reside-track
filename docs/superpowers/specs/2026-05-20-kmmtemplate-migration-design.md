@@ -175,11 +175,13 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 
 Каждая фаза завершается контрольной точкой: проект собирается, detekt проходит.
 
-1. **build-logic + версии** — `build-logic`, convention plugins, `libs.versions.toml`,
+**Статус (2026-05-20):** Фазы 1–2 завершены; следующая — Фаза 3 (навигация).
+
+1. **build-logic + версии** ✅ — `build-logic`, convention plugins, `libs.versions.toml`,
    бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
    `composeApp` → `:android:app` + `:shared:main` (AGP 9 запрещает совмещённый
    KMP + application модуль).
-2. **Core-модули + доводка app-слоя**:
+2. **Core-модули + доводка app-слоя** ✅:
    - core-модули: `core-mvikotlin`, `core-presentation`, `core-domain`, `common`,
      `common-ui`, `common-resources`, `core-database` под стиль;
    - **`:android:app` до полной парности с KMMTemplate `android:app`**: product flavors
