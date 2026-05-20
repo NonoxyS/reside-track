@@ -7,11 +7,11 @@ import org.jetbrains.compose.resources.Font
 import residetrack.shared.design_system.generated.resources.Poppins_Bold
 import residetrack.shared.design_system.generated.resources.Poppins_ExtraBold
 import residetrack.shared.design_system.generated.resources.Poppins_Medium
-import residetrack.shared.design_system.generated.resources.Res
+import residetrack.shared.design_system.generated.resources.DesignSystemRes
 
 internal val fontPoppins: FontFamily
     @Composable get() = FontFamily(
-        Font(resource = Res.font.Poppins_Medium, weight = FontWeight.Medium),
-        Font(resource = Res.font.Poppins_Bold, weight = FontWeight.Bold),
-        Font(resource = Res.font.Poppins_ExtraBold, weight = FontWeight.ExtraBold),
+        Font(resource = DesignSystemRes.font.Poppins_Medium, weight = FontWeight.Medium),
+        Font(resource = DesignSystemRes.font.Poppins_Bold, weight = FontWeight.Bold),
+        Font(resource = DesignSystemRes.font.Poppins_ExtraBold, weight = FontWeight.ExtraBold),
     )

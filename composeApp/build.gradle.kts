@@ -49,6 +49,7 @@ commonMainDependencies {
 
         projects.shared.featureRooms.impl,
         projects.shared.featureAddRoom.impl,
+        projects.shared.featureManageStudents.impl,
     )
 }
 

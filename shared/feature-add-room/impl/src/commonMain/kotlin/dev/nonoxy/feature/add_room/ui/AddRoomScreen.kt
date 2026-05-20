@@ -25,6 +25,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 internal fun AddRoomScreen(
     onNavigateBack: () -> Unit,
+    onNavigateToManageStudentsDraftRoom: () -> Unit,
     viewModel: AddRoomViewModel = koinViewModel()
 ) {
     val viewState by viewModel.viewState().collectAsStateWithLifecycle()
@@ -54,6 +55,10 @@ internal fun AddRoomScreen(
                     message = currentAction.message,
                     withDismissAction = true
                 )
+            }
+            
+            AddRoomAction.NavigateToManageStudentsDraftRoom -> {
+                onNavigateToManageStudentsDraftRoom()
             }
         }
     }

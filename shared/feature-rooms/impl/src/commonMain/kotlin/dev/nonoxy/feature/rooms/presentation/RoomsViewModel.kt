@@ -18,7 +18,9 @@ internal class RoomsViewModel(
 
     override fun obtainEvent(event: RoomsEvent) {
         when (event) {
-            is RoomsEvent.OnRoomClick -> TODO()
+            is RoomsEvent.OnRoomClick -> {
+                viewAction = RoomsAction.NavigateToManageStudentsExistingRoom(event.roomId.toString())
+            }
             is RoomsEvent.OnTabSelect -> TODO()
             RoomsEvent.OnAddRoomClick -> viewAction = RoomsAction.NavigateToAddRoomScreen
         }

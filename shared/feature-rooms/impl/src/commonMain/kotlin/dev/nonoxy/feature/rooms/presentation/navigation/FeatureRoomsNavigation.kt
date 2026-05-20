@@ -12,11 +12,13 @@ fun NavController.navigateToRoomsScreen() {
 }
 
 fun NavGraphBuilder.composableRoomsScreen(
-    onNavigateToAddRoomScreen: () -> Unit
+    onNavigateToAddRoomScreen: () -> Unit,
+    onNavigateToManageStudentsExistingRoom: (String) -> Unit
 ) {
     composable<Screen.Rooms> {
         RoomsScreen(
-            onNavigateToAddRoomScreen = onNavigateToAddRoomScreen
+            onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
+            onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom
         )
     }
 }

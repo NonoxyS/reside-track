@@ -20,6 +20,7 @@ fun NavController.navigateToAddRoomScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.bottomSheetAddRoomScreen(
     onNavigateBack: () -> Unit,
+    onNavigateToManageStudentsDraftRoom: () -> Unit
 ) {
     bottomSheet<Screen.AddRoom>(
         configuration = ModalBottomSheetConfiguration(
@@ -28,6 +29,7 @@ fun NavGraphBuilder.bottomSheetAddRoomScreen(
     ) { backStackEntry ->
         AddRoomScreen(
             onNavigateBack = onNavigateBack,
+            onNavigateToManageStudentsDraftRoom = onNavigateToManageStudentsDraftRoom
         )
     }
 }

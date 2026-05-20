@@ -12,4 +12,10 @@ sealed interface Screen {
 
     @Serializable
     data object AddRoom : Screen
+
+    @Serializable
+    data class ManageStudentsExistingRoom(val roomId: String) : Screen
+
+    @Serializable
+    data object ManageStudentsDraftRoom : Screen
 }

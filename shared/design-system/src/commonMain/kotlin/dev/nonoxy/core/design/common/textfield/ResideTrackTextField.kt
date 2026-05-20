@@ -7,8 +7,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import dev.nonoxy.core.design.theme.ResideTrackTheme
 import dev.nonoxy.core.design.theme.padding_size_4
@@ -23,9 +25,26 @@ fun ResideTrackTextField(
     placeholder: String? = null,
     isError: Boolean = false,
     errorMessage: String? = null,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = ResideTrackTheme.colors.borderActive,
+        unfocusedBorderColor = ResideTrackTheme.colors.borderDefault,
+        errorBorderColor = ResideTrackTheme.colors.borderError,
+        focusedLabelColor = ResideTrackTheme.colors.textPrimary,
+        unfocusedLabelColor = ResideTrackTheme.colors.textCaption,
+        errorLabelColor = ResideTrackTheme.colors.textError,
+        focusedTextColor = ResideTrackTheme.colors.textPrimary,
+        unfocusedTextColor = ResideTrackTheme.colors.textBody,
+        errorTextColor = ResideTrackTheme.colors.textPrimary,
+        focusedContainerColor = ResideTrackTheme.colors.surface,
+        unfocusedContainerColor = ResideTrackTheme.colors.surface,
+        disabledContainerColor = ResideTrackTheme.colors.fillInactive.copy(alpha = 0.1f)
+    ),
+    textStyle: TextStyle = ResideTrackTheme.typography.paragraph,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    readOnly: Boolean = false
 ) {
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -47,26 +66,15 @@ fun ResideTrackTextField(
                     )
                 }
             },
+            trailingIcon = trailingIcon,
             isError = isError,
             singleLine = singleLine,
             enabled = enabled,
+            readOnly = readOnly,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             shape = ResideTrackTheme.shapes.cornerRadius10,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = ResideTrackTheme.colors.borderActive,
-                unfocusedBorderColor = ResideTrackTheme.colors.borderDefault,
-                errorBorderColor = ResideTrackTheme.colors.borderError,
-                focusedLabelColor = ResideTrackTheme.colors.textPrimary,
-                unfocusedLabelColor = ResideTrackTheme.colors.textCaption,
-                errorLabelColor = ResideTrackTheme.colors.textError,
-                focusedTextColor = ResideTrackTheme.colors.textPrimary,
-                unfocusedTextColor = ResideTrackTheme.colors.textBody,
-                errorTextColor = ResideTrackTheme.colors.textPrimary,
-                focusedContainerColor = ResideTrackTheme.colors.surface,
-                unfocusedContainerColor = ResideTrackTheme.colors.surface,
-                disabledContainerColor = ResideTrackTheme.colors.fillInactive.copy(alpha = 0.1f)
-            ),
-            textStyle = ResideTrackTheme.typography.paragraph,
+            colors = colors,
+            textStyle = textStyle,
             modifier = Modifier.fillMaxWidth()
         )
 

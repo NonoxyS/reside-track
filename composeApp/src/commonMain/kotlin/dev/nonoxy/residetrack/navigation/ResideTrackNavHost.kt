@@ -10,6 +10,10 @@ import dev.nonoxy.core.navigation.bottom_sheet.ModalBottomSheetLayout
 import dev.nonoxy.core.navigation.bottom_sheet.rememberModalBottomSheetNavigator
 import dev.nonoxy.feature.add_room.presentation.navigation.bottomSheetAddRoomScreen
 import dev.nonoxy.feature.add_room.presentation.navigation.navigateToAddRoomScreen
+import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetManageStudentsExistingRoom
+import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetManageStudentsDraftRoom
+import dev.nonoxy.feature.manage_students.presentation.navigation.navigateToManageStudentsExistingRoom
+import dev.nonoxy.feature.manage_students.presentation.navigation.navigateToManageStudentsDraftRoom
 import dev.nonoxy.feature.rooms.presentation.navigation.composableRoomsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,9 +30,21 @@ internal fun ResideTrackNavHost(
             navController = navController,
             startDestination = Screen.Rooms
         ) {
-            composableRoomsScreen(onNavigateToAddRoomScreen = navController::navigateToAddRoomScreen)
+            composableRoomsScreen(
+                onNavigateToAddRoomScreen = navController::navigateToAddRoomScreen,
+                onNavigateToManageStudentsExistingRoom = navController::navigateToManageStudentsExistingRoom
+            )
 
             bottomSheetAddRoomScreen(
+                onNavigateBack = navController::popBackStack,
+                onNavigateToManageStudentsDraftRoom = navController::navigateToManageStudentsDraftRoom
+            )
+
+            bottomSheetManageStudentsExistingRoom(
+                onNavigateBack = navController::popBackStack
+            )
+
+            bottomSheetManageStudentsDraftRoom(
                 onNavigateBack = navController::popBackStack
             )
         }

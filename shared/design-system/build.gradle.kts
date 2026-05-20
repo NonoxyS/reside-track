@@ -1,3 +1,4 @@
+import extensions.apis
 import extensions.commonMainDependencies
 import extensions.implementations
 import plugins.composeBundle
@@ -13,7 +14,8 @@ android {
 
 commonMainDependencies {
     implementations(
-        *composeBundle
+        *composeBundle,
+        libs.compose.icons.core
     )
 }
 
@@ -24,4 +26,5 @@ dependencies {
 compose.resources {
     publicResClass = true
     generateResClass = auto
+    nameOfResClass = "DesignSystemRes"
 }

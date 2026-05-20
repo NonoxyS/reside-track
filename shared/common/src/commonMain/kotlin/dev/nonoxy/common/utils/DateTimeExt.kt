@@ -1,5 +1,6 @@
 package dev.nonoxy.common.utils
 
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -16,3 +17,6 @@ fun Instant.toLocalDate(): LocalDate {
     return this.toLocalDateTime(timeZone = TimeZone.currentSystemDefault())
         .date
 }
+
+val currentLocalDate: LocalDate
+    get() = Clock.System.now().toLocalDate()

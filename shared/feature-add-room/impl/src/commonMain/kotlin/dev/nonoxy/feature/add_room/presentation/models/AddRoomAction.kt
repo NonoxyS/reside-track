@@ -7,4 +7,6 @@ internal sealed interface AddRoomAction {
     class ShowSuccessMessage(val message: String) : AddRoomAction
 
     class ShowErrorMessage(val message: String) : AddRoomAction
+    
+    object NavigateToManageStudentsDraftRoom : AddRoomAction
 }

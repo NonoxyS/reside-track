@@ -176,13 +176,22 @@ internal class AddRoomViewModel(
 
                 result.fold(
                     onSuccess = {
-                        viewState = viewState.copy(isLoading = false)
-                        val message = getString(
-                            Res.string.add_room_success_message,
-                            roomNumber
+                        // Сохраняем созданную комнату как черновик для добавления студентов
+                        val draftSaveResult = roomsRepository.saveDraftRoom(newRoom)
+                        draftSaveResult.fold(
+                            onSuccess = {
+                                viewState = viewState.copy(isLoading = false)
+                                viewAction = AddRoomAction.NavigateToManageStudentsDraftRoom
+                            },
+                            onFailure = {
+                                viewState = viewState.copy(isLoading = false)
+                                val message = getString(
+                                    Res.string.add_room_success_message,
+                                    roomNumber
+                                )
+                                viewAction = AddRoomAction.ShowSuccessMessage(message)
+                            }
                         )
-                        viewAction = AddRoomAction.ShowSuccessMessage(message)
-                        viewAction = AddRoomAction.CloseScreen
                     },
                     onFailure = { error ->
                         viewState = viewState.copy(isLoading = false)

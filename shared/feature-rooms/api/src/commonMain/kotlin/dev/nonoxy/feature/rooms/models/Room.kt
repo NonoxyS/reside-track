@@ -1,6 +1,6 @@
 package dev.nonoxy.feature.rooms.models
 
-class Room(
+data class Room(
     val id: Long = 0,
     val floorNumber: Int,
     val roomNumber: Int,

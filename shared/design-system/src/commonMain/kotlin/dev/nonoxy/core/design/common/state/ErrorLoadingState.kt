@@ -13,15 +13,15 @@ import dev.nonoxy.core.design.theme.ResideTrackTheme
 import dev.nonoxy.core.design.theme.padding_size_16
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.design_system.generated.resources.Res
+import residetrack.shared.design_system.generated.resources.DesignSystemRes
 import residetrack.shared.design_system.generated.resources.button_update
 import residetrack.shared.design_system.generated.resources.error_something_went_wrong
 
 @Composable
 fun ErrorLoadingState(
     modifier: Modifier = Modifier,
-    errorMessage: String = stringResource(Res.string.error_something_went_wrong),
-    buttonText: String = stringResource(Res.string.button_update),
+    errorMessage: String = stringResource(DesignSystemRes .string.error_something_went_wrong),
+    buttonText: String = stringResource(DesignSystemRes .string.button_update),
     showRetryButton: Boolean = true,
     onRetryClick: () -> Unit = {}
 ) {

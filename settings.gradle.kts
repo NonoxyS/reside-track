@@ -42,8 +42,12 @@ include(
     // Features
     ":shared:feature-rooms:api",
     ":shared:feature-rooms:impl",
+
     ":shared:feature-add-room:api",
     ":shared:feature-add-room:impl",
+
+    ":shared:feature-manage-students:api",
+    ":shared:feature-manage-students:impl",
 
     ":shared:template-module"
 )
