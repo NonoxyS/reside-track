@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.nonoxy.core.design.common.utils.CollectFlow
+import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
 import dev.nonoxy.feature.rooms.presentation.RoomsViewModel
 import dev.nonoxy.feature.rooms.presentation.models.RoomsAction
 import dev.nonoxy.feature.rooms.ui.views.RoomsScreenDetails

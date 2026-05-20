@@ -18,10 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.padding_size_12
-import dev.nonoxy.core.design.theme.padding_size_16
-import dev.nonoxy.core.design.theme.padding_size_8
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.feature.manage_students.presentation.models.EditableStudent
 import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsEvent
 import kotlinx.collections.immutable.ImmutableList

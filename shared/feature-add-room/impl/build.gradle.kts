@@ -20,7 +20,7 @@ commonMainDependencies {
         libs.kotlin.immutableCollections,
         projects.shared.common,
         projects.shared.coreNavigation,
-        projects.shared.designSystem,
+        projects.shared.commonUi,
         projects.shared.featureRooms.api,
         projects.shared.featureAddRoom.api,
     )

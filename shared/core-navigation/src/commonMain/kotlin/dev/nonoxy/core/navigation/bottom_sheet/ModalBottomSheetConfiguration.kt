@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.nonoxy.core.design.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 
 data class ModalBottomSheetConfiguration
 @OptIn(ExperimentalMaterial3Api::class) constructor(

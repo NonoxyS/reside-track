@@ -19,6 +19,6 @@ commonMainDependencies {
         libs.androidx.lifecycle.runtimeCompose,
         libs.compose.multiplatform.material3,
         projects.shared.common,
-        projects.shared.designSystem,
+        projects.shared.commonUi,
     )
 }

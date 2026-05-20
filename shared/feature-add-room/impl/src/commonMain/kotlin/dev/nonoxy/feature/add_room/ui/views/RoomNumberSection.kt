@@ -3,8 +3,8 @@ package dev.nonoxy.feature.add_room.ui.views
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import dev.nonoxy.core.design.common.textfield.ResideTrackTextField
-import dev.nonoxy.core.design.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.feature.add_room.presentation.models.TextFieldState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

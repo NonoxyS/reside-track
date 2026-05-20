@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import kotlinx.collections.immutable.ImmutableSet
 import org.jetbrains.compose.resources.stringResource
 import residetrack.shared.feature_rooms.impl.generated.resources.Res

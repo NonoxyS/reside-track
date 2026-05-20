@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.size_24
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.size_24
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 import residetrack.shared.feature_manage_students.impl.generated.resources.Res

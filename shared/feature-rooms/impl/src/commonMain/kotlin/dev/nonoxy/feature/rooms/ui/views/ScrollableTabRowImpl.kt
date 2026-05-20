@@ -42,7 +42,7 @@ import androidx.compose.ui.util.fastFold
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastForEachIndexed
 import androidx.compose.ui.util.fastMap
-import dev.nonoxy.core.design.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.max

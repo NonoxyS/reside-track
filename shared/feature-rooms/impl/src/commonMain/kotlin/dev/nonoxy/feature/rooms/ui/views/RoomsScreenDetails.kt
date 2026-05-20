@@ -12,8 +12,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.nonoxy.common.utils.orEmptyPersist
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.feature.rooms.presentation.models.RoomsEvent
 import dev.nonoxy.feature.rooms.presentation.models.RoomsViewState
 import dev.nonoxy.feature.rooms.ui.models.UiRoom

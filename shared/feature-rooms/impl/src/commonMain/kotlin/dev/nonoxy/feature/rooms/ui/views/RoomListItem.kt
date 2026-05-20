@@ -19,10 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.util.fastForEach
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.padding_size_12
-import dev.nonoxy.core.design.theme.padding_size_4
-import dev.nonoxy.core.design.theme.padding_size_8
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.feature.rooms.ui.models.UiRoom
 import dev.nonoxy.feature.rooms.ui.models.UiStudent
 import kotlinx.collections.immutable.ImmutableList

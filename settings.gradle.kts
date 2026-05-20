@@ -36,9 +36,13 @@ include(
 
     // Core / Common
     ":shared:common",
+    ":shared:common-resources",
+    ":shared:core-domain",
+    ":shared:core-mvikotlin",
+    ":shared:core-presentation",
     ":shared:core-navigation",
     ":shared:core-database",
-    ":shared:design-system",
+    ":shared:common-ui",
 
     // Features
     ":shared:feature-rooms:api",

@@ -12,11 +12,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.nonoxy.core.design.common.dialog.DialogScaffold
-import dev.nonoxy.core.design.common.snackbar.ResideTrackErrorSnackbar
-import dev.nonoxy.core.design.common.snackbar.ResideTrackSnackbar
-import dev.nonoxy.core.design.common.snackbar.SnackbarType
-import dev.nonoxy.core.design.common.utils.CollectFlow
+import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
+import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
+import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
+import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
+import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
 import dev.nonoxy.feature.add_room.presentation.AddRoomViewModel
 import dev.nonoxy.feature.add_room.presentation.models.AddRoomAction
 import dev.nonoxy.feature.add_room.ui.views.AddRoomScreenContent

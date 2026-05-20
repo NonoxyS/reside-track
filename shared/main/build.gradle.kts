@@ -38,7 +38,7 @@ commonMainDependencies {
         libs.koin.composeMultiplatform.viewmodelNavigation,
         libs.napier,
         projects.shared.common,
-        projects.shared.designSystem,
+        projects.shared.commonUi,
         projects.shared.coreNavigation,
         projects.shared.coreDatabase,
         projects.shared.featureRooms.impl,

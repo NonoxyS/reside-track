@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.padding_size_32
-import dev.nonoxy.core.design.theme.padding_size_8
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import org.jetbrains.compose.resources.stringResource
 import residetrack.shared.feature_manage_students.impl.generated.resources.Res
 import residetrack.shared.feature_manage_students.impl.generated.resources.no_students_added

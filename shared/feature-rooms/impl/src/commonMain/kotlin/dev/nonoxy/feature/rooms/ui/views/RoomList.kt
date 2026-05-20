@@ -9,9 +9,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.nonoxy.core.design.theme.padding_size_16
-import dev.nonoxy.core.design.theme.padding_size_20
-import dev.nonoxy.core.design.theme.padding_size_8
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.feature.rooms.ui.models.UiRoom
 import kotlinx.collections.immutable.ImmutableList
 

@@ -10,7 +10,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.nonoxy.core.design.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

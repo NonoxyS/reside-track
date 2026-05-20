@@ -11,9 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import dev.nonoxy.core.design.common.datepicker.ResideTrackDatePicker
-import dev.nonoxy.core.design.common.textfield.ResideTrackTextField
-import dev.nonoxy.core.design.theme.padding_size_8
+import dev.nonoxy.residetrack.common.ui.common.datepicker.ResideTrackDatePicker
+import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import org.jetbrains.compose.resources.stringResource
 import residetrack.shared.feature_manage_students.impl.generated.resources.Res
 import residetrack.shared.feature_manage_students.impl.generated.resources.cancel

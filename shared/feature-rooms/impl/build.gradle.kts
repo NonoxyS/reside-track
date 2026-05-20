@@ -21,7 +21,7 @@ commonMainDependencies {
         projects.shared.common,
         projects.shared.coreNavigation,
         projects.shared.coreDatabase,
-        projects.shared.designSystem,
+        projects.shared.commonUi,
         projects.shared.featureRooms.api,
     )
 }

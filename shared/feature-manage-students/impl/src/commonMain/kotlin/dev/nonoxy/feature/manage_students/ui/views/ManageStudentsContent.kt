@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.nonoxy.core.design.common.state.ShowStateData
+import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
 import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsEvent
 import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsViewState
 

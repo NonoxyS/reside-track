@@ -10,10 +10,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.nonoxy.core.design.theme.ResideTrackTheme
-import dev.nonoxy.core.design.theme.padding_size_16
-import dev.nonoxy.core.design.theme.padding_size_20
-import dev.nonoxy.core.design.theme.padding_size_24
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_24
 import dev.nonoxy.feature.add_room.presentation.models.AddRoomEvent
 import dev.nonoxy.feature.add_room.presentation.models.AddRoomViewState
 import dev.nonoxy.feature.add_room.presentation.models.TextFieldState
