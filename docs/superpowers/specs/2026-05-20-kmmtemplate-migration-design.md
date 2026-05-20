@@ -154,8 +154,10 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 ## 12. App-модуль
 
 `composeApp` разделяется на:
-- `:android:app` — тонкое Android-приложение: `Activity`, `Application`, `appModule`
-  (платформенный DI), Android-ресурсы манифеста;
+- `:android:app` — Android-приложение **по полному образцу KMMTemplate `android:app`**:
+  product flavors `dev`/`prod`, версионирование `AppVersion`, `buildConfig = true`,
+  подпись через keystore, переименование APK/AAB, классы `Activity` / `Application` /
+  `di/AppModule`;
 - `:shared:main` — `App()` composable, `ResideTrackNavHost`, `Koin.kt` со сборкой всех
   модулей, конфигурация сборки iOS xcFramework.
 
@@ -173,9 +175,21 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 Каждая фаза завершается контрольной точкой: проект собирается, detekt проходит.
 
 1. **build-logic + версии** — `build-logic`, convention plugins, `libs.versions.toml`,
-   бамп версий, новые библиотеки.
-2. **Core-модули** — `core-mvikotlin`, `core-presentation`, `core-domain`, `common`,
-   `common-ui`, `common-resources`, `core-database` под стиль.
+   бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
+   `composeApp` → `:android:app` + `:shared:main` (AGP 9 запрещает совмещённый
+   KMP + application модуль).
+2. **Core-модули + доводка `:android:app`**:
+   - core-модули: `core-mvikotlin`, `core-presentation`, `core-domain`, `common`,
+     `common-ui`, `common-resources`, `core-database` под стиль;
+   - **`:android:app` до полной парности с KMMTemplate `android:app`**: product flavors
+     `dev`/`prod` (`flavorDimensions "environment"`), версионирование через `AppVersion`
+     (скопировать `utils/AppVersion.kt` и `valueSource/GitCommitCountValueSource.kt` в
+     build-logic), `buildFeatures { buildConfig = true }`, подпись через
+     `keystores/debug.keystore.jks` + property `DEBUG_STORE_PASSWORD`/`DEBUG_KEY_ALIAS`,
+     `applicationIdSuffix`/`versionNameSuffix` для debug, переименование APK/AAB через
+     `androidComponents { onVariants }`, классы `Application` + `di/AppModule`.
+     В Фазе 1 `:android:app` создан намеренно тонким (без flavors/AppVersion/keystore) —
+     здесь доводится до эталона.
 3. **Навигация** — `Screen` marker-интерфейс + route-объекты.
 4. **Пилот** — `feature-rooms` → 4 модуля + MVIKotlin.
 5. **Остальные фичи** — `feature-add-room`, `feature-manage-students`.
