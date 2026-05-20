@@ -44,4 +44,4 @@ internal fun EmptyStudentsState(
             textAlign = TextAlign.Center
         )
     }
-} 
+}

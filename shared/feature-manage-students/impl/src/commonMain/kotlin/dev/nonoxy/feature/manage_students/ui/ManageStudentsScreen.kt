@@ -76,4 +76,4 @@ internal fun ManageStudentsScreen(
             onObtainEvent = viewModel::obtainEvent
         )
     }
-} 
+}

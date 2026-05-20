@@ -21,7 +21,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.minus
-import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration.Companion.seconds
 import kotlin.uuid.ExperimentalUuidApi
@@ -65,12 +64,12 @@ internal class ManageStudentsViewModel(
                 event.studentId,
                 event.value
             )
-            
+
             is ManageStudentsEvent.OnCheckInDateMillisChange -> handleCheckInDateMillisChange(
                 event.studentId,
                 event.millis
             )
-            
+
             is ManageStudentsEvent.OnCheckOutDateMillisChange -> handleCheckOutDateMillisChange(
                 event.studentId,
                 event.millis
@@ -114,7 +113,7 @@ internal class ManageStudentsViewModel(
                                     val editableStudents = it.students.map { student ->
                                         val checkInDateString = dateDisplayFormat.format(student.checkInDate)
                                         val checkOutDateString = dateDisplayFormat.format(student.checkOutDate)
-                                        
+
                                         EditableStudent(
                                             id = Uuid.random().toString(),
                                             studentId = student.id,
@@ -160,7 +159,7 @@ internal class ManageStudentsViewModel(
                                     val editableStudents = it.students.map { student ->
                                         val checkInDateString = dateDisplayFormat.format(student.checkInDate)
                                         val checkOutDateString = dateDisplayFormat.format(student.checkOutDate)
-                                        
+
                                         EditableStudent(
                                             id = Uuid.random().toString(),
                                             studentId = student.id,
@@ -461,4 +460,4 @@ internal class ManageStudentsViewModel(
     }
 
     private fun generateUuid(): String = Uuid.random().toString()
-} 
+}

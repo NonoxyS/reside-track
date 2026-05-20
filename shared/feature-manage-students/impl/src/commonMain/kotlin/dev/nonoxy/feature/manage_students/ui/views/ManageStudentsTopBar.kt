@@ -21,12 +21,12 @@ internal fun ManageStudentsTopBar(
     TopAppBar(
         title = {
             Text(
-                text = room?.let { 
+                text = room?.let {
                     stringResource(
-                        Res.string.manage_students_room_title, 
-                        it.floorNumber.toIntOrNull() ?: 0, 
+                        Res.string.manage_students_room_title,
+                        it.floorNumber.toIntOrNull() ?: 0,
                         it.roomNumber.toIntOrNull() ?: 0
-                    ) 
+                    )
                 } ?: stringResource(Res.string.manage_students_title),
                 style = ResideTrackTheme.typography.head3,
                 color = ResideTrackTheme.colors.textPrimary
@@ -37,4 +37,4 @@ internal fun ManageStudentsTopBar(
             titleContentColor = ResideTrackTheme.colors.textPrimary
         )
     )
-} 
+}

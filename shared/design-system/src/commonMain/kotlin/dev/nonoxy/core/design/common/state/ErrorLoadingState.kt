@@ -20,8 +20,8 @@ import residetrack.shared.design_system.generated.resources.error_something_went
 @Composable
 fun ErrorLoadingState(
     modifier: Modifier = Modifier,
-    errorMessage: String = stringResource(DesignSystemRes .string.error_something_went_wrong),
-    buttonText: String = stringResource(DesignSystemRes .string.button_update),
+    errorMessage: String = stringResource(DesignSystemRes.string.error_something_went_wrong),
+    buttonText: String = stringResource(DesignSystemRes.string.button_update),
     showRetryButton: Boolean = true,
     onRetryClick: () -> Unit = {}
 ) {

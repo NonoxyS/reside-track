@@ -22,7 +22,9 @@ internal fun RoomsScreen(
     viewModel.viewAction().CollectFlow { viewAction ->
         when (viewAction) {
             RoomsAction.NavigateToAddRoomScreen -> onNavigateToAddRoomScreen()
-            is RoomsAction.NavigateToManageStudentsExistingRoom -> onNavigateToManageStudentsExistingRoom(viewAction.roomId)
+            is RoomsAction.NavigateToManageStudentsExistingRoom -> onNavigateToManageStudentsExistingRoom(
+                viewAction.roomId
+            )
         }
     }
 

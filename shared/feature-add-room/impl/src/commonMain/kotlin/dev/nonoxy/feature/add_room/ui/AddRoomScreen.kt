@@ -56,7 +56,7 @@ internal fun AddRoomScreen(
                     withDismissAction = true
                 )
             }
-            
+
             AddRoomAction.NavigateToManageStudentsDraftRoom -> {
                 onNavigateToManageStudentsDraftRoom()
             }

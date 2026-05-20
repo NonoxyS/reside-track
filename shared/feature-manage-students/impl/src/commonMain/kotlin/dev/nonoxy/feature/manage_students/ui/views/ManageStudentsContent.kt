@@ -40,4 +40,4 @@ internal fun ManageStudentsContent(
             )
         }
     }
-} 
+}

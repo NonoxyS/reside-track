@@ -1,7 +1,6 @@
 import extensions.commonMainDependencies
 import extensions.implementations
 import plugins.composeBundle
-import plugins.composeDeps
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
@@ -35,4 +34,4 @@ dependencies {
 compose.resources {
     publicResClass = false
     generateResClass = auto
-} 
+}

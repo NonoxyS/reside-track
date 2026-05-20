@@ -27,4 +27,4 @@ val featureManageStudentsImplModule = module {
             stringProvider = get()
         )
     }
-} 
+}

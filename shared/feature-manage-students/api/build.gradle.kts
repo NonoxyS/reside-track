@@ -10,6 +10,5 @@ android {
 }
 
 commonMainDependencies {
-    implementations(
-    )
+    implementations()
 }

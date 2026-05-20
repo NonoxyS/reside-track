@@ -56,4 +56,4 @@ internal fun StudentCardHeader(
             )
         }
     }
-} 
+}

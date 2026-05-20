@@ -28,7 +28,9 @@ internal fun EditableStudentCard(
         colors = CardDefaults.cardColors(
             containerColor = if (student.isNew) {
                 ResideTrackTheme.colors.fillSecondary
-            } else ResideTrackTheme.colors.surface
+            } else {
+                ResideTrackTheme.colors.surface
+            }
         )
     ) {
         Column(
@@ -56,4 +58,4 @@ internal fun EditableStudentCard(
             )
         }
     }
-} 
+}

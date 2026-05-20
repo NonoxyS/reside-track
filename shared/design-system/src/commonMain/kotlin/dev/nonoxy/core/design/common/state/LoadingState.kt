@@ -20,7 +20,7 @@ import residetrack.shared.design_system.generated.resources.loading_data
 @Composable
 fun LoadingState(
     modifier: Modifier = Modifier,
-    loadingMessage: String? = stringResource(DesignSystemRes .string.loading_data)
+    loadingMessage: String? = stringResource(DesignSystemRes.string.loading_data)
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),

@@ -21,4 +21,4 @@ internal sealed class ManageStudentsEvent {
     data object OnSaveAndClose : ManageStudentsEvent()
 
     data object OnClose : ManageStudentsEvent()
-} 
+}

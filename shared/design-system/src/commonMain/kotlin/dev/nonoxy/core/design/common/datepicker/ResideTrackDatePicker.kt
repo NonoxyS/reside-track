@@ -40,13 +40,16 @@ fun ResideTrackDatePicker(
                 shape = ResideTrackTheme.shapes.cornerRadius10
             )
             .clip(ResideTrackTheme.shapes.cornerRadius10)
-            .clickable { onShowDatePickerStateChange(false) }
+            .clickable { onShowDatePickerStateChange(true) }
     ) {
         Text(
             text = value.ifBlank { placeholder },
             style = ResideTrackTheme.typography.paragraph.copy(
-                color = if (value.isBlank()) ResideTrackTheme.colors.textCaption
-                else ResideTrackTheme.colors.textPrimary
+                color = if (value.isBlank()) {
+                    ResideTrackTheme.colors.textCaption
+                } else {
+                    ResideTrackTheme.colors.textPrimary
+                }
             )
         )
     }
@@ -100,4 +103,4 @@ fun ResideTrackDatePicker(
             )
         }
     }
-} 
+}

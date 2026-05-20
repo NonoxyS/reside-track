@@ -21,4 +21,4 @@ internal data class ManageStudentsViewState(
     val errorMessage: String? = null,
     val room: UiRoom? = null,
     val editableStudents: ImmutableList<EditableStudent> = persistentListOf()
-) 
+)
