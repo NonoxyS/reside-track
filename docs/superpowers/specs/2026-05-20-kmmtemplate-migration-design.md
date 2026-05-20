@@ -158,8 +158,9 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
   product flavors `dev`/`prod`, версионирование `AppVersion`, `buildConfig = true`,
   подпись через keystore, переименование APK/AAB, классы `Activity` / `Application` /
   `di/AppModule`;
-- `:shared:main` — `App()` composable, `ResideTrackNavHost`, `Koin.kt` со сборкой всех
-  модулей, конфигурация сборки iOS xcFramework.
+- `:shared:main` — `App()` composable, `ResideTrackNavHost`, агрегация всех
+  common/core/feature-модулей через reflection-хелперы `build.gradle.kts` (как в
+  KMMTemplate `shared:main`), `Koin.kt` с `initKoin`, сборка iOS-фреймворка.
 
 `iosApp/` переключается на потребление `:shared:main`.
 
@@ -178,7 +179,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
    бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
    `composeApp` → `:android:app` + `:shared:main` (AGP 9 запрещает совмещённый
    KMP + application модуль).
-2. **Core-модули + доводка `:android:app`**:
+2. **Core-модули + доводка app-слоя**:
    - core-модули: `core-mvikotlin`, `core-presentation`, `core-domain`, `common`,
      `common-ui`, `common-resources`, `core-database` под стиль;
    - **`:android:app` до полной парности с KMMTemplate `android:app`**: product flavors
@@ -189,7 +190,13 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
      `applicationIdSuffix`/`versionNameSuffix` для debug, переименование APK/AAB через
      `androidComponents { onVariants }`, классы `Application` + `di/AppModule`.
      В Фазе 1 `:android:app` создан намеренно тонким (без flavors/AppVersion/keystore) —
-     здесь доводится до эталона.
+     здесь доводится до эталона;
+   - **`:shared:main` до парности с KMMTemplate**: агрегация common/core/feature-модулей
+     через reflection-хелперы в `build.gradle.kts` вместо явного списка зависимостей
+     (в Фазе 1 оставлен явный список);
+   - **Koin до паттерна KMMTemplate**: `initKoin(appDeclaration)` в
+     `:shared:main/di/Koin.kt` + класс `Application` (Android) вместо
+     `KoinMultiplatformApplication` внутри `App()` (в Фазе 1 оставлен старый паттерн).
 3. **Навигация** — `Screen` marker-интерфейс + route-объекты.
 4. **Пилот** — `feature-rooms` → 4 модуля + MVIKotlin.
 5. **Остальные фичи** — `feature-add-room`, `feature-manage-students`.
