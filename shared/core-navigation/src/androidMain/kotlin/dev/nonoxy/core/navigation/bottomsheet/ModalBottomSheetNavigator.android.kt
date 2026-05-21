@@ -1,7 +1,7 @@
 package dev.nonoxy.core.navigation.bottomsheet
 
+import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.util.fastForEach
 import androidx.navigation.FloatingWindow
@@ -9,16 +9,17 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetNavigator.Destination
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
- * Navigator that navigates through [Composable]s that will be hosted within a [ModalBottomSheet]. Every
+ * Navigator that navigates through [Composable]s
+ * that will be hosted within a [androidx.compose.material3.ModalBottomSheet]. Every
  * destination using this Navigator must set a valid [Composable] by setting it directly on an
  * instantiated [Destination] or calling [bottomSheet].
  */
+@SuppressLint("RestrictedApi")
 @Navigator.Name(ModalBottomSheetNavigator.NAME)
-actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destination>() {
+actual class ModalBottomSheetNavigator actual constructor() : Navigator<ModalBottomSheetNavigator.Destination>(NAME) {
     /** Get the back stack from the [state]. */
     internal actual val backStack
         get() = when {
@@ -66,7 +67,7 @@ actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destinat
         internal actual val content: @Composable (NavBackStackEntry) -> Unit,
     ) : NavDestination(navigator), FloatingWindow
 
-    public actual companion object {
-        internal actual const val NAME = "modalBottomSheet"
+    actual companion object {
+        actual const val NAME = "modalBottomSheet"
     }
 }

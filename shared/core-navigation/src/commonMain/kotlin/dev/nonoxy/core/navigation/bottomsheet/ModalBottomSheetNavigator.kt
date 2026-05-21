@@ -9,7 +9,6 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetNavigator.Destination
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
@@ -21,7 +20,7 @@ fun rememberModalBottomSheetNavigator(): ModalBottomSheetNavigator =
  * destination using this Navigator must set a valid [Composable] by setting it directly on an
  * instantiated [Destination] or calling [bottomSheet].
  */
-expect class ModalBottomSheetNavigator() : Navigator<Destination> {
+expect class ModalBottomSheetNavigator() : Navigator<ModalBottomSheetNavigator.Destination> {
 
     /** Get the back stack from the [state]. */
     internal val backStack: StateFlow<List<NavBackStackEntry>>
@@ -56,6 +55,6 @@ expect class ModalBottomSheetNavigator() : Navigator<Destination> {
     }
 
     companion object {
-        internal val NAME: String
+        val NAME: String
     }
 }
