@@ -21,6 +21,9 @@ commonMainDependencies {
 
     apis(
         libs.compose.multiplatform.navigation,
+        // Explicit (not present in KMMTemplate): pins the renamed Compose 1.10.1 shared-transition
+        // API for the Android target. See NavigationSharedTransitionUtils.kt for the full rationale.
+        libs.compose.multiplatform.animation,
         libs.compose.multiplatform.backhandler,
     )
 }
