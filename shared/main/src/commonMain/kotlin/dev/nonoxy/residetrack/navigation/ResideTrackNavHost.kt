@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import dev.nonoxy.core.navigation.Screen
+import dev.nonoxy.core.navigation.RoomsRoute
 import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetLayout
 import dev.nonoxy.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
 import dev.nonoxy.feature.add_room.presentation.navigation.bottomSheetAddRoomScreen
@@ -28,7 +28,7 @@ internal fun ResideTrackNavHost(
         NavHost(
             modifier = modifier,
             navController = navController,
-            startDestination = Screen.Rooms
+            startDestination = RoomsRoute
         ) {
             composableRoomsScreen(
                 onNavigateToAddRoomScreen = navController::navigateToAddRoomScreen,

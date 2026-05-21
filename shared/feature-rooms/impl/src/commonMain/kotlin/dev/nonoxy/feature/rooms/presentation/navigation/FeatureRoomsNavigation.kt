@@ -3,19 +3,19 @@ package dev.nonoxy.feature.rooms.presentation.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.nonoxy.core.navigation.Screen
+import dev.nonoxy.core.navigation.RoomsRoute
 import dev.nonoxy.core.navigation.navigateOnResumed
 import dev.nonoxy.feature.rooms.ui.RoomsScreen
 
 fun NavController.navigateToRoomsScreen() {
-    navigateOnResumed<Screen.Rooms>()
+    navigateOnResumed(RoomsRoute)
 }
 
 fun NavGraphBuilder.composableRoomsScreen(
     onNavigateToAddRoomScreen: () -> Unit,
     onNavigateToManageStudentsExistingRoom: (String) -> Unit
 ) {
-    composable<Screen.Rooms> {
+    composable<RoomsRoute> {
         RoomsScreen(
             onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
             onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom

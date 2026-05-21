@@ -7,7 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.toRoute
-import dev.nonoxy.core.navigation.Screen
+import dev.nonoxy.core.navigation.ManageStudentsDraftRoomRoute
+import dev.nonoxy.core.navigation.ManageStudentsExistingRoomRoute
 import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetConfiguration
 import dev.nonoxy.core.navigation.bottomsheet.bottomSheet
 import dev.nonoxy.feature.manage_students.models.ManageStudentsMode
@@ -16,13 +17,13 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 fun NavController.navigateToManageStudentsExistingRoom(roomId: String) {
-    navigate(Screen.ManageStudentsExistingRoom(roomId)) {
+    navigate(ManageStudentsExistingRoomRoute(roomId)) {
         launchSingleTop = true
     }
 }
 
 fun NavController.navigateToManageStudentsDraftRoom() {
-    navigate(Screen.ManageStudentsDraftRoom) {
+    navigate(ManageStudentsDraftRoomRoute) {
         launchSingleTop = true
     }
 }
@@ -31,12 +32,12 @@ fun NavController.navigateToManageStudentsDraftRoom() {
 fun NavGraphBuilder.bottomSheetManageStudentsExistingRoom(
     onNavigateBack: () -> Unit,
 ) {
-    bottomSheet<Screen.ManageStudentsExistingRoom>(
+    bottomSheet<ManageStudentsExistingRoomRoute>(
         configuration = ModalBottomSheetConfiguration(
             modifier = Modifier.statusBarsPadding().fillMaxWidth()
         )
     ) { backStackEntry ->
-        val roomId = backStackEntry.toRoute<Screen.ManageStudentsExistingRoom>().roomId
+        val roomId = backStackEntry.toRoute<ManageStudentsExistingRoomRoute>().roomId
 
         ManageStudentsScreen(
             onNavigateBack = onNavigateBack,
@@ -49,7 +50,7 @@ fun NavGraphBuilder.bottomSheetManageStudentsExistingRoom(
 fun NavGraphBuilder.bottomSheetManageStudentsDraftRoom(
     onNavigateBack: () -> Unit,
 ) {
-    bottomSheet<Screen.ManageStudentsDraftRoom>(
+    bottomSheet<ManageStudentsDraftRoomRoute>(
         configuration = ModalBottomSheetConfiguration(
             modifier = Modifier.statusBarsPadding().fillMaxWidth()
         )
