@@ -42,7 +42,6 @@ commonMainDependencies {
         libs.androidx.lifecycle.viewmodel,
         libs.androidx.lifecycle.runtimeCompose,
         libs.compose.multiplatform.navigation,
-        libs.compose.navigation.material,
         libs.koin.composeMultiplatform,
         libs.koin.composeMultiplatform.viewmodelNavigation,
     )
