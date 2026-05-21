@@ -1,4 +1,4 @@
-package dev.nonoxy.core.navigation.bottom_sheet
+package dev.nonoxy.core.navigation.bottomsheet
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.material3.ExperimentalMaterial3Api

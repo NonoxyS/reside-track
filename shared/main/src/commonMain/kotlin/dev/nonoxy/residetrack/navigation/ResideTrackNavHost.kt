@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dev.nonoxy.core.navigation.Screen
-import dev.nonoxy.core.navigation.bottom_sheet.ModalBottomSheetLayout
-import dev.nonoxy.core.navigation.bottom_sheet.rememberModalBottomSheetNavigator
+import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetLayout
+import dev.nonoxy.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
 import dev.nonoxy.feature.add_room.presentation.navigation.bottomSheetAddRoomScreen
 import dev.nonoxy.feature.add_room.presentation.navigation.navigateToAddRoomScreen
 import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetManageStudentsExistingRoom

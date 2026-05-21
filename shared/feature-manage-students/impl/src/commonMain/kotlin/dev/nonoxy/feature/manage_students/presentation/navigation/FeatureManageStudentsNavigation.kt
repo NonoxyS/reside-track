@@ -8,8 +8,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.toRoute
 import dev.nonoxy.core.navigation.Screen
-import dev.nonoxy.core.navigation.bottom_sheet.ModalBottomSheetConfiguration
-import dev.nonoxy.core.navigation.bottom_sheet.bottomSheet
+import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetConfiguration
+import dev.nonoxy.core.navigation.bottomsheet.bottomSheet
 import dev.nonoxy.feature.manage_students.models.ManageStudentsMode
 import dev.nonoxy.feature.manage_students.ui.ManageStudentsScreen
 import org.koin.compose.viewmodel.koinViewModel

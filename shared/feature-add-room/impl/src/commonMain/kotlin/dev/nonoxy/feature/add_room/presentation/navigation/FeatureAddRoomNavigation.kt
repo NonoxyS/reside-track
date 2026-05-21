@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import dev.nonoxy.core.navigation.Screen
-import dev.nonoxy.core.navigation.bottom_sheet.ModalBottomSheetConfiguration
-import dev.nonoxy.core.navigation.bottom_sheet.bottomSheet
+import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetConfiguration
+import dev.nonoxy.core.navigation.bottomsheet.bottomSheet
 import dev.nonoxy.feature.add_room.ui.AddRoomScreen
 
 fun NavController.navigateToAddRoomScreen() {

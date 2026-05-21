@@ -1,4 +1,4 @@
-package dev.nonoxy.core.navigation.bottom_sheet
+package dev.nonoxy.core.navigation.bottomsheet
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -9,7 +9,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import dev.nonoxy.core.navigation.bottom_sheet.ModalBottomSheetNavigator.Destination
+import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetNavigator.Destination
 import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
@@ -17,7 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
  * destination using this Navigator must set a valid [Composable] by setting it directly on an
  * instantiated [Destination] or calling [bottomSheet].
  */
-actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destination>(NAME) {
+@Navigator.Name(ModalBottomSheetNavigator.NAME)
+actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destination>() {
     /** Get the back stack from the [state]. */
     internal actual val backStack
         get() = when {
@@ -46,7 +47,7 @@ actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destinat
         navOptions: NavOptions?,
         navigatorExtras: Extras?,
     ) {
-        entries.fastForEach { entry -> state.push(entry) }
+        entries.fastForEach { entry -> state.pushWithTransition(entry) }
     }
 
     @ExperimentalMaterial3Api
@@ -57,6 +58,7 @@ actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destinat
     }
 
     /** NavDestination specific to [ModalBottomSheetNavigator] */
+    @NavDestination.ClassType(Composable::class)
     actual class Destination @ExperimentalMaterial3Api
     actual constructor(
         navigator: ModalBottomSheetNavigator,
@@ -64,7 +66,7 @@ actual class ModalBottomSheetNavigator actual constructor() : Navigator<Destinat
         internal actual val content: @Composable (NavBackStackEntry) -> Unit,
     ) : NavDestination(navigator), FloatingWindow
 
-    actual companion object {
+    public actual companion object {
         internal actual const val NAME = "modalBottomSheet"
     }
 }

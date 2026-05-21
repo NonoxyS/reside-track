@@ -1,4 +1,4 @@
-package dev.nonoxy.core.navigation.bottom_sheet
+package dev.nonoxy.core.navigation.bottomsheet
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ContentTransform

@@ -1,4 +1,4 @@
-package dev.nonoxy.core.navigation.bottom_sheet
+package dev.nonoxy.core.navigation.bottomsheet
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -9,7 +9,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import dev.nonoxy.core.navigation.bottom_sheet.ModalBottomSheetNavigator.Destination
+import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetNavigator.Destination
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
