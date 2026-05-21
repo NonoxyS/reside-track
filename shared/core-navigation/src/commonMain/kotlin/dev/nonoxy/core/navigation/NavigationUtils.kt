@@ -2,6 +2,8 @@ package dev.nonoxy.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
@@ -15,14 +17,8 @@ const val DEFAULT_RESULT_KEY = "RESULT"
 val NavController.currentRoute: String?
     get() = currentDestination?.route
 
-@Suppress("ComposableParametersOrdering")
-@Composable
-expect fun BackHandler(enabled: Boolean = true, onBack: () -> Unit)
-
 fun NavController.popBackStackOnResumed() {
-    runOnResumed {
-        popBackStack()
-    }
+    runOnResumed(::popBackStack)
 }
 
 fun NavController.runOnResumed(block: () -> Unit) {
@@ -111,12 +107,13 @@ fun <T> NavController.LaunchedParamsEffect(
     onResult: (T) -> Unit = {}
 ) {
     val params = get<T>(key)
+    val currentOnResult by rememberUpdatedState(onResult)
 
     LaunchedEffect(key1 = params) {
         if (params != null) {
             if (clear) clear<T>(key)
 
-            onResult(params)
+            currentOnResult(params)
         }
     }
 }
