@@ -5,6 +5,7 @@ import dev.nonoxy.core.database.di.coreDatabaseModule
 import dev.nonoxy.feature.add_room.di.featureAddRoomImplModule
 import dev.nonoxy.feature.manage_students.di.featureManageStudentsImplModule
 import dev.nonoxy.feature.rooms.di.featureRoomsImplModule
+import dev.nonoxy.feature.rooms.presentation.di.featureRoomsPresentationModule
 import dev.nonoxy.residetrack.core.domain.di.coreDomainModule
 import dev.nonoxy.residetrack.core.mvikotlin.di.coreMVIKotlinModule
 import io.github.aakira.napier.Napier
@@ -23,6 +24,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
             coreDatabaseModule,
 
             featureRoomsImplModule,
+            featureRoomsPresentationModule,
+
             featureAddRoomImplModule,
             featureManageStudentsImplModule,
         )

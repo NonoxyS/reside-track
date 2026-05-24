@@ -9,12 +9,6 @@ import dev.nonoxy.feature.rooms.data.mappers.RoomMapperImpl
 import dev.nonoxy.feature.rooms.data.mappers.StudentMapper
 import dev.nonoxy.feature.rooms.data.mappers.StudentMapperImpl
 import dev.nonoxy.feature.rooms.impl.domain.RoomsStoreFactory
-import dev.nonoxy.feature.rooms.presentation.OldRoomsViewModel
-import dev.nonoxy.feature.rooms.presentation.mappers.UiRoomMapper
-import dev.nonoxy.feature.rooms.presentation.mappers.UiRoomMapperImpl
-import dev.nonoxy.feature.rooms.presentation.mappers.UiStudentMapper
-import dev.nonoxy.feature.rooms.presentation.mappers.UiStudentMapperImpl
-import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 val featureRoomsImplModule = module {
@@ -41,16 +35,4 @@ val featureRoomsImplModule = module {
             roomsRepository = get(),
         ).create()
     }
-
-    // TODO Task 7: remove — OldRoomsViewModel is the only consumer of these mapper bindings.
-    //  After OldRoomsViewModel is deleted, mappers come exclusively from featureRoomsPresentationModule.
-    factory<UiStudentMapper> {
-        UiStudentMapperImpl()
-    }
-
-    factory<UiRoomMapper> {
-        UiRoomMapperImpl(studentMapper = get())
-    }
-
-    viewModelOf(::OldRoomsViewModel)
 }
