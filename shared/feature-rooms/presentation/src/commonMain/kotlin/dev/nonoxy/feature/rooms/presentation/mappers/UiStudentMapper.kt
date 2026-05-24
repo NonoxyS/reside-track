@@ -1,12 +1,14 @@
-package dev.nonoxy.feature.rooms.ui.mappers
+package dev.nonoxy.feature.rooms.presentation.mappers
 
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.feature.rooms.api.models.Student
-import dev.nonoxy.feature.rooms.ui.models.UiStudent
+import dev.nonoxy.feature.rooms.presentation.models.UiStudent
 
-internal interface UiStudentMapper : Mapper<Student, UiStudent>
+// TODO Task 7: restore `internal` on both interface and Impl — currently public so OldRoomsViewModel
+//  in :shared:feature-rooms:impl can construct UiStudentMapperImpl via Koin DSL `::Impl` constructor ref.
+interface UiStudentMapper : Mapper<Student, UiStudent>
 
-internal class UiStudentMapperImpl : UiStudentMapper {
+class UiStudentMapperImpl : UiStudentMapper {
 
     override fun map(item: Student): UiStudent = with(item) {
         UiStudent(

@@ -1,13 +1,15 @@
-package dev.nonoxy.feature.rooms.ui.mappers
+package dev.nonoxy.feature.rooms.presentation.mappers
 
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.feature.rooms.api.models.Room
-import dev.nonoxy.feature.rooms.ui.models.UiRoom
+import dev.nonoxy.feature.rooms.presentation.models.UiRoom
 import kotlinx.collections.immutable.toImmutableList
 
-internal interface UiRoomMapper : Mapper<Room, UiRoom>
+// TODO Task 7: restore `internal` on both interface and Impl — currently public so OldRoomsViewModel
+//  in :shared:feature-rooms:impl can construct UiRoomMapperImpl via Koin DSL `::Impl` constructor ref.
+interface UiRoomMapper : Mapper<Room, UiRoom>
 
-internal class UiRoomMapperImpl(
+class UiRoomMapperImpl(
     private val studentMapper: UiStudentMapper
 ) : UiRoomMapper {
 

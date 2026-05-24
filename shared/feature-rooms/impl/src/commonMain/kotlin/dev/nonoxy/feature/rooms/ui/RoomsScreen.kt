@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import dev.nonoxy.feature.rooms.presentation.RoomsViewModel
+import dev.nonoxy.feature.rooms.presentation.OldRoomsViewModel
 import dev.nonoxy.feature.rooms.presentation.models.RoomsAction
 import dev.nonoxy.feature.rooms.ui.views.RoomsScreenDetails
 import org.koin.compose.viewmodel.koinViewModel
@@ -15,7 +15,7 @@ import org.koin.compose.viewmodel.koinViewModel
 internal fun RoomsScreen(
     onNavigateToAddRoomScreen: () -> Unit,
     onNavigateToManageStudentsExistingRoom: (String) -> Unit,
-    viewModel: RoomsViewModel = koinViewModel()
+    viewModel: OldRoomsViewModel = koinViewModel()
 ) {
     val viewState by viewModel.viewState().collectAsStateWithLifecycle()
 

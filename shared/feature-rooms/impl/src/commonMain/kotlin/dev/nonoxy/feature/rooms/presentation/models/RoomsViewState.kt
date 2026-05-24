@@ -1,6 +1,5 @@
 package dev.nonoxy.feature.rooms.presentation.models
 
-import dev.nonoxy.feature.rooms.ui.models.UiRoom
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf

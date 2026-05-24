@@ -23,8 +23,8 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import dev.nonoxy.feature.rooms.ui.models.UiRoom
-import dev.nonoxy.feature.rooms.ui.models.UiStudent
+import dev.nonoxy.feature.rooms.presentation.models.UiRoom
+import dev.nonoxy.feature.rooms.presentation.models.UiStudent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource

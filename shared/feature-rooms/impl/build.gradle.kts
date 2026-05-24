@@ -23,6 +23,7 @@ commonMainDependencies {
         projects.shared.coreDatabase,
         projects.shared.commonUi,
         projects.shared.featureRooms.api,
+        projects.shared.featureRooms.presentation, // временно, удалится в Task 7 вместе со старым кодом
         // Temporary: MVIKotlin deps for domain layer (will be removed in Task 8
         // when impl migrates to kmpFeatureSetup which provides them via core-mvikotlin)
         projects.shared.coreMvikotlin,

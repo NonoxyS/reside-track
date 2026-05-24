@@ -16,8 +16,8 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.feature.rooms.presentation.models.RoomsEvent
 import dev.nonoxy.feature.rooms.presentation.models.RoomsViewState
-import dev.nonoxy.feature.rooms.ui.models.UiRoom
-import dev.nonoxy.feature.rooms.ui.models.UiStudent
+import dev.nonoxy.feature.rooms.presentation.models.UiRoom
+import dev.nonoxy.feature.rooms.presentation.models.UiStudent
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
