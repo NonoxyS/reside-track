@@ -29,12 +29,12 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_rooms.impl.generated.resources.Res
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_check_in
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_check_out
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_floor
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_room
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_stream
+import residetrack.shared.feature_rooms.ui.generated.resources.Res
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_check_in
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_check_out
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_floor
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_room
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_stream
 
 @Composable
 internal fun RoomListItem(

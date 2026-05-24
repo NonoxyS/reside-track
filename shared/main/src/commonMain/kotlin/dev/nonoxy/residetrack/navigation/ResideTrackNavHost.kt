@@ -14,7 +14,7 @@ import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetMan
 import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetManageStudentsDraftRoom
 import dev.nonoxy.feature.manage_students.presentation.navigation.navigateToManageStudentsExistingRoom
 import dev.nonoxy.feature.manage_students.presentation.navigation.navigateToManageStudentsDraftRoom
-import dev.nonoxy.feature.rooms.presentation.navigation.composableRoomsScreen
+import dev.nonoxy.feature.rooms.ui.api.composableRoomsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

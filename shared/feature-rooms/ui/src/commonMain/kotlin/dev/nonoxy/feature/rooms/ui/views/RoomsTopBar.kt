@@ -14,10 +14,10 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_rooms.impl.generated.resources.Res
-import residetrack.shared.feature_rooms.impl.generated.resources.ic_add
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_available_places
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_total_places
+import residetrack.shared.feature_rooms.ui.generated.resources.Res
+import residetrack.shared.feature_rooms.ui.generated.resources.ic_add
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_available_places
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_total_places
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

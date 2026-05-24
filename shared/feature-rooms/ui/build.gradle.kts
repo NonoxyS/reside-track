@@ -1,4 +1,6 @@
 import extensions.androidLibraryConfig
+import extensions.commonMainDependencies
+import extensions.implementations
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
@@ -7,4 +9,11 @@ plugins {
 
 androidLibraryConfig {
     namespace = "dev.nonoxy.feature.rooms.ui"
+}
+
+commonMainDependencies {
+    implementations(
+        libs.compose.multiplatform.resources,
+        libs.kotlin.immutableCollections,
+    )
 }

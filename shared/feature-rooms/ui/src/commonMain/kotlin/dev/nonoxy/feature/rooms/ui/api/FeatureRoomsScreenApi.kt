@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.rooms.presentation.navigation
+package dev.nonoxy.feature.rooms.ui.api
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

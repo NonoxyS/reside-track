@@ -12,12 +12,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.nonoxy.common.utils.orEmptyPersist
+import dev.nonoxy.feature.rooms.presentation.models.UiRoom
+import dev.nonoxy.feature.rooms.presentation.models.UiRoomsState
+import dev.nonoxy.feature.rooms.presentation.models.UiStudent
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import dev.nonoxy.feature.rooms.presentation.models.RoomsEvent
-import dev.nonoxy.feature.rooms.presentation.models.RoomsViewState
-import dev.nonoxy.feature.rooms.presentation.models.UiRoom
-import dev.nonoxy.feature.rooms.presentation.models.UiStudent
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
@@ -26,8 +25,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun RoomsScreenDetails(
-    state: RoomsViewState,
-    onObtainEvent: (RoomsEvent) -> Unit,
+    state: UiRoomsState,
+    onRoomClick: (Long) -> Unit,
+    onAddRoomClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState { state.roomsOnFloor.keys.size }
@@ -36,9 +36,9 @@ internal fun RoomsScreenDetails(
     Column(modifier = modifier) {
         RoomsTopBar(
             modifier = Modifier.padding(horizontal = padding_size_16),
-            totalPlaces = state.selectedFloorTotalBeds,
-            availablePlaces = state.selectedFloorAvailableBeds,
-            onAddRoomClick = { onObtainEvent(RoomsEvent.OnAddRoomClick) }
+            totalPlaces = 0,
+            availablePlaces = 0,
+            onAddRoomClick = onAddRoomClick
         )
 
         if (state.roomsOnFloor.keys.size > 1) {
@@ -61,9 +61,7 @@ internal fun RoomsScreenDetails(
                 rooms = state.roomsOnFloor.get(
                     key = state.roomsOnFloor.keys.elementAtOrNull(index = page)
                 ).orEmptyPersist(),
-                onRoomClick = { roomId ->
-                    onObtainEvent(RoomsEvent.OnRoomClick(roomId = roomId))
-                }
+                onRoomClick = onRoomClick
             )
         }
     }
@@ -74,7 +72,7 @@ internal fun RoomsScreenDetails(
 private fun Preview() {
     ResideTrackTheme {
         RoomsScreenDetails(
-            state = RoomsViewState.Initial.copy(
+            state = UiRoomsState(
                 roomsOnFloor = persistentMapOf(
                     3 to persistentListOf(
                         UiRoom(
@@ -100,52 +98,18 @@ private fun Preview() {
                     ),
                     4 to persistentListOf(
                         UiRoom(
-                            id = 1,
-                            floorNumber = "3",
-                            roomNumber = "329",
-                            bedsCount = "5",
-                            students = persistentListOf(
-                                UiStudent(
-                                    streamNumber = "1234",
-                                    checkInDate = "12-03-2024",
-                                    checkOutDate = "31-03-2024",
-                                    isCheckOutDateNearOrExpired = false
-                                ),
-                                UiStudent(
-                                    streamNumber = "5646",
-                                    checkInDate = "12-03-2024",
-                                    checkOutDate = "15-03-2024",
-                                    isCheckOutDateNearOrExpired = true
-                                ),
-                            )
+                            id = 2,
+                            floorNumber = "4",
+                            roomNumber = "401",
+                            bedsCount = "3",
+                            students = persistentListOf()
                         ),
                     )
-                ),
-                allRooms = persistentListOf(
-                    UiRoom(
-                        id = 1,
-                        floorNumber = "3",
-                        roomNumber = "329",
-                        bedsCount = "5",
-                        students = persistentListOf(
-                            UiStudent(
-                                streamNumber = "1234",
-                                checkInDate = "12-03-2024",
-                                checkOutDate = "31-03-2024",
-                                isCheckOutDateNearOrExpired = false
-                            ),
-                            UiStudent(
-                                streamNumber = "5646",
-                                checkInDate = "12-03-2024",
-                                checkOutDate = "15-03-2024",
-                                isCheckOutDateNearOrExpired = true
-                            ),
-                        )
-                    ),
                 )
             ),
-            modifier = Modifier.fillMaxSize(),
-            onObtainEvent = {}
+            onRoomClick = {},
+            onAddRoomClick = {},
+            modifier = Modifier.fillMaxSize()
         )
     }
 }

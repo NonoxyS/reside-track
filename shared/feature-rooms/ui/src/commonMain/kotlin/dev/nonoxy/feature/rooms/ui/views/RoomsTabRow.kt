@@ -14,8 +14,8 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import kotlinx.collections.immutable.ImmutableSet
 import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_rooms.impl.generated.resources.Res
-import residetrack.shared.feature_rooms.impl.generated.resources.rooms_floor
+import residetrack.shared.feature_rooms.ui.generated.resources.Res
+import residetrack.shared.feature_rooms.ui.generated.resources.rooms_floor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
