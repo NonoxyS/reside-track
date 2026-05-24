@@ -5,7 +5,7 @@ import dev.nonoxy.common.presentation.BaseViewModel
 import dev.nonoxy.feature.rooms.presentation.models.RoomsAction
 import dev.nonoxy.feature.rooms.presentation.models.RoomsEvent
 import dev.nonoxy.feature.rooms.presentation.models.RoomsViewState
-import dev.nonoxy.feature.rooms.repository.RoomsRepository
+import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import dev.nonoxy.feature.rooms.ui.mappers.UiRoomMapper
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap

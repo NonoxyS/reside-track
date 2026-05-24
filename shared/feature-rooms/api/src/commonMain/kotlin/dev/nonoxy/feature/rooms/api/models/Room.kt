@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.rooms.models
+package dev.nonoxy.feature.rooms.api.models
 
 data class Room(
     val id: Long = 0,

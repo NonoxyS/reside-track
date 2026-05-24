@@ -1,7 +1,7 @@
 package dev.nonoxy.feature.rooms.ui.mappers
 
 import dev.nonoxy.common.utils.mapper.Mapper
-import dev.nonoxy.feature.rooms.models.Room
+import dev.nonoxy.feature.rooms.api.models.Room
 import dev.nonoxy.feature.rooms.ui.models.UiRoom
 import kotlinx.collections.immutable.toImmutableList
 

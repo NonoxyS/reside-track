@@ -2,7 +2,7 @@ package dev.nonoxy.feature.manage_students.ui.mappers
 
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.feature.manage_students.ui.models.UiRoom
-import dev.nonoxy.feature.rooms.models.Room
+import dev.nonoxy.feature.rooms.api.models.Room
 import kotlinx.collections.immutable.toImmutableList
 
 internal interface UiRoomMapper : Mapper<Room, UiRoom>

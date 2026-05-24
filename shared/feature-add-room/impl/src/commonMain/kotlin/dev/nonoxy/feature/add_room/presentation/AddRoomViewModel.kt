@@ -10,8 +10,8 @@ import dev.nonoxy.feature.add_room.presentation.models.AddRoomViewState
 import dev.nonoxy.feature.add_room.presentation.models.BedsSelectionState
 import dev.nonoxy.feature.add_room.presentation.models.FloorSelectionState
 import dev.nonoxy.feature.add_room.presentation.models.TextFieldState
-import dev.nonoxy.feature.rooms.models.Room
-import dev.nonoxy.feature.rooms.repository.RoomsRepository
+import dev.nonoxy.feature.rooms.api.models.Room
+import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString

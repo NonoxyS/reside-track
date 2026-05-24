@@ -6,7 +6,7 @@ import dev.nonoxy.feature.rooms.data.mappers.RoomMapperImpl
 import dev.nonoxy.feature.rooms.data.mappers.StudentMapper
 import dev.nonoxy.feature.rooms.data.mappers.StudentMapperImpl
 import dev.nonoxy.feature.rooms.presentation.RoomsViewModel
-import dev.nonoxy.feature.rooms.repository.RoomsRepository
+import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import dev.nonoxy.feature.rooms.ui.mappers.UiRoomMapper
 import dev.nonoxy.feature.rooms.ui.mappers.UiRoomMapperImpl
 import dev.nonoxy.feature.rooms.ui.mappers.UiStudentMapper

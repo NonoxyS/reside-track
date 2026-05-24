@@ -1,6 +1,6 @@
-package dev.nonoxy.feature.rooms.repository
+package dev.nonoxy.feature.rooms.api.repository
 
-import dev.nonoxy.feature.rooms.models.Room
+import dev.nonoxy.feature.rooms.api.models.Room
 import kotlinx.coroutines.flow.Flow
 
 interface RoomsRepository {

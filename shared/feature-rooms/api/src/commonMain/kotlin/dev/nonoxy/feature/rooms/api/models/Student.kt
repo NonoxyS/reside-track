@@ -1,8 +1,8 @@
-package dev.nonoxy.feature.rooms.models
+package dev.nonoxy.feature.rooms.api.models
 
 import kotlinx.datetime.LocalDate
 
-class Student(
+data class Student(
     val id: Long,
     val streamNumber: Int,
     val checkInDate: LocalDate,

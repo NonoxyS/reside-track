@@ -2,7 +2,7 @@ package dev.nonoxy.feature.manage_students.ui.mappers
 
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.feature.manage_students.ui.models.UiStudent
-import dev.nonoxy.feature.rooms.models.Student
+import dev.nonoxy.feature.rooms.api.models.Student
 
 internal interface UiStudentMapper : Mapper<Student, UiStudent>
 

@@ -11,8 +11,8 @@ import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsView
 import dev.nonoxy.feature.manage_students.ui.mappers.UiRoomMapper
 import dev.nonoxy.feature.manage_students.ui.mappers.UiStudentMapper
 import dev.nonoxy.feature.manage_students.utils.StringProvider
-import dev.nonoxy.feature.rooms.models.Student
-import dev.nonoxy.feature.rooms.repository.RoomsRepository
+import dev.nonoxy.feature.rooms.api.models.Student
+import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import kotlin.time.Instant

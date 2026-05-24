@@ -3,7 +3,7 @@ package dev.nonoxy.feature.rooms.data.mappers
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.common.utils.toLocalDate
 import dev.nonoxy.core.database.entities.StudentEntity
-import dev.nonoxy.feature.rooms.models.Student
+import dev.nonoxy.feature.rooms.api.models.Student
 import kotlin.time.Clock
 import kotlinx.datetime.minus
 

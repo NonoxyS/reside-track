@@ -3,7 +3,7 @@ package dev.nonoxy.feature.rooms.data.mappers
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.core.database.entities.RoomEntity
 import dev.nonoxy.core.database.relations.RoomWithStudents
-import dev.nonoxy.feature.rooms.models.Room
+import dev.nonoxy.feature.rooms.api.models.Room
 
 internal interface RoomMapper : Mapper<RoomWithStudents, Room> {
     fun map(item: Room): RoomEntity
