@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.rooms.data.mappers
+package dev.nonoxy.feature.rooms.impl.data.mappers
 
 import dev.nonoxy.common.utils.mapper.Mapper
 import dev.nonoxy.core.database.entities.RoomEntity

@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.rooms.data
+package dev.nonoxy.feature.rooms.impl.data
 
 import dev.nonoxy.common.utils.coRunCatching
 import dev.nonoxy.common.utils.wrapFailure
@@ -6,7 +6,7 @@ import dev.nonoxy.common.utils.wrapSuccess
 import dev.nonoxy.core.database.dao.RoomDao
 import dev.nonoxy.core.database.entities.RoomEntity
 import dev.nonoxy.core.database.relations.RoomWithStudents
-import dev.nonoxy.feature.rooms.data.mappers.RoomMapper
+import dev.nonoxy.feature.rooms.impl.data.mappers.RoomMapper
 import dev.nonoxy.feature.rooms.api.models.Room
 import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import io.github.aakira.napier.Napier

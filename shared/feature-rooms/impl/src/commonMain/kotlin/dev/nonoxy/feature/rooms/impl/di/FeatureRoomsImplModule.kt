@@ -1,13 +1,13 @@
-package dev.nonoxy.feature.rooms.di
+package dev.nonoxy.feature.rooms.impl.di
 
 import dev.nonoxy.common.coroutines.CoroutineDispatchers
 import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import dev.nonoxy.feature.rooms.api.store.RoomsStore
-import dev.nonoxy.feature.rooms.data.RoomsRepositoryImpl
-import dev.nonoxy.feature.rooms.data.mappers.RoomMapper
-import dev.nonoxy.feature.rooms.data.mappers.RoomMapperImpl
-import dev.nonoxy.feature.rooms.data.mappers.StudentMapper
-import dev.nonoxy.feature.rooms.data.mappers.StudentMapperImpl
+import dev.nonoxy.feature.rooms.impl.data.RoomsRepositoryImpl
+import dev.nonoxy.feature.rooms.impl.data.mappers.RoomMapper
+import dev.nonoxy.feature.rooms.impl.data.mappers.RoomMapperImpl
+import dev.nonoxy.feature.rooms.impl.data.mappers.StudentMapper
+import dev.nonoxy.feature.rooms.impl.data.mappers.StudentMapperImpl
 import dev.nonoxy.feature.rooms.impl.domain.RoomsStoreFactory
 import org.koin.dsl.module
 
