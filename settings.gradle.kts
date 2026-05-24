@@ -47,6 +47,8 @@ include(
     // Features
     ":shared:feature-rooms:api",
     ":shared:feature-rooms:impl",
+    ":shared:feature-rooms:presentation",
+    ":shared:feature-rooms:ui",
 
     ":shared:feature-add-room:api",
     ":shared:feature-add-room:impl",
