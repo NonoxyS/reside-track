@@ -557,9 +557,9 @@ Executor получает `Action.LoadInitial` от `SimpleBootstrapper`, гру
 ```kotlin
 package dev.nonoxy.feature.rooms.impl.domain
 
+import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.arkivanov.mvikotlin.extensions.coroutines.SimpleBootstrapper
 import dev.nonoxy.feature.rooms.api.models.Room
 import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import dev.nonoxy.feature.rooms.api.store.RoomsStore
@@ -667,13 +667,25 @@ internal class RoomsExecutor(
 
 - [ ] **Step 4: Проверка сборки**
 
-Run: `./gradlew :shared:feature-rooms:impl:compileKotlinAndroid :android:app:assembleDevDebug :shared:main:linkDebugFrameworkIosSimulatorArm64`
+Run: `./gradlew :android:app:assembleDevDebug :shared:main:linkDebugFrameworkIosSimulatorArm64`
 Expected: BUILD SUCCESSFUL. Старый код в impl продолжает работать; новые файлы под `impl.domain.*` компилируются, но ещё никем не используются.
+
+**Возможная зависимость:** новые файлы используют `BaseExecutor`, `Store`, `StoreFactory`, `SimpleBootstrapper` и `Reducer` из MVIKotlin. Текущий `impl/build.gradle.kts` собран на `kmpLibrary` (старый плагин), который НЕ приносит ни `:shared:core-mvikotlin`, ни MVIKotlin libs. Если компиляция падает с `Unresolved reference: com.arkivanov.mvikotlin.*` или `Unresolved reference: BaseExecutor` — добавь в `commonMainDependencies { implementations(...) }`:
+
+```kotlin
+        // Temporary: MVIKotlin deps for domain layer (will be removed in Task 8 when impl switches to kmpFeatureSetup)
+        projects.shared.coreMvikotlin,
+        libs.mvikotlin.core,
+        libs.mvikotlin.coroutines,
+        libs.mvikotlin.main,
+```
+
+Эти строки удалятся в Task 8 — `kmpFeatureSetup` для impl-модулей автоматически принесёт `:shared:core-mvikotlin` (а через него — MVIKotlin libs).
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/impl/domain
+git add shared/feature-rooms/impl
 git commit -m "Phase 4: add MVIKotlin domain layer (Executor, Reducer, StoreFactory) for feature-rooms"
 ```
 
