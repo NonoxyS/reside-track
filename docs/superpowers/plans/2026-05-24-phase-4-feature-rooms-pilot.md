@@ -143,15 +143,18 @@ shared/feature-rooms/
 ```kotlin
 package dev.nonoxy.common.coroutines
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 
-val ioDispatcher = Dispatchers.IO
-val mainDispatcher = Dispatchers.Main
-val mainImmediateDispatcher = Dispatchers.Main.immediate
-val defaultDispatcher = Dispatchers.Default
-val unconfinedDispatcher = Dispatchers.Unconfined
+val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+val mainDispatcher: CoroutineDispatcher = Dispatchers.Main
+val mainImmediateDispatcher: CoroutineDispatcher = Dispatchers.Main.immediate
+val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+val unconfinedDispatcher: CoroutineDispatcher = Dispatchers.Unconfined
 ```
+
+(Явные типы — паритет с KMMTemplate `Dispatchers.kt`.)
 
 - [ ] **Step 2: Создать `CoroutineDispatchers.kt` (интерфейс)**
 
