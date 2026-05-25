@@ -1416,17 +1416,23 @@ git commit -m "Phase 4: extract ui module (Screen, views, FeatureRoomsScreenApi)
 
 **Files:**
 - Modify: `shared/main/src/commonMain/kotlin/dev/nonoxy/residetrack/di/Koin.kt` (зарегистрировать `featureRoomsPresentationModule`)
-- Modify: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/di/FeatureRoomsImplModule.kt` (удалить ViewModel биндинг + UiRoomMapper/UiStudentMapper биндинги — они уезжают в `featureRoomsPresentationModule`)
-- Delete: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/RoomsViewModel.kt`
+- Modify: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/di/FeatureRoomsImplModule.kt` (удалить `OldRoomsViewModel` биндинг + UiRoomMapper/UiStudentMapper биндинги — они уезжают в `featureRoomsPresentationModule`)
+- Delete: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/OldRoomsViewModel.kt` (был `RoomsViewModel.kt` до Task 5; переименован, чтобы избежать FQN-коллизии)
 - Delete: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models/RoomsAction.kt`
 - Delete: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models/RoomsEvent.kt`
 - Delete: `shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models/RoomsViewState.kt`
-- Delete: пустые директории `impl/.../presentation/{models,navigation,/}` и `impl/.../ui/`
+- Delete: `shared/feature-rooms/impl/src/commonMain/composeResources/drawable/ic_add.xml` (дубль — ui-модуль владеет ресурсами после Task 6)
+- Delete: `shared/feature-rooms/impl/src/commonMain/composeResources/values/strings.xml` (дубль)
+- Delete: пустые директории `impl/.../presentation/{models,/}`, `impl/.../composeResources/{drawable,values,/}`
+- Modify: `shared/feature-rooms/presentation/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/mappers/UiRoomMapper.kt` (восстановить `internal` на интерфейсе + Impl; удалить Task 7-TODO)
+- Modify: `shared/feature-rooms/presentation/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/mappers/UiStudentMapper.kt` (восстановить `internal` на интерфейсе + Impl; удалить Task 7-TODO)
 - Modify: `shared/feature-rooms/impl/build.gradle.kts` (УБРАТЬ временную зависимость `projects.shared.featureRooms.presentation`, добавленную в Task 5 Step 13)
 
 **Контекст.** Это «момент истины»: переключаем DI на новый ViewModel и удаляем весь старый MVI-код из impl. После задачи в impl остаются ТОЛЬКО `data/` и `di/` — и они ещё в старых пакетах (без `.impl.` суффикса). Перепаковка impl в `.impl.*` будет в Task 8.
 
-**Внимание:** перед удалением старого `RoomsViewModel.kt` из impl нужно убрать его DI-биндинг. Иначе compile-time ошибка (Koin DSL ссылается на `RoomsViewModel` через `viewModelOf(::RoomsViewModel)`).
+**Внимание:** перед удалением старого `OldRoomsViewModel.kt` из impl нужно убрать его DI-биндинг. Иначе compile-time ошибка (Koin DSL ссылается на `OldRoomsViewModel` через `viewModelOf(::OldRoomsViewModel)`).
+
+**Историческая правка для Task 5 carry-over.** В Task 5 пришлось публично выставить `UiRoomMapper`/`UiStudentMapper` (оба интерфейса и Impls), потому что `OldRoomsViewModel` из impl получал их через Koin `factoryOf(::Impl)`. Сейчас этот единственный потребитель удаляется, поэтому возвращаем `internal` модификатор и снимаем TODO-комментарии в обоих файлах.
 
 - [ ] **Step 1: Переписать `featureRoomsImplModule` — оставить только Repository + RoomMapper + StudentMapper + RoomsStore**
 
@@ -1503,23 +1509,70 @@ import dev.nonoxy.feature.rooms.presentation.di.featureRoomsPresentationModule
             featureAddRoomImplModule,
 ```
 
-- [ ] **Step 3: Удалить мёртвые файлы старого MVI**
+- [ ] **Step 3: Удалить мёртвые файлы старого MVI + дубли composeResources**
 
 ```bash
 cd /Users/a.dobrov/StudioProjects/reside-track
-git rm shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/RoomsViewModel.kt
+git rm shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/OldRoomsViewModel.kt
 git rm shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models/RoomsAction.kt
 git rm shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models/RoomsEvent.kt
 git rm shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models/RoomsViewState.kt
+git rm shared/feature-rooms/impl/src/commonMain/composeResources/drawable/ic_add.xml
+git rm shared/feature-rooms/impl/src/commonMain/composeResources/values/strings.xml
 rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/models 2>/dev/null || true
 rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation 2>/dev/null || true
-rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/ui/mappers 2>/dev/null || true
-rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/ui/models 2>/dev/null || true
-rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/ui/views 2>/dev/null || true
-rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/ui 2>/dev/null || true
+rmdir shared/feature-rooms/impl/src/commonMain/composeResources/drawable 2>/dev/null || true
+rmdir shared/feature-rooms/impl/src/commonMain/composeResources/values 2>/dev/null || true
+rmdir shared/feature-rooms/impl/src/commonMain/composeResources 2>/dev/null || true
 ```
 
-- [ ] **Step 4: Убрать временную зависимость `projects.shared.featureRooms.presentation` из `impl/build.gradle.kts`**
+Compose-плагин и compose-зависимости в `impl/build.gradle.kts` оставляем до Task 8 — Task 8 переключит impl на `kmpFeatureSetup`, где Compose-частей нет, и они уйдут вместе. На промежуточной точке после Step 3 `compose.resources` блок остаётся в build.gradle.kts с пустой папкой ресурсов; `generateResClass = auto` корректно пропустит генерацию, если ресурсов нет.
+
+- [ ] **Step 4: Восстановить `internal` на `UiRoomMapper` и `UiStudentMapper`**
+
+В файле `shared/feature-rooms/presentation/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/mappers/UiStudentMapper.kt` заменить блок:
+
+```kotlin
+// TODO Task 7: restore `internal` on both interface and Impl — currently public so OldRoomsViewModel
+//  in :shared:feature-rooms:impl can construct UiStudentMapperImpl via Koin DSL `::Impl` constructor ref.
+interface UiStudentMapper : Mapper<Student, UiStudent>
+
+class UiStudentMapperImpl : UiStudentMapper {
+```
+
+На:
+
+```kotlin
+internal interface UiStudentMapper : Mapper<Student, UiStudent>
+
+internal class UiStudentMapperImpl : UiStudentMapper {
+```
+
+В файле `shared/feature-rooms/presentation/src/commonMain/kotlin/dev/nonoxy/feature/rooms/presentation/mappers/UiRoomMapper.kt` заменить блок:
+
+```kotlin
+// TODO Task 7: restore `internal` on both interface and Impl — currently public so OldRoomsViewModel
+//  in :shared:feature-rooms:impl can construct UiRoomMapperImpl via Koin DSL `::Impl` constructor ref.
+interface UiRoomMapper : Mapper<Room, UiRoom>
+
+class UiRoomMapperImpl(
+    private val studentMapper: UiStudentMapper
+) : UiRoomMapper {
+```
+
+На:
+
+```kotlin
+internal interface UiRoomMapper : Mapper<Room, UiRoom>
+
+internal class UiRoomMapperImpl(
+    private val studentMapper: UiStudentMapper
+) : UiRoomMapper {
+```
+
+(Тело `map(...)` обоих классов не трогать.)
+
+- [ ] **Step 5: Убрать временную зависимость `projects.shared.featureRooms.presentation` из `impl/build.gradle.kts`**
 
 В файле `shared/feature-rooms/impl/build.gradle.kts` найти и удалить строку:
 
@@ -1531,21 +1584,23 @@ rmdir shared/feature-rooms/impl/src/commonMain/kotlin/dev/nonoxy/feature/rooms/u
 
 Промежуточная сборка может ещё работать с этой строкой; для чистоты удаляем именно сейчас.
 
-- [ ] **Step 5: Проверка сборки**
+- [ ] **Step 6: Проверка сборки**
 
 Run: `./gradlew :android:app:assembleDevDebug :android:app:assembleProdDebug :shared:main:linkDebugFrameworkIosSimulatorArm64`
 Expected: BUILD SUCCESSFUL.
 
-**Если падает с `Class 'RoomsViewModel' not found in module ...impl`** — значит где-то ещё остался импорт старого VM. Грепнуть:
+**Если падает с `OldRoomsViewModel` not found / `RoomsViewModel' not found in module ...impl`** — значит где-то ещё остался импорт старого VM. Грепнуть:
 ```bash
-grep -rn "dev\.nonoxy\.feature\.rooms\.presentation\.RoomsViewModel\|featureRoomsImplModule" shared --include='*.kt' --include='*.kts' | grep -v build/
+grep -rn "OldRoomsViewModel\|dev\.nonoxy\.feature\.rooms\.presentation\.RoomsViewModel" shared --include='*.kt' --include='*.kts' | grep -v build/
 ```
-Все случаи должны вести либо в `:shared:feature-rooms:presentation` (новый ViewModel), либо в DI shared/main/Koin.kt.
+После Task 7 ни одной ссылки на `OldRoomsViewModel` остаться не должно. Ссылки на `dev.nonoxy.feature.rooms.presentation.RoomsViewModel` (без `Old`) должны вести в `:shared:feature-rooms:presentation` (новый ViewModel) или в DI `shared/main/Koin.kt`.
 
-- [ ] **Step 6: Commit**
+**Если падает с `UiRoomMapper`/`UiStudentMapper` is internal and cannot be accessed from ...impl** — значит остался Koin-биндинг этих мапперов в `featureRoomsImplModule`. Step 1 должен был его удалить.
+
+- [ ] **Step 7: Commit**
 
 ```bash
-git add shared/feature-rooms/impl shared/main shared/feature-rooms/ui
+git add shared/feature-rooms/impl shared/feature-rooms/presentation shared/main
 git commit -m "Phase 4: wire feature-rooms presentation module + delete old MVI code"
 ```
 
