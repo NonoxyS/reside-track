@@ -175,7 +175,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 
 Каждая фаза завершается контрольной точкой: проект собирается, detekt проходит.
 
-**Статус (2026-05-21):** Фазы 1–3 завершены; следующая — Фаза 4 (пилот feature-rooms).
+**Статус (2026-05-24):** Фазы 1–4 завершены; следующая — Фаза 5 (миграция feature-add-room и feature-manage-students).
 
 1. **build-logic + версии** ✅ — `build-logic`, convention plugins, `libs.versions.toml`,
    бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
@@ -201,7 +201,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
      `KoinMultiplatformApplication` внутри `App()` (в Фазе 1 оставлен старый паттерн).
 3. **Навигация** ✅ — `Screen` marker-интерфейс + top-level route-объекты,
    `core-navigation` доведён до парности с KMMTemplate.
-4. **Пилот** — `feature-rooms` → 4 модуля + MVIKotlin.
+4. **Пилот** ✅ — `feature-rooms` → 4 модуля + MVIKotlin.
 5. **Остальные фичи** — `feature-add-room`, `feature-manage-students`.
 6. **Ресурсы** — Compose Resources → moko-resources, удаление `StringProvider`.
 7. **App-модуль** — `composeApp` → `:android:app` + `:shared:main`.
