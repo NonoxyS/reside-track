@@ -52,6 +52,8 @@ include(
 
     ":shared:feature-add-room:api",
     ":shared:feature-add-room:impl",
+    ":shared:feature-add-room:presentation",
+    ":shared:feature-add-room:ui",
 
     ":shared:feature-manage-students:api",
     ":shared:feature-manage-students:impl",
