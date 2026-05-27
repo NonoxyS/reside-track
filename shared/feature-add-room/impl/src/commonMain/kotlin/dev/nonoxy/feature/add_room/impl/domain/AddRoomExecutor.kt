@@ -65,6 +65,7 @@ internal class AddRoomExecutor(
     }
 
     private fun handleFloorNumberInput(value: String) {
+        if (value.length > MAX_INPUT_LENGTH) return
         if (!value.isDigitsOnly()) return
         dispatch(Message.SetFloorNumberInput(value = value))
         revalidateForm()
@@ -76,12 +77,14 @@ internal class AddRoomExecutor(
     }
 
     private fun handleRoomNumberInput(value: String) {
+        if (value.length > MAX_INPUT_LENGTH) return
         if (!value.isDigitsOnly()) return
         dispatch(Message.SetRoomNumberInput(value = value))
         revalidateForm()
     }
 
     private fun handleBedsCountInput(value: String) {
+        if (value.length > MAX_INPUT_LENGTH) return
         if (!value.isDigitsOnly()) return
         dispatch(Message.SetBedsCountInput(value = value))
         revalidateForm()
@@ -186,3 +189,5 @@ internal class AddRoomExecutor(
     private fun validateBedsCount(value: String): AddRoomErrorKind? =
         if (value.isBlank()) AddRoomErrorKind.BedsCountRequired else null
 }
+
+private const val MAX_INPUT_LENGTH = 4
