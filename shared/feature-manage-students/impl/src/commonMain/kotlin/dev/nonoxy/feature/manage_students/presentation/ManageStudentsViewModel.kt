@@ -3,7 +3,7 @@ package dev.nonoxy.feature.manage_students.presentation
 import androidx.lifecycle.viewModelScope
 import dev.nonoxy.common.presentation.BaseViewModel
 import dev.nonoxy.common.utils.currentLocalDate
-import dev.nonoxy.feature.manage_students.models.ManageStudentsMode
+import dev.nonoxy.feature.manage_students.api.models.ManageStudentsMode
 import dev.nonoxy.feature.manage_students.presentation.models.EditableStudent
 import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsAction
 import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsEvent
