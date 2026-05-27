@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.manage_students.di
+package dev.nonoxy.feature.manage_students.impl.di
 
 import dev.nonoxy.common.coroutines.CoroutineDispatchers
 import dev.nonoxy.feature.manage_students.api.models.ManageStudentsMode
