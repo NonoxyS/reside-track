@@ -24,6 +24,7 @@ commonMainDependencies {
         projects.shared.commonUi,
         projects.shared.featureRooms.api,
         projects.shared.featureManageStudents.api,
+        projects.shared.coreMvikotlin,
     )
 }
 
