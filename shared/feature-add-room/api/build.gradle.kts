@@ -3,7 +3,7 @@ import extensions.commonMainDependencies
 import extensions.implementations
 
 plugins {
-    alias(libs.plugins.conventionPlugin.kmpLibrary)
+    alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
 }
 
 androidLibraryConfig {
@@ -13,7 +13,7 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         libs.kotlin.datetime,
-        projects.shared.common,
+        libs.kotlin.immutableCollections,
         projects.shared.featureRooms.api,
     )
 }
