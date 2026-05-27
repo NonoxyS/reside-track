@@ -175,7 +175,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 
 Каждая фаза завершается контрольной точкой: проект собирается, detekt проходит.
 
-**Статус (2026-05-24):** Фазы 1–4 завершены; следующая — Фаза 5 (миграция feature-add-room и feature-manage-students).
+**Статус (2026-05-25):** Фазы 1–5 завершены; следующая — Фаза 6 (Compose Resources → moko-resources, удаление StringProvider — уже выполнено в Фазе 5, остаётся только перевод ресурсов).
 
 1. **build-logic + версии** ✅ — `build-logic`, convention plugins, `libs.versions.toml`,
    бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
@@ -202,7 +202,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 3. **Навигация** ✅ — `Screen` marker-интерфейс + top-level route-объекты,
    `core-navigation` доведён до парности с KMMTemplate.
 4. **Пилот** ✅ — `feature-rooms` → 4 модуля + MVIKotlin.
-5. **Остальные фичи** — `feature-add-room`, `feature-manage-students`.
+5. **Остальные фичи** ✅ — `feature-add-room`, `feature-manage-students` → 4 модуля + MVIKotlin. `BaseViewModel`/`StringProvider` удалены.
 6. **Ресурсы** — Compose Resources → moko-resources, удаление `StringProvider`.
 7. **App-модуль** — `composeApp` → `:android:app` + `:shared:main`.
 8. **Пакеты** — переименование `dev.nonoxy.*` → `dev.nonoxy.residetrack.*`.
