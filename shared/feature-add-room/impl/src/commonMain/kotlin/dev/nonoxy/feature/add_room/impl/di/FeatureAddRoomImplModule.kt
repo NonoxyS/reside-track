@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.add_room.di
+package dev.nonoxy.feature.add_room.impl.di
 
 import dev.nonoxy.common.coroutines.CoroutineDispatchers
 import dev.nonoxy.feature.add_room.api.store.AddRoomStore
