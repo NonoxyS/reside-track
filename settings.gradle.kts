@@ -57,6 +57,8 @@ include(
 
     ":shared:feature-manage-students:api",
     ":shared:feature-manage-students:impl",
+    ":shared:feature-manage-students:presentation",
+    ":shared:feature-manage-students:ui",
 
     ":shared:template-module"
 )
