@@ -19,10 +19,10 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.impl.generated.resources.Res
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_custom_beds_button
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_hide_button
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_new_floor_button
+import residetrack.shared.feature_add_room.ui.generated.resources.Res
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_custom_beds_button
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_hide_button
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_new_floor_button
 
 @Composable
 internal fun FloorSelectionChips(

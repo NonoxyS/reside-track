@@ -7,33 +7,34 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import dev.nonoxy.feature.add_room.presentation.models.UiAddRoomState
+import dev.nonoxy.feature.add_room.ui.localized
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import dev.nonoxy.feature.add_room.presentation.models.TextFieldState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.impl.generated.resources.Res
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_beds_count_label
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_beds_count_placeholder
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_select_beds_hint
+import residetrack.shared.feature_add_room.ui.generated.resources.Res
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_beds_count_label
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_beds_count_placeholder
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_select_beds_hint
 
 @Composable
 internal fun BedsSelectionSection(
-    textFieldState: TextFieldState,
+    textFieldState: UiAddRoomState.TextField,
     existingBedsCounts: ImmutableList<Int>,
     showInput: Boolean,
     isLoading: Boolean,
     onInputValueChange: (String) -> Unit,
     onBedsSelect: (Int) -> Unit,
     onToggleInput: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(padding_size_16)
+        verticalArrangement = Arrangement.spacedBy(padding_size_16),
     ) {
         if (existingBedsCounts.isNotEmpty()) {
             Column {
@@ -41,8 +42,8 @@ internal fun BedsSelectionSection(
                     Text(
                         text = stringResource(Res.string.add_room_select_beds_hint),
                         style = ResideTrackTheme.typography.head3.copy(
-                            color = ResideTrackTheme.colors.textCaption
-                        )
+                            color = ResideTrackTheme.colors.textCaption,
+                        ),
                     )
                 }
             }
@@ -52,7 +53,7 @@ internal fun BedsSelectionSection(
                 selectedBedsCount = textFieldState.value,
                 showInput = showInput,
                 onBedsSelect = onBedsSelect,
-                onToggleInput = onToggleInput
+                onToggleInput = onToggleInput,
             )
         }
 
@@ -64,9 +65,9 @@ internal fun BedsSelectionSection(
                     label = stringResource(Res.string.add_room_beds_count_label),
                     placeholder = stringResource(Res.string.add_room_beds_count_placeholder),
                     keyboardType = KeyboardType.Number,
-                    isError = textFieldState.isError,
-                    errorMessage = textFieldState.errorMessage,
-                    enabled = !isLoading
+                    isError = textFieldState.errorKind != null,
+                    errorMessage = textFieldState.errorKind?.localized(),
+                    enabled = !isLoading,
                 )
             }
         }
@@ -78,13 +79,13 @@ internal fun BedsSelectionSection(
 private fun BedsSelectionSectionPreview() {
     ResideTrackTheme {
         BedsSelectionSection(
-            textFieldState = TextFieldState(value = "2"),
+            textFieldState = UiAddRoomState.TextField(value = "2"),
             existingBedsCounts = persistentListOf(1, 2, 3, 4),
             showInput = false,
             isLoading = false,
             onInputValueChange = {},
             onBedsSelect = {},
-            onToggleInput = {}
+            onToggleInput = {},
         )
     }
 }

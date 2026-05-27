@@ -14,15 +14,6 @@ import dev.nonoxy.feature.rooms.api.models.Room
 import dev.nonoxy.feature.rooms.api.repository.RoomsRepository
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.getString
-import residetrack.shared.feature_add_room.impl.generated.resources.Res
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_error_room_already_exists
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_error_save_failed
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_error_unknown
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_success_message
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_beds_count_required
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_floor_number_required
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_room_number_required
 
 internal class OldAddRoomViewModel(
     private val roomsRepository: RoomsRepository
@@ -156,12 +147,7 @@ internal class OldAddRoomViewModel(
 
                 if (roomExists) {
                     viewState = viewState.copy(isLoading = false)
-                    val errorMessage = getString(
-                        Res.string.add_room_error_room_already_exists,
-                        roomNumber,
-                        floorNumber
-                    )
-                    viewAction = AddRoomAction.ShowErrorMessage(errorMessage)
+                    viewAction = AddRoomAction.ShowErrorMessage("Room $roomNumber on floor $floorNumber already exists")
                     return@launch
                 }
 
@@ -185,24 +171,18 @@ internal class OldAddRoomViewModel(
                             },
                             onFailure = {
                                 viewState = viewState.copy(isLoading = false)
-                                val message = getString(
-                                    Res.string.add_room_success_message,
-                                    roomNumber
-                                )
-                                viewAction = AddRoomAction.ShowSuccessMessage(message)
+                                viewAction = AddRoomAction.ShowSuccessMessage("Room $roomNumber created successfully")
                             }
                         )
                     },
-                    onFailure = { error ->
+                    onFailure = { _ ->
                         viewState = viewState.copy(isLoading = false)
-                        val errorMessage = getString(Res.string.add_room_error_save_failed)
-                        viewAction = AddRoomAction.ShowErrorMessage(errorMessage)
+                        viewAction = AddRoomAction.ShowErrorMessage("Failed to create room")
                     }
                 )
             } catch (_: Exception) {
                 viewState = viewState.copy(isLoading = false)
-                val errorMessage = getString(Res.string.add_room_error_unknown)
-                viewAction = AddRoomAction.ShowErrorMessage(errorMessage)
+                viewAction = AddRoomAction.ShowErrorMessage("Unknown error")
             }
         }
     }
@@ -228,7 +208,7 @@ internal class OldAddRoomViewModel(
         }
     }
 
-    private suspend fun performValidation(): Boolean {
+    private fun performValidation(): Boolean {
         var isValid = true
         val currentState = viewState
 
@@ -259,23 +239,23 @@ internal class OldAddRoomViewModel(
         return isValid
     }
 
-    private suspend fun validateFloorNumber(floorNumber: String): String? {
+    private fun validateFloorNumber(floorNumber: String): String? {
         return when {
-            floorNumber.isBlank() -> getString(Res.string.add_room_validation_floor_number_required)
+            floorNumber.isBlank() -> "Floor number is required"
             else -> null
         }
     }
 
-    private suspend fun validateRoomNumber(roomNumber: String): String? {
+    private fun validateRoomNumber(roomNumber: String): String? {
         return when {
-            roomNumber.isBlank() -> getString(Res.string.add_room_validation_room_number_required)
+            roomNumber.isBlank() -> "Room number is required"
             else -> null
         }
     }
 
-    private suspend fun validateBedsCount(bedsCount: String): String? {
+    private fun validateBedsCount(bedsCount: String): String? {
         return when {
-            bedsCount.isBlank() -> getString(Res.string.add_room_validation_beds_count_required)
+            bedsCount.isBlank() -> "Beds count is required"
             else -> null
         }
     }

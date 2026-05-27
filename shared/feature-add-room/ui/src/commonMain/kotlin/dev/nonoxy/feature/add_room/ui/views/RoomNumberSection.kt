@@ -3,21 +3,22 @@ package dev.nonoxy.feature.add_room.ui.views
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import dev.nonoxy.feature.add_room.presentation.models.UiAddRoomState
+import dev.nonoxy.feature.add_room.ui.localized
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
-import dev.nonoxy.feature.add_room.presentation.models.TextFieldState
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.impl.generated.resources.Res
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_room_number_label
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_room_number_placeholder
+import residetrack.shared.feature_add_room.ui.generated.resources.Res
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_room_number_label
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_room_number_placeholder
 
 @Composable
 internal fun RoomNumberSection(
-    textFieldState: TextFieldState,
+    textFieldState: UiAddRoomState.TextField,
     isLoading: Boolean,
     onInputValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     ResideTrackTextField(
         value = textFieldState.value,
@@ -25,10 +26,10 @@ internal fun RoomNumberSection(
         label = stringResource(Res.string.add_room_room_number_label),
         placeholder = stringResource(Res.string.add_room_room_number_placeholder),
         keyboardType = KeyboardType.Number,
-        isError = textFieldState.isError,
-        errorMessage = textFieldState.errorMessage,
+        isError = textFieldState.errorKind != null,
+        errorMessage = textFieldState.errorKind?.localized(),
         enabled = !isLoading,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -37,9 +38,9 @@ internal fun RoomNumberSection(
 private fun RoomNumberSectionPreview() {
     ResideTrackTheme {
         RoomNumberSection(
-            textFieldState = TextFieldState(value = "301"),
+            textFieldState = UiAddRoomState.TextField(value = "301"),
             isLoading = false,
-            onInputValueChange = {}
+            onInputValueChange = {},
         )
     }
 }

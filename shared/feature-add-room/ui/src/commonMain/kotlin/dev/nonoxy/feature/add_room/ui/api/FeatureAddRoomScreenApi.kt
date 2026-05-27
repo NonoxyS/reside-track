@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.add_room.presentation.navigation
+package dev.nonoxy.feature.add_room.ui.api
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -9,27 +9,26 @@ import androidx.navigation.NavGraphBuilder
 import dev.nonoxy.core.navigation.AddRoomRoute
 import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetConfiguration
 import dev.nonoxy.core.navigation.bottomsheet.bottomSheet
+import dev.nonoxy.core.navigation.navigateOnResumed
 import dev.nonoxy.feature.add_room.ui.AddRoomScreen
 
 fun NavController.navigateToAddRoomScreen() {
-    navigate(AddRoomRoute) {
-        launchSingleTop = true
-    }
+    navigateOnResumed(AddRoomRoute)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.bottomSheetAddRoomScreen(
     onNavigateBack: () -> Unit,
-    onNavigateToManageStudentsDraftRoom: () -> Unit
+    onNavigateToManageStudentsDraftRoom: () -> Unit,
 ) {
     bottomSheet<AddRoomRoute>(
         configuration = ModalBottomSheetConfiguration(
-            modifier = Modifier.statusBarsPadding().fillMaxWidth()
-        )
-    ) { backStackEntry ->
+            modifier = Modifier.statusBarsPadding().fillMaxWidth(),
+        ),
+    ) {
         AddRoomScreen(
             onNavigateBack = onNavigateBack,
-            onNavigateToManageStudentsDraftRoom = onNavigateToManageStudentsDraftRoom
+            onNavigateToManageStudentsDraftRoom = onNavigateToManageStudentsDraftRoom,
         )
     }
 }

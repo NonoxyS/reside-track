@@ -12,9 +12,9 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.impl.generated.resources.Res
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_cancel_button
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_create_button
+import residetrack.shared.feature_add_room.ui.generated.resources.Res
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_cancel_button
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_create_button
 
 @Composable
 internal fun AddRoomActionsSection(

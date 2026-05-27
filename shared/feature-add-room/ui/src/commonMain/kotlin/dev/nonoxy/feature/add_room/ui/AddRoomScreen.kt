@@ -12,53 +12,46 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.nonoxy.feature.add_room.presentation.AddRoomViewModel
+import dev.nonoxy.feature.add_room.presentation.models.UiAddRoomLabel
+import dev.nonoxy.feature.add_room.ui.views.AddRoomScreenContent
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import dev.nonoxy.feature.add_room.presentation.OldAddRoomViewModel
-import dev.nonoxy.feature.add_room.presentation.models.AddRoomAction
-import dev.nonoxy.feature.add_room.ui.views.AddRoomScreenContent
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun AddRoomScreen(
     onNavigateBack: () -> Unit,
     onNavigateToManageStudentsDraftRoom: () -> Unit,
-    viewModel: OldAddRoomViewModel = koinViewModel()
+    viewModel: AddRoomViewModel = koinViewModel(),
 ) {
-    val viewState by viewModel.viewState().collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
     var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
 
-    viewModel.viewAction().CollectFlow { viewAction ->
-        when (val currentAction = viewAction) {
-            is AddRoomAction.CloseScreen -> {
-                onNavigateBack()
-            }
-
-            is AddRoomAction.ShowSuccessMessage -> {
+    viewModel.label.CollectFlow { label ->
+        when (label) {
+            UiAddRoomLabel.CloseScreen -> onNavigateBack()
+            UiAddRoomLabel.NavigateToManageStudentsDraftRoom -> onNavigateToManageStudentsDraftRoom()
+            is UiAddRoomLabel.ShowSuccess -> {
                 currentSnackbarType = SnackbarType.INFO
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = currentAction.message,
-                    withDismissAction = true
+                    message = label.kind.localizedSuspend(),
+                    withDismissAction = true,
                 )
             }
-
-            is AddRoomAction.ShowErrorMessage -> {
+            is UiAddRoomLabel.ShowError -> {
                 currentSnackbarType = SnackbarType.ERROR
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = currentAction.message,
-                    withDismissAction = true
+                    message = label.kind.localizedSuspend(),
+                    withDismissAction = true,
                 )
-            }
-
-            AddRoomAction.NavigateToManageStudentsDraftRoom -> {
-                onNavigateToManageStudentsDraftRoom()
             }
         }
     }
@@ -73,14 +66,22 @@ internal fun AddRoomScreen(
                         SnackbarType.INFO -> ResideTrackSnackbar(snackbarData = snackbarData)
                         else -> null
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         AddRoomScreenContent(
             modifier = Modifier.fillMaxWidth().padding(paddingValues),
-            state = viewState,
-            onObtainEvent = viewModel::obtainEvent
+            state = state,
+            onFloorNumberInputValueChange = viewModel::onFloorNumberInputValueChange,
+            onFloorNumberSelect = viewModel::onFloorNumberSelect,
+            onRoomNumberInputValueChange = viewModel::onRoomNumberInputValueChange,
+            onBedsCountInputValueChange = viewModel::onBedsCountInputValueChange,
+            onBedsCountSelect = viewModel::onBedsCountSelect,
+            onCreateRoomClick = viewModel::onCreateRoomClick,
+            onCancelClick = viewModel::onCancelClick,
+            onToggleFloorInput = viewModel::onToggleFloorInput,
+            onToggleBedsInput = viewModel::onToggleBedsInput,
         )
     }
 }

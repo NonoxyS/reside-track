@@ -7,22 +7,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import dev.nonoxy.feature.add_room.presentation.models.UiAddRoomState
+import dev.nonoxy.feature.add_room.ui.localized
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import dev.nonoxy.feature.add_room.presentation.models.TextFieldState
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.impl.generated.resources.Res
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_floor_number_label
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_floor_number_placeholder
-import residetrack.shared.feature_add_room.impl.generated.resources.add_room_select_floor_hint
-import kotlinx.collections.immutable.persistentListOf
+import residetrack.shared.feature_add_room.ui.generated.resources.Res
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_floor_number_label
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_floor_number_placeholder
+import residetrack.shared.feature_add_room.ui.generated.resources.add_room_select_floor_hint
 
 @Composable
 internal fun FloorSelectionSection(
-    textFieldState: TextFieldState,
+    textFieldState: UiAddRoomState.TextField,
     existingFloors: ImmutableList<Int>,
     showInput: Boolean,
     hasExistingRooms: Boolean,
@@ -30,11 +31,11 @@ internal fun FloorSelectionSection(
     onInputValueChange: (String) -> Unit,
     onFloorSelect: (Int) -> Unit,
     onToggleInput: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(padding_size_16)
+        verticalArrangement = Arrangement.spacedBy(padding_size_16),
     ) {
         if (hasExistingRooms && existingFloors.isNotEmpty()) {
             Column {
@@ -42,8 +43,8 @@ internal fun FloorSelectionSection(
                     Text(
                         text = stringResource(Res.string.add_room_select_floor_hint),
                         style = ResideTrackTheme.typography.head3.copy(
-                            color = ResideTrackTheme.colors.textCaption
-                        )
+                            color = ResideTrackTheme.colors.textCaption,
+                        ),
                     )
                 }
             }
@@ -53,7 +54,7 @@ internal fun FloorSelectionSection(
                 selectedFloor = textFieldState.value,
                 showInput = showInput,
                 onFloorSelect = onFloorSelect,
-                onToggleInput = onToggleInput
+                onToggleInput = onToggleInput,
             )
         }
 
@@ -65,9 +66,9 @@ internal fun FloorSelectionSection(
                     label = stringResource(Res.string.add_room_floor_number_label),
                     placeholder = stringResource(Res.string.add_room_floor_number_placeholder),
                     keyboardType = KeyboardType.Number,
-                    isError = textFieldState.isError,
-                    errorMessage = textFieldState.errorMessage,
-                    enabled = !isLoading
+                    isError = textFieldState.errorKind != null,
+                    errorMessage = textFieldState.errorKind?.localized(),
+                    enabled = !isLoading,
                 )
             }
         }
@@ -79,14 +80,14 @@ internal fun FloorSelectionSection(
 private fun FloorSelectionSectionPreview() {
     ResideTrackTheme {
         FloorSelectionSection(
-            textFieldState = TextFieldState(value = "2"),
+            textFieldState = UiAddRoomState.TextField(value = "2"),
             existingFloors = persistentListOf(3, 4, 5, 6, 7),
             showInput = false,
             hasExistingRooms = true,
             isLoading = false,
             onInputValueChange = {},
             onFloorSelect = {},
-            onToggleInput = {}
+            onToggleInput = {},
         )
     }
 }
