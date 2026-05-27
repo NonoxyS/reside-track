@@ -24,6 +24,7 @@ commonMainDependencies {
         projects.shared.commonUi,
         projects.shared.featureRooms.api,
         projects.shared.featureManageStudents.api,
+        projects.shared.featureManageStudents.presentation, // TEMP for Tasks 13–16; removed in Task 17
         projects.shared.coreMvikotlin,
     )
 }

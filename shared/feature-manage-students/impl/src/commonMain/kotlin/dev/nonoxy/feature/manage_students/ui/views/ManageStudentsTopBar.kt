@@ -6,7 +6,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
-import dev.nonoxy.feature.manage_students.ui.models.UiRoom
+import dev.nonoxy.feature.manage_students.presentation.models.UiRoom
 import org.jetbrains.compose.resources.stringResource
 import residetrack.shared.feature_manage_students.impl.generated.resources.Res
 import residetrack.shared.feature_manage_students.impl.generated.resources.manage_students_room_title

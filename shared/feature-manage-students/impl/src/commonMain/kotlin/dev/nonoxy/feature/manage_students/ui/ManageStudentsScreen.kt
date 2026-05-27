@@ -17,7 +17,7 @@ import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import dev.nonoxy.feature.manage_students.presentation.ManageStudentsViewModel
+import dev.nonoxy.feature.manage_students.presentation.OldManageStudentsViewModel
 import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsAction
 import dev.nonoxy.feature.manage_students.ui.views.ManageStudentsContent
 import org.koin.compose.viewmodel.koinViewModel
@@ -25,7 +25,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 internal fun ManageStudentsScreen(
     onNavigateBack: () -> Unit,
-    viewModel: ManageStudentsViewModel = koinViewModel()
+    viewModel: OldManageStudentsViewModel = koinViewModel()
 ) {
     val viewState by viewModel.viewState().collectAsStateWithLifecycle()
 

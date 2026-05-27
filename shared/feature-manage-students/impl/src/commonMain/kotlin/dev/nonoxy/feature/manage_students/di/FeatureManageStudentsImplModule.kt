@@ -1,10 +1,10 @@
 package dev.nonoxy.feature.manage_students.di
 
-import dev.nonoxy.feature.manage_students.presentation.ManageStudentsViewModel
-import dev.nonoxy.feature.manage_students.ui.mappers.UiRoomMapper
-import dev.nonoxy.feature.manage_students.ui.mappers.UiRoomMapperImpl
-import dev.nonoxy.feature.manage_students.ui.mappers.UiStudentMapper
-import dev.nonoxy.feature.manage_students.ui.mappers.UiStudentMapperImpl
+import dev.nonoxy.feature.manage_students.presentation.OldManageStudentsViewModel
+import dev.nonoxy.feature.manage_students.presentation.mappers.UiRoomMapper
+import dev.nonoxy.feature.manage_students.presentation.mappers.UiRoomMapperImpl
+import dev.nonoxy.feature.manage_students.presentation.mappers.UiStudentMapper
+import dev.nonoxy.feature.manage_students.presentation.mappers.UiStudentMapperImpl
 import dev.nonoxy.feature.manage_students.utils.StringProvider
 import dev.nonoxy.feature.manage_students.utils.StringProviderImpl
 import org.koin.core.module.dsl.factoryOf
@@ -18,8 +18,9 @@ val featureManageStudentsImplModule = module {
     factoryOf(::UiRoomMapperImpl) bind UiRoomMapper::class
     factoryOf<StringProvider>(::StringProviderImpl)
 
+    // TODO Task 16: remove together with OldManageStudentsViewModel.
     viewModel { parameters ->
-        ManageStudentsViewModel(
+        OldManageStudentsViewModel(
             mode = parameters.get(),
             roomsRepository = get(),
             uiRoomMapper = get(),

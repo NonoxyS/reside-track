@@ -1,6 +1,5 @@
 package dev.nonoxy.feature.manage_students.presentation.models
 
-import dev.nonoxy.feature.manage_students.ui.models.UiRoom
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
