@@ -1,11 +1,9 @@
 import extensions.androidLibraryConfig
 import extensions.commonMainDependencies
 import extensions.implementations
-import plugins.composeBundle
 
 plugins {
-    alias(libs.plugins.conventionPlugin.kmpLibrary)
-    alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
+    alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
 }
 
 androidLibraryConfig {
@@ -14,20 +12,6 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
-        *composeBundle,
-        libs.compose.multiplatform.resources,
-        libs.koin.composeMultiplatform.viewmodelNavigation,
         libs.kotlin.immutableCollections,
-        projects.shared.common,
-        projects.shared.coreNavigation,
-        projects.shared.commonUi,
-        projects.shared.featureRooms.api,
-        projects.shared.featureAddRoom.api,
-        projects.shared.coreMvikotlin,
     )
-}
-
-compose.resources {
-    publicResClass = false
-    generateResClass = auto
 }

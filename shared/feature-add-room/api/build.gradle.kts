@@ -1,4 +1,5 @@
 import extensions.androidLibraryConfig
+import extensions.apis
 import extensions.commonMainDependencies
 import extensions.implementations
 
@@ -14,6 +15,8 @@ commonMainDependencies {
     implementations(
         libs.kotlin.datetime,
         libs.kotlin.immutableCollections,
+    )
+    apis(
         projects.shared.featureRooms.api,
     )
 }
