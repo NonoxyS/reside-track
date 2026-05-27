@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.feature.manage_students.presentation.models.UiRoom
 import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.impl.generated.resources.Res
-import residetrack.shared.feature_manage_students.impl.generated.resources.manage_students_room_title
-import residetrack.shared.feature_manage_students.impl.generated.resources.manage_students_title
+import residetrack.shared.feature_manage_students.ui.generated.resources.Res
+import residetrack.shared.feature_manage_students.ui.generated.resources.manage_students_room_title
+import residetrack.shared.feature_manage_students.ui.generated.resources.manage_students_title
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

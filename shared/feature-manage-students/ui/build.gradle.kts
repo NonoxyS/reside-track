@@ -1,4 +1,6 @@
 import extensions.androidLibraryConfig
+import extensions.commonMainDependencies
+import extensions.implementations
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
@@ -11,5 +13,13 @@ androidLibraryConfig {
 
 compose.resources {
     publicResClass = false
-    generateResClass = auto
+    generateResClass = always
+}
+
+commonMainDependencies {
+    implementations(
+        libs.compose.multiplatform.resources,
+        libs.kotlin.immutableCollections,
+        libs.compose.icons.core,
+    )
 }

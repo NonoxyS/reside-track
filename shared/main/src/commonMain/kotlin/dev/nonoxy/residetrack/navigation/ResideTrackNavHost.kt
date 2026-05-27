@@ -10,10 +10,10 @@ import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetLayout
 import dev.nonoxy.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
 import dev.nonoxy.feature.add_room.ui.api.bottomSheetAddRoomScreen
 import dev.nonoxy.feature.add_room.ui.api.navigateToAddRoomScreen
-import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetManageStudentsExistingRoom
-import dev.nonoxy.feature.manage_students.presentation.navigation.bottomSheetManageStudentsDraftRoom
-import dev.nonoxy.feature.manage_students.presentation.navigation.navigateToManageStudentsExistingRoom
-import dev.nonoxy.feature.manage_students.presentation.navigation.navigateToManageStudentsDraftRoom
+import dev.nonoxy.feature.manage_students.ui.api.bottomSheetManageStudentsExistingRoom
+import dev.nonoxy.feature.manage_students.ui.api.bottomSheetManageStudentsDraftRoom
+import dev.nonoxy.feature.manage_students.ui.api.navigateToManageStudentsExistingRoom
+import dev.nonoxy.feature.manage_students.ui.api.navigateToManageStudentsDraftRoom
 import dev.nonoxy.feature.rooms.ui.api.composableRoomsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)

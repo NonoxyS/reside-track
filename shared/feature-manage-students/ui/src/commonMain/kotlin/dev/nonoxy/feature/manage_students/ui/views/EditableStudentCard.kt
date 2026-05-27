@@ -9,19 +9,19 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dev.nonoxy.feature.manage_students.presentation.models.UiEditableStudent
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import dev.nonoxy.feature.manage_students.presentation.models.EditableStudent
 
 @Composable
 internal fun EditableStudentCard(
-    student: EditableStudent,
+    student: UiEditableStudent,
     onStreamNumberChange: (String) -> Unit,
     onCheckInDateMillisChange: (Long) -> Unit,
     onCheckOutDateMillisChange: (Long) -> Unit,
     onRemove: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
@@ -30,18 +30,18 @@ internal fun EditableStudentCard(
                 ResideTrackTheme.colors.fillSecondary
             } else {
                 ResideTrackTheme.colors.surface
-            }
-        )
+            },
+        ),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(padding_size_16)
+                .padding(padding_size_16),
         ) {
             StudentCardHeader(
                 streamNumber = student.streamNumber,
                 isNew = student.isNew,
-                onRemove = onRemove
+                onRemove = onRemove,
             )
 
             Spacer(modifier = Modifier.height(padding_size_12))
@@ -54,7 +54,7 @@ internal fun EditableStudentCard(
                 checkOutDateMillis = student.checkOutDateMillis,
                 onStreamNumberChange = onStreamNumberChange,
                 onCheckInDateMillisChange = onCheckInDateMillisChange,
-                onCheckOutDateMillisChange = onCheckOutDateMillisChange
+                onCheckOutDateMillisChange = onCheckOutDateMillisChange,
             )
         }
     }

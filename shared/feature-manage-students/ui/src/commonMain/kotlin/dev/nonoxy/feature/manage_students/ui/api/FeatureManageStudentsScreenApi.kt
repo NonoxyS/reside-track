@@ -1,4 +1,4 @@
-package dev.nonoxy.feature.manage_students.presentation.navigation
+package dev.nonoxy.feature.manage_students.ui.api
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -11,21 +11,18 @@ import dev.nonoxy.core.navigation.ManageStudentsDraftRoomRoute
 import dev.nonoxy.core.navigation.ManageStudentsExistingRoomRoute
 import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetConfiguration
 import dev.nonoxy.core.navigation.bottomsheet.bottomSheet
+import dev.nonoxy.core.navigation.navigateOnResumed
 import dev.nonoxy.feature.manage_students.api.models.ManageStudentsMode
 import dev.nonoxy.feature.manage_students.ui.ManageStudentsScreen
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 fun NavController.navigateToManageStudentsExistingRoom(roomId: String) {
-    navigate(ManageStudentsExistingRoomRoute(roomId)) {
-        launchSingleTop = true
-    }
+    navigateOnResumed(ManageStudentsExistingRoomRoute(roomId))
 }
 
 fun NavController.navigateToManageStudentsDraftRoom() {
-    navigate(ManageStudentsDraftRoomRoute) {
-        launchSingleTop = true
-    }
+    navigateOnResumed(ManageStudentsDraftRoomRoute)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,14 +31,13 @@ fun NavGraphBuilder.bottomSheetManageStudentsExistingRoom(
 ) {
     bottomSheet<ManageStudentsExistingRoomRoute>(
         configuration = ModalBottomSheetConfiguration(
-            modifier = Modifier.statusBarsPadding().fillMaxWidth()
-        )
+            modifier = Modifier.statusBarsPadding().fillMaxWidth(),
+        ),
     ) { backStackEntry ->
         val roomId = backStackEntry.toRoute<ManageStudentsExistingRoomRoute>().roomId
-
         ManageStudentsScreen(
             onNavigateBack = onNavigateBack,
-            viewModel = koinViewModel { parametersOf(ManageStudentsMode.ExistingRoom(roomId)) }
+            viewModel = koinViewModel { parametersOf(ManageStudentsMode.ExistingRoom(roomId)) },
         )
     }
 }
@@ -52,12 +48,12 @@ fun NavGraphBuilder.bottomSheetManageStudentsDraftRoom(
 ) {
     bottomSheet<ManageStudentsDraftRoomRoute>(
         configuration = ModalBottomSheetConfiguration(
-            modifier = Modifier.statusBarsPadding().fillMaxWidth()
-        )
-    ) { backStackEntry ->
+            modifier = Modifier.statusBarsPadding().fillMaxWidth(),
+        ),
+    ) {
         ManageStudentsScreen(
             onNavigateBack = onNavigateBack,
-            viewModel = koinViewModel { parametersOf(ManageStudentsMode.DraftRoom) }
+            viewModel = koinViewModel { parametersOf(ManageStudentsMode.DraftRoom) },
         )
     }
 }

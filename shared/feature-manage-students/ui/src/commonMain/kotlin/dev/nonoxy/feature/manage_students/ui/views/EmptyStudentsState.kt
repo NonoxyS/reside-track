@@ -15,9 +15,9 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.impl.generated.resources.Res
-import residetrack.shared.feature_manage_students.impl.generated.resources.no_students_added
-import residetrack.shared.feature_manage_students.impl.generated.resources.no_students_hint
+import residetrack.shared.feature_manage_students.ui.generated.resources.Res
+import residetrack.shared.feature_manage_students.ui.generated.resources.no_students_added
+import residetrack.shared.feature_manage_students.ui.generated.resources.no_students_hint
 
 @Composable
 internal fun EmptyStudentsState(

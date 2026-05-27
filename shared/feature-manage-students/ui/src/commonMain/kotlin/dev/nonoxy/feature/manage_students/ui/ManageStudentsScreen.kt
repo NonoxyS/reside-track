@@ -12,45 +12,43 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.nonoxy.feature.manage_students.presentation.ManageStudentsViewModel
+import dev.nonoxy.feature.manage_students.presentation.models.UiManageStudentsLabel
+import dev.nonoxy.feature.manage_students.ui.views.ManageStudentsContent
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import dev.nonoxy.feature.manage_students.presentation.OldManageStudentsViewModel
-import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsAction
-import dev.nonoxy.feature.manage_students.ui.views.ManageStudentsContent
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun ManageStudentsScreen(
     onNavigateBack: () -> Unit,
-    viewModel: OldManageStudentsViewModel = koinViewModel()
+    viewModel: ManageStudentsViewModel = koinViewModel(),
 ) {
-    val viewState by viewModel.viewState().collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
     var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
 
-    viewModel.viewAction().CollectFlow { viewAction ->
-        when (val currentAction = viewAction) {
-            ManageStudentsAction.NavigateBack -> {
-                onNavigateBack()
-            }
-            is ManageStudentsAction.ShowError -> {
+    viewModel.label.CollectFlow { label ->
+        when (label) {
+            UiManageStudentsLabel.NavigateBack -> onNavigateBack()
+            is UiManageStudentsLabel.ShowError -> {
                 currentSnackbarType = SnackbarType.ERROR
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = currentAction.message,
-                    withDismissAction = true
+                    message = label.kind.localizedSuspend(),
+                    withDismissAction = true,
                 )
             }
-            is ManageStudentsAction.ShowSuccess -> {
+            is UiManageStudentsLabel.ShowSuccess -> {
                 currentSnackbarType = SnackbarType.INFO
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = currentAction.message,
-                    withDismissAction = true
+                    message = label.kind.localizedSuspend(),
+                    withDismissAction = true,
                 )
             }
         }
@@ -66,14 +64,23 @@ internal fun ManageStudentsScreen(
                         SnackbarType.INFO -> ResideTrackSnackbar(snackbarData = snackbarData)
                         else -> null
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         ManageStudentsContent(
             modifier = Modifier.fillMaxSize().padding(paddingValues),
-            state = viewState,
-            onObtainEvent = viewModel::obtainEvent
+            state = state,
+            onRetryClick = viewModel::onRetryLoadStudents,
+            onCloseClick = viewModel::onClose,
+            onAddStudent = viewModel::onAddStudent,
+            onRemoveStudent = viewModel::onRemoveStudent,
+            onStreamNumberChange = viewModel::onStreamNumberChange,
+            onCheckInDateChange = viewModel::onCheckInDateChange,
+            onCheckOutDateChange = viewModel::onCheckOutDateChange,
+            onCheckInDateMillisChange = viewModel::onCheckInDateMillisChange,
+            onCheckOutDateMillisChange = viewModel::onCheckOutDateMillisChange,
+            onSaveAndClose = viewModel::onSaveAndClose,
         )
     }
 }

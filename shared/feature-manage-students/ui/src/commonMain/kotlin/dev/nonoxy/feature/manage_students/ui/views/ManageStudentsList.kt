@@ -18,38 +18,43 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.nonoxy.feature.manage_students.presentation.models.UiEditableStudent
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import dev.nonoxy.feature.manage_students.presentation.models.EditableStudent
-import dev.nonoxy.feature.manage_students.presentation.models.ManageStudentsEvent
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.impl.generated.resources.Res
-import residetrack.shared.feature_manage_students.impl.generated.resources.add_student
-import residetrack.shared.feature_manage_students.impl.generated.resources.students_total_count
+import residetrack.shared.feature_manage_students.ui.generated.resources.Res
+import residetrack.shared.feature_manage_students.ui.generated.resources.add_student
+import residetrack.shared.feature_manage_students.ui.generated.resources.students_total_count
 
 @Composable
 internal fun ManageStudentsList(
-    students: ImmutableList<EditableStudent>,
-    onObtainEvent: (ManageStudentsEvent) -> Unit,
-    modifier: Modifier = Modifier
+    students: ImmutableList<UiEditableStudent>,
+    onAddStudent: () -> Unit,
+    onRemoveStudent: (String) -> Unit,
+    onStreamNumberChange: (String, String) -> Unit,
+    onCheckInDateChange: (String, String) -> Unit,
+    onCheckOutDateChange: (String, String) -> Unit,
+    onCheckInDateMillisChange: (String, Long) -> Unit,
+    onCheckOutDateMillisChange: (String, Long) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(padding_size_16),
-        verticalArrangement = Arrangement.spacedBy(padding_size_12)
+        verticalArrangement = Arrangement.spacedBy(padding_size_12),
     ) {
         if (students.isNotEmpty()) {
             item {
                 Text(
                     text = stringResource(
                         Res.string.students_total_count,
-                        students.size
+                        students.size,
                     ),
                     style = ResideTrackTheme.typography.paragraph,
-                    color = ResideTrackTheme.colors.textCaption
+                    color = ResideTrackTheme.colors.textCaption,
                 )
                 Spacer(modifier = Modifier.height(padding_size_8))
             }
@@ -57,56 +62,41 @@ internal fun ManageStudentsList(
 
         items(
             items = students,
-            key = { student -> student.id }
+            key = { student -> student.id },
         ) { student ->
             EditableStudentCard(
                 modifier = Modifier.fillMaxWidth().animateItem(),
                 student = student,
                 onStreamNumberChange = { value ->
-                    onObtainEvent(
-                        ManageStudentsEvent.OnStreamNumberChange(
-                            studentId = student.id,
-                            value = value
-                        )
-                    )
+                    onStreamNumberChange(student.id, value)
                 },
                 onCheckInDateMillisChange = { value ->
-                    onObtainEvent(
-                        ManageStudentsEvent.OnCheckInDateMillisChange(
-                            studentId = student.id,
-                            millis = value
-                        )
-                    )
+                    onCheckInDateMillisChange(student.id, value)
                 },
                 onCheckOutDateMillisChange = { value ->
-                    onObtainEvent(
-                        ManageStudentsEvent.OnCheckOutDateMillisChange(
-                            studentId = student.id,
-                            millis = value
-                        )
-                    )
+                    onCheckOutDateMillisChange(student.id, value)
                 },
                 onRemove = {
-                    onObtainEvent(ManageStudentsEvent.OnRemoveStudent(student.id))
-                }
+                    onRemoveStudent(student.id)
+                },
             )
         }
 
         item {
             OutlinedButton(
-                onClick = { onObtainEvent(ManageStudentsEvent.OnAddStudent) },
+                onClick = onAddStudent,
                 modifier = Modifier.fillMaxWidth(),
                 border = BorderStroke(
                     width = 1.dp,
-                    color = ResideTrackTheme.colors.borderDefault
+                    color = ResideTrackTheme.colors.borderDefault,
                 ),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = ResideTrackTheme.colors.textPrimary
-                )
+                    contentColor = ResideTrackTheme.colors.textPrimary,
+                ),
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = null
+                    contentDescription = null,
                 )
                 Spacer(modifier = Modifier.width(padding_size_8))
                 Text(stringResource(Res.string.add_student))

@@ -15,13 +15,13 @@ import dev.nonoxy.residetrack.common.ui.common.datepicker.ResideTrackDatePicker
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.impl.generated.resources.Res
-import residetrack.shared.feature_manage_students.impl.generated.resources.cancel
-import residetrack.shared.feature_manage_students.impl.generated.resources.check_in_date_placeholder
-import residetrack.shared.feature_manage_students.impl.generated.resources.check_out_date_placeholder
-import residetrack.shared.feature_manage_students.impl.generated.resources.save
-import residetrack.shared.feature_manage_students.impl.generated.resources.stream_number
-import residetrack.shared.feature_manage_students.impl.generated.resources.stream_number_placeholder
+import residetrack.shared.feature_manage_students.ui.generated.resources.Res
+import residetrack.shared.feature_manage_students.ui.generated.resources.cancel
+import residetrack.shared.feature_manage_students.ui.generated.resources.check_in_date_placeholder
+import residetrack.shared.feature_manage_students.ui.generated.resources.check_out_date_placeholder
+import residetrack.shared.feature_manage_students.ui.generated.resources.save
+import residetrack.shared.feature_manage_students.ui.generated.resources.stream_number
+import residetrack.shared.feature_manage_students.ui.generated.resources.stream_number_placeholder
 
 @Composable
 internal fun StudentCardContent(
