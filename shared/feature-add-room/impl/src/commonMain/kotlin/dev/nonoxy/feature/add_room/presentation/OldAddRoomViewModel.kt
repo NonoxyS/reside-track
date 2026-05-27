@@ -24,7 +24,7 @@ import residetrack.shared.feature_add_room.impl.generated.resources.add_room_val
 import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_floor_number_required
 import residetrack.shared.feature_add_room.impl.generated.resources.add_room_validation_room_number_required
 
-internal class AddRoomViewModel(
+internal class OldAddRoomViewModel(
     private val roomsRepository: RoomsRepository
 ) : BaseViewModel<AddRoomViewState, AddRoomEvent, AddRoomAction>(AddRoomViewState.Initial) {
 

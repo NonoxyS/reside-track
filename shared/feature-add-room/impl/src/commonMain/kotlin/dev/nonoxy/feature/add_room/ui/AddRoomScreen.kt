@@ -17,7 +17,7 @@ import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import dev.nonoxy.feature.add_room.presentation.AddRoomViewModel
+import dev.nonoxy.feature.add_room.presentation.OldAddRoomViewModel
 import dev.nonoxy.feature.add_room.presentation.models.AddRoomAction
 import dev.nonoxy.feature.add_room.ui.views.AddRoomScreenContent
 import org.koin.compose.viewmodel.koinViewModel
@@ -26,7 +26,7 @@ import org.koin.compose.viewmodel.koinViewModel
 internal fun AddRoomScreen(
     onNavigateBack: () -> Unit,
     onNavigateToManageStudentsDraftRoom: () -> Unit,
-    viewModel: AddRoomViewModel = koinViewModel()
+    viewModel: OldAddRoomViewModel = koinViewModel()
 ) {
     val viewState by viewModel.viewState().collectAsStateWithLifecycle()
 
