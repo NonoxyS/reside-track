@@ -23,6 +23,7 @@ commonMainDependencies {
         projects.shared.commonUi,
         projects.shared.featureRooms.api,
         projects.shared.featureAddRoom.api,
+        projects.shared.coreMvikotlin,
     )
 }
 
