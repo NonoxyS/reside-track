@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack
+package dev.nonoxy.residetrack.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
