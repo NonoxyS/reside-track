@@ -8,7 +8,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.common"
+    namespace = "dev.nonoxy.residetrack.common"
 }
 
 commonMainDependencies {

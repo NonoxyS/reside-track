@@ -10,7 +10,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.core.database"
+    namespace = "dev.nonoxy.residetrack.core.database"
 }
 
 commonMainDependencies {

@@ -8,7 +8,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.feature.add_room.ui"
+    namespace = "dev.nonoxy.residetrack.feature.add_room.ui"
 }
 
 commonMainDependencies {

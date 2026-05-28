@@ -5,16 +5,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import dev.nonoxy.core.navigation.RoomsRoute
-import dev.nonoxy.core.navigation.bottomsheet.ModalBottomSheetLayout
-import dev.nonoxy.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
-import dev.nonoxy.feature.add_room.ui.api.bottomSheetAddRoomScreen
-import dev.nonoxy.feature.add_room.ui.api.navigateToAddRoomScreen
-import dev.nonoxy.feature.manage_students.ui.api.bottomSheetManageStudentsExistingRoom
-import dev.nonoxy.feature.manage_students.ui.api.bottomSheetManageStudentsDraftRoom
-import dev.nonoxy.feature.manage_students.ui.api.navigateToManageStudentsExistingRoom
-import dev.nonoxy.feature.manage_students.ui.api.navigateToManageStudentsDraftRoom
-import dev.nonoxy.feature.rooms.ui.api.composableRoomsScreen
+import dev.nonoxy.residetrack.core.navigation.RoomsRoute
+import dev.nonoxy.residetrack.core.navigation.bottomsheet.ModalBottomSheetLayout
+import dev.nonoxy.residetrack.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
+import dev.nonoxy.residetrack.feature.add_room.ui.api.bottomSheetAddRoomScreen
+import dev.nonoxy.residetrack.feature.add_room.ui.api.navigateToAddRoomScreen
+import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsExistingRoom
+import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsDraftRoom
+import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsExistingRoom
+import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsDraftRoom
+import dev.nonoxy.residetrack.feature.rooms.ui.api.composableRoomsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

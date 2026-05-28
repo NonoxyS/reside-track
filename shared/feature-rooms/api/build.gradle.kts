@@ -5,5 +5,5 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.feature.rooms.api"
+    namespace = "dev.nonoxy.residetrack.feature.rooms.api"
 }

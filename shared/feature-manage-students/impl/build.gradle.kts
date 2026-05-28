@@ -7,7 +7,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.feature.manage_students.impl"
+    namespace = "dev.nonoxy.residetrack.feature.manage_students.impl"
 }
 
 commonMainDependencies {

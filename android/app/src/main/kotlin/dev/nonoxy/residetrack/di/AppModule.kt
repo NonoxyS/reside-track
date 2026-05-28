@@ -1,6 +1,6 @@
 package dev.nonoxy.residetrack.di
 
-import dev.nonoxy.common.di.AppEnvironmentQualifiers
+import dev.nonoxy.residetrack.common.di.AppEnvironmentQualifiers
 import dev.nonoxy.residetrack.BuildConfig
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

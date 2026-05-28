@@ -10,7 +10,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.core.navigation"
+    namespace = "dev.nonoxy.residetrack.core.navigation"
 }
 
 commonMainDependencies {

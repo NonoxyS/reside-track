@@ -5,5 +5,5 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.template"
+    namespace = "dev.nonoxy.residetrack.template"
 }

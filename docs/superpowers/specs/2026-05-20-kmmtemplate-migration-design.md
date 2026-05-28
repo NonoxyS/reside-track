@@ -175,7 +175,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 
 Каждая фаза завершается контрольной точкой: проект собирается, detekt проходит.
 
-**Статус (2026-05-28):** Фазы 1–7 завершены; следующая — Фаза 8 (Пакеты: `dev.nonoxy.*` → `dev.nonoxy.residetrack.*`).
+**Статус (2026-05-28):** Фазы 1–8 завершены.
 
 1. **build-logic + версии** ✅ — `build-logic`, convention plugins, `libs.versions.toml`,
    бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
@@ -205,7 +205,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 5. **Остальные фичи** ✅ — `feature-add-room`, `feature-manage-students` → 4 модуля + MVIKotlin. `BaseViewModel`/`StringProvider` удалены.
 6. **Ресурсы** ✅ — Compose Resources → moko-resources. Все strings/plurals/images/fonts централизованы в `:shared:common-resources` под `moko-resources/`. `StringProvider` удалён ещё в Фазе 5.
 7. **App-модуль** ✅ — `:android:app` и `:shared:main` доведены до парности с KMMTemplate: file-moves под `ui/`, удалён неиспользуемый Platform-boilerplate, edge-to-edge, network security config per flavor, Koin init вынесен в `iOSApp.swift`, iOS framework `isStatic = true`.
-8. **Пакеты** — переименование `dev.nonoxy.*` → `dev.nonoxy.residetrack.*`.
+8. **Пакеты** ✅ — переименование `dev.nonoxy.*` → `dev.nonoxy.residetrack.*`. Все модули переведены на `dev.nonoxy.residetrack.*`, namespace в `build.gradle.kts` обновлены, мёртвый каталог `core/` удалён.
 
 ## 15. Риски
 

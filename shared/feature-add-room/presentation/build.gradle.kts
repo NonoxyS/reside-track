@@ -7,7 +7,7 @@ plugins {
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.feature.add_room.presentation"
+    namespace = "dev.nonoxy.residetrack.feature.add_room.presentation"
 }
 
 commonMainDependencies {

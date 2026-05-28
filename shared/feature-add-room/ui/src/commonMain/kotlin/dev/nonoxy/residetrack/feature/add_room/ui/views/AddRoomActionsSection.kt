@@ -1,0 +1,73 @@
+package dev.nonoxy.residetrack.feature.add_room.ui.views
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+@Composable
+internal fun AddRoomActionsSection(
+    isFormValid: Boolean,
+    isLoading: Boolean,
+    onCancelClick: () -> Unit,
+    onCreateClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(padding_size_32)
+    ) {
+        ResideTrackButton(
+            onClick = onCancelClick,
+            modifier = Modifier.weight(1f),
+            enabled = !isLoading,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ResideTrackTheme.colors.fillSecondary,
+                disabledContainerColor = ResideTrackTheme.colors.fillInactive
+            )
+        ) {
+            Text(
+                text = stringResource(MR.strings.add_room_cancel_button),
+                style = ResideTrackTheme.typography.head3.copy(
+                    color = ResideTrackTheme.colors.textPrimary
+                )
+            )
+        }
+
+        ResideTrackButton(
+            onClick = onCreateClick,
+            modifier = Modifier.weight(1f),
+            enabled = isFormValid && !isLoading,
+            loading = isLoading
+        ) {
+            Text(
+                text = stringResource(MR.strings.add_room_create_button),
+                style = ResideTrackTheme.typography.head3.copy(
+                    color = ResideTrackTheme.colors.textPrimary
+                )
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun AddRoomActionsSectionPreview() {
+    ResideTrackTheme {
+        AddRoomActionsSection(
+            isFormValid = true,
+            isLoading = false,
+            onCancelClick = {},
+            onCreateClick = {}
+        )
+    }
+}
