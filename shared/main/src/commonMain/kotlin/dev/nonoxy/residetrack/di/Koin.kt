@@ -15,7 +15,7 @@ import io.github.aakira.napier.Napier
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
+fun initKoin(appDeclaration: KoinAppDeclaration) {
     Napier.d(message = "initKoin")
     startKoin {
         appDeclaration()
