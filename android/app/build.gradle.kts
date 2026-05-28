@@ -43,6 +43,22 @@ android {
     }
 
     signingConfigs {
+        // TODO: Create release keystore and uncomment this
+        // register("release").configure {
+        //     file("$rootDir/signing.properties").let { file ->
+        //         if (!file.canRead()) error("signing.properties file read error")
+        //
+        //         val properties = Properties().apply {
+        //             file.inputStream().use { stream -> load(stream) }
+        //         }
+        //
+        //         storeFile = file("$rootDir/keystores/release.keystore.jks")
+        //         storePassword = properties.getProperty("keystorePassword")
+        //         keyAlias = properties.getProperty("keyAlias")
+        //         keyPassword = properties.getProperty("keyPassword")
+        //     }
+        // }
+
         named("debug").configure {
             val DEBUG_STORE_PASSWORD: String by project
             val DEBUG_KEY_ALIAS: String by project
