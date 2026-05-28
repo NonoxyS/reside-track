@@ -175,7 +175,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 
 Каждая фаза завершается контрольной точкой: проект собирается, detekt проходит.
 
-**Статус (2026-05-28):** Фазы 1–6 завершены; следующая — Фаза 7 (App-модуль: `composeApp` → `:android:app` + `:shared:main`).
+**Статус (2026-05-28):** Фазы 1–7 завершены; следующая — Фаза 8 (Пакеты: `dev.nonoxy.*` → `dev.nonoxy.residetrack.*`).
 
 1. **build-logic + версии** ✅ — `build-logic`, convention plugins, `libs.versions.toml`,
    бамп версий, новые библиотеки. Сюда же вынужденно вошёл структурный split
@@ -204,7 +204,7 @@ Compose Resources → moko-resources. Строки фич и `design-system` п�
 4. **Пилот** ✅ — `feature-rooms` → 4 модуля + MVIKotlin.
 5. **Остальные фичи** ✅ — `feature-add-room`, `feature-manage-students` → 4 модуля + MVIKotlin. `BaseViewModel`/`StringProvider` удалены.
 6. **Ресурсы** ✅ — Compose Resources → moko-resources. Все strings/plurals/images/fonts централизованы в `:shared:common-resources` под `moko-resources/`. `StringProvider` удалён ещё в Фазе 5.
-7. **App-модуль** — `composeApp` → `:android:app` + `:shared:main`.
+7. **App-модуль** ✅ — `:android:app` и `:shared:main` доведены до парности с KMMTemplate: file-moves под `ui/`, удалён неиспользуемый Platform-boilerplate, edge-to-edge, network security config per flavor, Koin init вынесен в `iOSApp.swift`, iOS framework `isStatic = true`.
 8. **Пакеты** — переименование `dev.nonoxy.*` → `dev.nonoxy.residetrack.*`.
 
 ## 15. Риски
