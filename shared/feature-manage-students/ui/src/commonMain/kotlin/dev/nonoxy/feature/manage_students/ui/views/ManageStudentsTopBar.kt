@@ -7,10 +7,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.feature.manage_students.presentation.models.UiRoom
-import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.manage_students_room_title
-import residetrack.shared.feature_manage_students.ui.generated.resources.manage_students_title
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,11 +21,11 @@ internal fun ManageStudentsTopBar(
             Text(
                 text = room?.let {
                     stringResource(
-                        Res.string.manage_students_room_title,
+                        MR.strings.manage_students_room_title,
                         it.floorNumber.toIntOrNull() ?: 0,
                         it.roomNumber.toIntOrNull() ?: 0
                     )
-                } ?: stringResource(Res.string.manage_students_title),
+                } ?: stringResource(MR.strings.manage_students_title),
                 style = ResideTrackTheme.typography.head3,
                 color = ResideTrackTheme.colors.textPrimary
             )

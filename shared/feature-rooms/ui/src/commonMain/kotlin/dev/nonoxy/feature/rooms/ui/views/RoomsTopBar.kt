@@ -11,13 +11,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
-import org.jetbrains.compose.resources.pluralStringResource
-import org.jetbrains.compose.resources.vectorResource
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_rooms.ui.generated.resources.Res
-import residetrack.shared.feature_rooms.ui.generated.resources.ic_add
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_available_places
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_total_places
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +36,7 @@ internal fun RoomsTopBar(
         actions = {
             IconButton(onClick = onAddRoomClick) {
                 Icon(
-                    imageVector = vectorResource(resource = Res.drawable.ic_add),
+                    painter = painterResource(MR.images.ic_add),
                     contentDescription = null
                 )
             }
@@ -47,19 +44,19 @@ internal fun RoomsTopBar(
         navigationIcon = {
             Column {
                 Text(
-                    text = pluralStringResource(
-                        resource = Res.plurals.rooms_total_places,
+                    text = stringResource(
+                        resource = MR.plurals.rooms_total_places,
                         quantity = totalPlaces,
-                        totalPlaces
+                        totalPlaces,
                     ),
                     style = ResideTrackTheme.typography.lead
                 )
 
                 Text(
-                    text = pluralStringResource(
-                        resource = Res.plurals.rooms_available_places,
+                    text = stringResource(
+                        resource = MR.plurals.rooms_available_places,
                         quantity = availablePlaces,
-                        availablePlaces
+                        availablePlaces,
                     ),
                     style = ResideTrackTheme.typography.lead
                 )

@@ -8,6 +8,7 @@ import dev.nonoxy.feature.manage_students.impl.di.featureManageStudentsImplModul
 import dev.nonoxy.feature.manage_students.presentation.di.featureManageStudentsPresentationModule
 import dev.nonoxy.feature.rooms.impl.di.featureRoomsImplModule
 import dev.nonoxy.feature.rooms.presentation.di.featureRoomsPresentationModule
+import dev.nonoxy.residetrack.common.resources.di.commonResourcesModule
 import dev.nonoxy.residetrack.core.domain.di.coreDomainModule
 import dev.nonoxy.residetrack.core.mvikotlin.di.coreMVIKotlinModule
 import io.github.aakira.napier.Napier
@@ -20,6 +21,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
         appDeclaration()
         modules(
             commonModule,
+            commonResourcesModule,
 
             coreDomainModule,
             coreMVIKotlinModule,

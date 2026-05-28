@@ -15,10 +15,8 @@ import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.cancel
-import residetrack.shared.feature_manage_students.ui.generated.resources.save
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @Composable
 internal fun ManageStudentsBottomButtons(
@@ -44,7 +42,7 @@ internal fun ManageStudentsBottomButtons(
             ),
         ) {
             Text(
-                text = stringResource(Res.string.cancel),
+                text = stringResource(MR.strings.cancel),
                 style = ResideTrackTheme.typography.paragraph,
             )
         }
@@ -54,7 +52,7 @@ internal fun ManageStudentsBottomButtons(
             modifier = Modifier.weight(1f),
         ) {
             Text(
-                text = stringResource(Res.string.save),
+                text = stringResource(MR.strings.save),
                 style = ResideTrackTheme.typography.paragraph,
                 color = ResideTrackTheme.colors.white,
             )

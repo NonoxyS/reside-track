@@ -14,10 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.no_students_added
-import residetrack.shared.feature_manage_students.ui.generated.resources.no_students_hint
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @Composable
 internal fun EmptyStudentsState(
@@ -31,14 +29,14 @@ internal fun EmptyStudentsState(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = stringResource(Res.string.no_students_added),
+            text = stringResource(MR.strings.no_students_added),
             style = ResideTrackTheme.typography.head4,
             color = ResideTrackTheme.colors.textCaption,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(padding_size_8))
         Text(
-            text = stringResource(Res.string.no_students_hint),
+            text = stringResource(MR.strings.no_students_hint),
             style = ResideTrackTheme.typography.paragraph,
             color = ResideTrackTheme.colors.textCaption,
             textAlign = TextAlign.Center

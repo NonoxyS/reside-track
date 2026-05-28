@@ -12,15 +12,14 @@ import dev.nonoxy.residetrack.common.ui.common.loader.ResideTrackLoader
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.text_size_20
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.common_ui.generated.resources.CommonUiRes
-import residetrack.shared.common_ui.generated.resources.loading_data
 
 @Composable
 fun LoadingState(
     modifier: Modifier = Modifier,
-    loadingMessage: String? = stringResource(CommonUiRes.string.loading_data)
+    loadingMessage: String? = stringResource(MR.strings.loading_data)
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),

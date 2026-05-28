@@ -10,11 +10,9 @@ import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.ui.generated.resources.Res
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_cancel_button
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_create_button
 
 @Composable
 internal fun AddRoomActionsSection(
@@ -38,7 +36,7 @@ internal fun AddRoomActionsSection(
             )
         ) {
             Text(
-                text = stringResource(Res.string.add_room_cancel_button),
+                text = stringResource(MR.strings.add_room_cancel_button),
                 style = ResideTrackTheme.typography.head3.copy(
                     color = ResideTrackTheme.colors.textPrimary
                 )
@@ -52,7 +50,7 @@ internal fun AddRoomActionsSection(
             loading = isLoading
         ) {
             Text(
-                text = stringResource(Res.string.add_room_create_button),
+                text = stringResource(MR.strings.add_room_create_button),
                 style = ResideTrackTheme.typography.head3.copy(
                     color = ResideTrackTheme.colors.textPrimary
                 )

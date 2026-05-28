@@ -11,17 +11,15 @@ import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.common_ui.generated.resources.CommonUiRes
-import residetrack.shared.common_ui.generated.resources.button_update
-import residetrack.shared.common_ui.generated.resources.error_something_went_wrong
 
 @Composable
 fun ErrorLoadingState(
     modifier: Modifier = Modifier,
-    errorMessage: String = stringResource(CommonUiRes.string.error_something_went_wrong),
-    buttonText: String = stringResource(CommonUiRes.string.button_update),
+    errorMessage: String = stringResource(MR.strings.error_something_went_wrong),
+    buttonText: String = stringResource(MR.strings.button_update),
     showRetryButton: Boolean = true,
     onRetryClick: () -> Unit = {}
 ) {

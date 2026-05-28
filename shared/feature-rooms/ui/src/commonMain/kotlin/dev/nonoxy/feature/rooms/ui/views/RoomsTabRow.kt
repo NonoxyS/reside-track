@@ -13,9 +13,8 @@ import androidx.compose.ui.unit.Dp
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import kotlinx.collections.immutable.ImmutableSet
-import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_rooms.ui.generated.resources.Res
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_floor
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +45,7 @@ internal fun RoomsTabRow(
                     text = {
                         Text(
                             text = buildString {
-                                append(stringResource(Res.string.rooms_floor))
+                                append(stringResource(MR.strings.rooms_floor))
                                 append(" $floor")
                             },
                             style = ResideTrackTheme.typography.lead
@@ -80,7 +79,7 @@ internal fun RoomsTabRow(
                     text = {
                         Text(
                             text = buildString {
-                                append(stringResource(Res.string.rooms_floor))
+                                append(stringResource(MR.strings.rooms_floor))
                                 append(" $floor")
                             },
                             style = ResideTrackTheme.typography.lead

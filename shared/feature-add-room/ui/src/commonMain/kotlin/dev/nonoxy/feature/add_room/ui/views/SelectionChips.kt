@@ -17,12 +17,9 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.ui.generated.resources.Res
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_custom_beds_button
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_hide_button
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_new_floor_button
 
 @Composable
 internal fun FloorSelectionChips(
@@ -64,9 +61,9 @@ internal fun FloorSelectionChips(
             label = {
                 Text(
                     text = if (showInput) {
-                        stringResource(Res.string.add_room_hide_button)
+                        stringResource(MR.strings.add_room_hide_button)
                     } else {
-                        stringResource(Res.string.add_room_new_floor_button)
+                        stringResource(MR.strings.add_room_new_floor_button)
                     },
                     style = ResideTrackTheme.typography.paragraph
                 )
@@ -134,9 +131,9 @@ internal fun BedsSelectionChips(
             label = {
                 Text(
                     text = if (showInput) {
-                        stringResource(Res.string.add_room_hide_button)
+                        stringResource(MR.strings.add_room_hide_button)
                     } else {
-                        stringResource(Res.string.add_room_custom_beds_button)
+                        stringResource(MR.strings.add_room_custom_beds_button)
                     },
                     style = ResideTrackTheme.typography.paragraph
                 )

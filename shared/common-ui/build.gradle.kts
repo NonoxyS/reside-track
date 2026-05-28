@@ -15,14 +15,9 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         *composeBundle,
-        libs.compose.multiplatform.resources,
         libs.compose.icons.core,
+        libs.moko.resources.compose,
         projects.shared.common,
+        projects.shared.commonResources,
     )
-}
-
-compose.resources {
-    publicResClass = true
-    generateResClass = auto
-    nameOfResClass = "CommonUiRes"
 }

@@ -14,12 +14,9 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.ui.generated.resources.Res
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_floor_number_label
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_floor_number_placeholder
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_select_floor_hint
 
 @Composable
 internal fun FloorSelectionSection(
@@ -41,7 +38,7 @@ internal fun FloorSelectionSection(
             Column {
                 AnimatedVisibility(visible = !showInput) {
                     Text(
-                        text = stringResource(Res.string.add_room_select_floor_hint),
+                        text = stringResource(MR.strings.add_room_select_floor_hint),
                         style = ResideTrackTheme.typography.head3.copy(
                             color = ResideTrackTheme.colors.textCaption,
                         ),
@@ -63,8 +60,8 @@ internal fun FloorSelectionSection(
                 ResideTrackTextField(
                     value = textFieldState.value,
                     onValueChange = onInputValueChange,
-                    label = stringResource(Res.string.add_room_floor_number_label),
-                    placeholder = stringResource(Res.string.add_room_floor_number_placeholder),
+                    label = stringResource(MR.strings.add_room_floor_number_label),
+                    placeholder = stringResource(MR.strings.add_room_floor_number_placeholder),
                     keyboardType = KeyboardType.Number,
                     isError = textFieldState.errorKind != null,
                     errorMessage = textFieldState.errorKind?.localized(),

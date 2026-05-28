@@ -27,14 +27,9 @@ import dev.nonoxy.feature.rooms.presentation.models.UiRoom
 import dev.nonoxy.feature.rooms.presentation.models.UiStudent
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_rooms.ui.generated.resources.Res
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_check_in
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_check_out
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_floor
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_room
-import residetrack.shared.feature_rooms.ui.generated.resources.rooms_stream
 
 @Composable
 internal fun RoomListItem(
@@ -89,7 +84,7 @@ private fun RoomInfo(
     Column(modifier = modifier) {
         Text(
             text = buildString {
-                append(stringResource(resource = Res.string.rooms_floor))
+                append(stringResource(resource = MR.strings.rooms_floor))
                 append(": $floor")
             },
             style = ResideTrackTheme.typography.head4,
@@ -99,7 +94,7 @@ private fun RoomInfo(
         Box {
             Text(
                 text = buildString {
-                    append(stringResource(resource = Res.string.rooms_room))
+                    append(stringResource(resource = MR.strings.rooms_room))
                     append(": 12345") // Hold exactly for 5-symbol room number
                 },
                 style = ResideTrackTheme.typography.head4,
@@ -108,7 +103,7 @@ private fun RoomInfo(
 
             Text(
                 text = buildString {
-                    append(stringResource(resource = Res.string.rooms_room))
+                    append(stringResource(resource = MR.strings.rooms_room))
                     append(": $room")
                 },
                 style = ResideTrackTheme.typography.head4,
@@ -134,7 +129,7 @@ private fun StudentsStreamInfo(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(resource = Res.string.rooms_stream),
+            text = stringResource(resource = MR.strings.rooms_stream),
             style = ResideTrackTheme.typography.head4,
             color = ResideTrackTheme.colors.textCaption,
         )
@@ -162,7 +157,7 @@ private fun StudentsCheckInOutInfo(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = stringResource(resource = Res.string.rooms_check_in),
+                text = stringResource(resource = MR.strings.rooms_check_in),
                 style = ResideTrackTheme.typography.head4,
                 color = ResideTrackTheme.colors.textCaption,
             )
@@ -179,7 +174,7 @@ private fun StudentsCheckInOutInfo(
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = stringResource(resource = Res.string.rooms_check_out),
+                text = stringResource(resource = MR.strings.rooms_check_out),
                 style = ResideTrackTheme.typography.head4,
                 color = ResideTrackTheme.colors.textCaption,
             )

@@ -16,10 +16,9 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_24
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.stringResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import residetrack.shared.feature_add_room.ui.generated.resources.Res
-import residetrack.shared.feature_add_room.ui.generated.resources.add_room_title
 
 @Composable
 internal fun AddRoomScreenContent(
@@ -42,7 +41,7 @@ internal fun AddRoomScreenContent(
         verticalArrangement = Arrangement.spacedBy(padding_size_20),
     ) {
         Text(
-            text = stringResource(Res.string.add_room_title),
+            text = stringResource(MR.strings.add_room_title),
             style = ResideTrackTheme.typography.head2.copy(
                 color = ResideTrackTheme.colors.textPrimary,
             ),

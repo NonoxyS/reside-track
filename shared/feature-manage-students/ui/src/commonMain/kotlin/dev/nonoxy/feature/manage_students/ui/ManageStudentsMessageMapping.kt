@@ -2,29 +2,20 @@ package dev.nonoxy.feature.manage_students.ui
 
 import dev.nonoxy.feature.manage_students.api.store.ManageStudentsErrorKind
 import dev.nonoxy.feature.manage_students.api.store.ManageStudentsSuccessKind
-import org.jetbrains.compose.resources.getString
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_draft_room_not_found
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_duplicate_stream_numbers
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_failed_to_load_students
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_failed_to_save_students
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_invalid_date_format
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_invalid_date_range
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_room_not_found
-import residetrack.shared.feature_manage_students.ui.generated.resources.error_stream_number_invalid
-import residetrack.shared.feature_manage_students.ui.generated.resources.students_saved_successfully
+import dev.nonoxy.residetrack.common.resources.StringConverter
+import dev.nonoxy.residetrack.res.MR
 
-internal suspend fun ManageStudentsErrorKind.localizedSuspend(): String = when (this) {
-    ManageStudentsErrorKind.FailedToLoadStudents -> getString(Res.string.error_failed_to_load_students)
-    ManageStudentsErrorKind.FailedToSaveStudents -> getString(Res.string.error_failed_to_save_students)
-    ManageStudentsErrorKind.RoomNotFound -> getString(Res.string.error_room_not_found)
-    ManageStudentsErrorKind.DraftRoomNotFound -> getString(Res.string.error_draft_room_not_found)
-    ManageStudentsErrorKind.StreamNumberInvalid -> getString(Res.string.error_stream_number_invalid)
-    ManageStudentsErrorKind.InvalidDateRange -> getString(Res.string.error_invalid_date_range)
-    ManageStudentsErrorKind.InvalidDateFormat -> getString(Res.string.error_invalid_date_format)
-    ManageStudentsErrorKind.DuplicateStreamNumbers -> getString(Res.string.error_duplicate_stream_numbers)
+internal fun ManageStudentsErrorKind.localized(converter: StringConverter): String = when (this) {
+    ManageStudentsErrorKind.FailedToLoadStudents -> converter.convert(MR.strings.error_failed_to_load_students)
+    ManageStudentsErrorKind.FailedToSaveStudents -> converter.convert(MR.strings.error_failed_to_save_students)
+    ManageStudentsErrorKind.RoomNotFound -> converter.convert(MR.strings.error_room_not_found)
+    ManageStudentsErrorKind.DraftRoomNotFound -> converter.convert(MR.strings.error_draft_room_not_found)
+    ManageStudentsErrorKind.StreamNumberInvalid -> converter.convert(MR.strings.error_stream_number_invalid)
+    ManageStudentsErrorKind.InvalidDateRange -> converter.convert(MR.strings.error_invalid_date_range)
+    ManageStudentsErrorKind.InvalidDateFormat -> converter.convert(MR.strings.error_invalid_date_format)
+    ManageStudentsErrorKind.DuplicateStreamNumbers -> converter.convert(MR.strings.error_duplicate_stream_numbers)
 }
 
-internal suspend fun ManageStudentsSuccessKind.localizedSuspend(): String = when (this) {
-    ManageStudentsSuccessKind.StudentsSaved -> getString(Res.string.students_saved_successfully)
+internal fun ManageStudentsSuccessKind.localized(converter: StringConverter): String = when (this) {
+    ManageStudentsSuccessKind.StudentsSaved -> converter.convert(MR.strings.students_saved_successfully)
 }

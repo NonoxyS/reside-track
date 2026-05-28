@@ -13,12 +13,6 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
-        libs.compose.multiplatform.resources,
         libs.kotlin.immutableCollections,
     )
-}
-
-compose.resources {
-    publicResClass = false
-    generateResClass = always
 }

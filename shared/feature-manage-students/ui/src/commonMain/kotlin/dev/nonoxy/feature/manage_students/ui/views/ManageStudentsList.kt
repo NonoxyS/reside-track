@@ -24,10 +24,8 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import kotlinx.collections.immutable.ImmutableList
-import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.add_student
-import residetrack.shared.feature_manage_students.ui.generated.resources.students_total_count
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @Composable
 internal fun ManageStudentsList(
@@ -50,7 +48,7 @@ internal fun ManageStudentsList(
             item {
                 Text(
                     text = stringResource(
-                        Res.string.students_total_count,
+                        MR.strings.students_total_count,
                         students.size,
                     ),
                     style = ResideTrackTheme.typography.paragraph,
@@ -99,7 +97,7 @@ internal fun ManageStudentsList(
                     contentDescription = null,
                 )
                 Spacer(modifier = Modifier.width(padding_size_8))
-                Text(stringResource(Res.string.add_student))
+                Text(stringResource(MR.strings.add_student))
             }
         }
 

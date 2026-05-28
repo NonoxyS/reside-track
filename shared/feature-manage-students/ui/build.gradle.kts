@@ -11,14 +11,8 @@ androidLibraryConfig {
     namespace = "dev.nonoxy.feature.manage_students.ui"
 }
 
-compose.resources {
-    publicResClass = false
-    generateResClass = always
-}
-
 commonMainDependencies {
     implementations(
-        libs.compose.multiplatform.resources,
         libs.kotlin.immutableCollections,
         libs.compose.icons.core,
     )

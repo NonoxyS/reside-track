@@ -13,7 +13,6 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
-        libs.compose.multiplatform.resources,
         libs.kotlin.immutableCollections,
     )
 }

@@ -14,14 +14,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import dev.nonoxy.residetrack.common.ui.common.datepicker.ResideTrackDatePicker
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import org.jetbrains.compose.resources.stringResource
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.cancel
-import residetrack.shared.feature_manage_students.ui.generated.resources.check_in_date_placeholder
-import residetrack.shared.feature_manage_students.ui.generated.resources.check_out_date_placeholder
-import residetrack.shared.feature_manage_students.ui.generated.resources.save
-import residetrack.shared.feature_manage_students.ui.generated.resources.stream_number
-import residetrack.shared.feature_manage_students.ui.generated.resources.stream_number_placeholder
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @Composable
 internal fun StudentCardContent(
@@ -44,8 +38,8 @@ internal fun StudentCardContent(
         ResideTrackTextField(
             value = streamNumber,
             onValueChange = onStreamNumberChange,
-            label = stringResource(Res.string.stream_number),
-            placeholder = stringResource(Res.string.stream_number_placeholder),
+            label = stringResource(MR.strings.stream_number),
+            placeholder = stringResource(MR.strings.stream_number_placeholder),
             keyboardType = KeyboardType.Number,
             modifier = Modifier.fillMaxWidth()
         )
@@ -56,11 +50,11 @@ internal fun StudentCardContent(
             showDatePicker = showCheckInDatePicker,
             onShowDatePickerStateChange = { showCheckInDatePicker = it },
             value = checkInDate,
-            placeholder = stringResource(Res.string.check_in_date_placeholder),
+            placeholder = stringResource(MR.strings.check_in_date_placeholder),
             selectedDateMillis = checkInDateMillis,
             onDateSelect = onCheckInDateMillisChange,
-            saveButtonText = stringResource(Res.string.save),
-            cancelButtonText = stringResource(Res.string.cancel),
+            saveButtonText = stringResource(MR.strings.save),
+            cancelButtonText = stringResource(MR.strings.cancel),
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -70,11 +64,11 @@ internal fun StudentCardContent(
             showDatePicker = showCheckOutDatePicker,
             onShowDatePickerStateChange = { showCheckOutDatePicker = it },
             value = checkOutDate,
-            placeholder = stringResource(Res.string.check_out_date_placeholder),
+            placeholder = stringResource(MR.strings.check_out_date_placeholder),
             selectedDateMillis = checkOutDateMillis,
             onDateSelect = onCheckOutDateMillisChange,
-            saveButtonText = stringResource(Res.string.save),
-            cancelButtonText = stringResource(Res.string.cancel),
+            saveButtonText = stringResource(MR.strings.save),
+            cancelButtonText = stringResource(MR.strings.cancel),
             modifier = Modifier.fillMaxWidth()
         )
     }

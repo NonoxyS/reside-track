@@ -12,13 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.size_24
-import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.resources.vectorResource
-import residetrack.shared.feature_manage_students.ui.generated.resources.Res
-import residetrack.shared.feature_manage_students.ui.generated.resources.ic_delete_circle
-import residetrack.shared.feature_manage_students.ui.generated.resources.new_student
-import residetrack.shared.feature_manage_students.ui.generated.resources.student_placeholder
-import residetrack.shared.feature_manage_students.ui.generated.resources.student_title
+import dev.icerock.moko.resources.compose.painterResource
+import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.res.MR
 
 @Composable
 internal fun StudentCardHeader(
@@ -34,12 +30,12 @@ internal fun StudentCardHeader(
     ) {
         Text(
             text = if (isNew) {
-                stringResource(Res.string.new_student)
+                stringResource(MR.strings.new_student)
             } else {
                 val displayNumber = streamNumber.ifBlank {
-                    stringResource(Res.string.student_placeholder)
+                    stringResource(MR.strings.student_placeholder)
                 }
-                stringResource(Res.string.student_title, displayNumber)
+                stringResource(MR.strings.student_title, displayNumber)
             },
             style = ResideTrackTheme.typography.lead,
             color = ResideTrackTheme.colors.textPrimary
@@ -50,7 +46,7 @@ internal fun StudentCardHeader(
             modifier = Modifier.size(size_24)
         ) {
             Icon(
-                imageVector = vectorResource(Res.drawable.ic_delete_circle),
+                painter = painterResource(MR.images.ic_delete_circle),
                 contentDescription = null,
                 tint = ResideTrackTheme.colors.textError
             )
