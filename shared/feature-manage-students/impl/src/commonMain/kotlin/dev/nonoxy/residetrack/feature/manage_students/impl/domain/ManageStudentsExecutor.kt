@@ -17,12 +17,12 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
-import kotlin.time.Duration.Companion.seconds
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -277,8 +277,9 @@ internal class ManageStudentsExecutor(
                     return
                 }
                 val updated = draftRoom.copy(students = students)
-                roomsRepository.saveDraftRoom(updated)
+                roomsRepository.saveRoom(updated)
                     .onSuccess {
+                        roomsRepository.clearDraftRoom()
                         dispatch(Message.SetIsLoading(isLoading = false))
                         publish(Label.ShowSuccess(kind = ManageStudentsSuccessKind.StudentsSaved))
                         publish(Label.NavigateBack)
@@ -302,7 +303,7 @@ internal class ManageStudentsExecutor(
 
     private fun parseDateToMillis(dateString: String): Long? = try {
         val localDate = dateDisplayFormat.parse(dateString)
-        localDate.toEpochDays().seconds.inWholeSeconds
+        localDate.atStartOfDayIn(TimeZone.currentSystemDefault()).toEpochMilliseconds()
     } catch (_: Exception) {
         null
     }

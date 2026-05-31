@@ -10,7 +10,7 @@ interface RoomsRepository {
     suspend fun getRoomByNumber(roomNumber: Int): Result<Room?>
     suspend fun getRoomById(roomId: Long): Result<Room?>
 
-    suspend fun saveRoom(room: Room): Result<Unit>
+    suspend fun saveRoom(room: Room): Result<Long>
 
     suspend fun saveDraftRoom(room: Room): Result<Unit>
     suspend fun getDraftRoom(): Result<Room?>

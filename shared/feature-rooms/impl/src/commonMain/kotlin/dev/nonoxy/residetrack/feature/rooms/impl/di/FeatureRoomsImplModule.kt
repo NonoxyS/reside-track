@@ -24,7 +24,8 @@ val featureRoomsImplModule = module {
     factory<RoomsRepository> {
         RoomsRepositoryImpl(
             roomDao = get(),
-            roomMapper = get()
+            roomMapper = get(),
+            studentMapper = get(),
         )
     }
 

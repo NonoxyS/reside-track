@@ -157,8 +157,9 @@ internal class AddRoomExecutor(
         )
 
         roomsRepository.saveRoom(newRoom).fold(
-            onSuccess = {
-                roomsRepository.saveDraftRoom(newRoom).fold(
+            onSuccess = { persistedId ->
+                val persistedRoom = newRoom.copy(id = persistedId)
+                roomsRepository.saveDraftRoom(persistedRoom).fold(
                     onSuccess = {
                         dispatch(Message.SetIsLoading(isLoading = false))
                         publish(Label.NavigateToManageStudentsDraftRoom)

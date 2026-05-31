@@ -7,6 +7,7 @@ import dev.nonoxy.residetrack.core.database.dao.RoomDao
 import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
 import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.RoomMapper
+import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.StudentMapper
 import dev.nonoxy.residetrack.feature.rooms.api.models.Room
 import dev.nonoxy.residetrack.feature.rooms.api.repository.RoomsRepository
 import io.github.aakira.napier.Napier
@@ -19,6 +20,7 @@ import kotlinx.coroutines.withContext
 internal class RoomsRepositoryImpl(
     private val roomDao: RoomDao,
     private val roomMapper: RoomMapper,
+    private val studentMapper: StudentMapper,
     private val ioDispatcher: CoroutineDispatcher = dev.nonoxy.residetrack.common.coroutines.ioDispatcher
 ) : RoomsRepository {
 
@@ -86,9 +88,17 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun saveRoom(room: Room): Result<Unit> = withContext(ioDispatcher) {
+    override suspend fun saveRoom(room: Room): Result<Long> = withContext(ioDispatcher) {
         coRunCatching(
-            tryBlock = { roomDao.insertRoom(room = room.mapToEntity()).wrapSuccess() },
+            tryBlock = {
+                val roomEntity = room.mapToEntity()
+                val studentEntities = studentMapper.map(items = room.students, roomId = room.id)
+                val persistedId = roomDao.saveRoomWithStudents(
+                    room = roomEntity,
+                    students = studentEntities,
+                )
+                persistedId.wrapSuccess()
+            },
             catchBlock = { throwable ->
                 Napier.e(throwable) { "Error occur on saving room: $room" }
                 throwable.wrapFailure()
