@@ -1,7 +1,9 @@
+import extensions.androidLibraryConfig
+
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
 }
 
-android {
-    namespace = "dev.nonoxy.template"
+androidLibraryConfig {
+    namespace = "dev.nonoxy.residetrack.template"
 }

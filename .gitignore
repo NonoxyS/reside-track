@@ -1,6 +1,7 @@
 *.iml
 .kotlin
 .gradle
+.claude/scheduled_tasks.lock
 **/build/
 xcuserdata
 !src/**/build/

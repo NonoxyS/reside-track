@@ -1,16 +1,9 @@
-import extensions.commonMainDependencies
-import extensions.implementations
+import extensions.androidLibraryConfig
 
 plugins {
-    alias(libs.plugins.conventionPlugin.kmpLibrary)
+    alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
 }
 
-android {
-    namespace = "dev.nonoxy.feature.rooms.api"
-}
-
-commonMainDependencies {
-    implementations(
-        libs.kotlin.datetime,
-    )
+androidLibraryConfig {
+    namespace = "dev.nonoxy.residetrack.feature.rooms.api"
 }

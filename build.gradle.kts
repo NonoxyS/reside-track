@@ -3,17 +3,22 @@ plugins {
     // in each subproject's classloader
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false
-    alias(libs.plugins.composeMultiplatform) apply false
-    alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.kotlinMultiplatform) apply false
-    alias(libs.plugins.kotlinSerialization) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.multiplatformAndroidLibrary) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.compose.multiplatform) apply false
+    alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.room) apply false
+    alias(libs.plugins.ksp) apply false
     alias(libs.plugins.detekt)
 
     // Convention plugins
-    alias(libs.plugins.conventionPlugin.composeCompiler) apply false
+    alias(libs.plugins.conventionPlugin.composeMultiplatformSetup) apply false
     alias(libs.plugins.conventionPlugin.androidLibrary) apply false
     alias(libs.plugins.conventionPlugin.kmpLibrary) apply false
+    alias(libs.plugins.conventionPlugin.kmpLibraryLegacy) apply false
+    alias(libs.plugins.conventionPlugin.kmpFeatureSetup) apply false
+    alias(libs.plugins.conventionPlugin.jsonSerialization) apply false
 }
 
 dependencies {
@@ -49,32 +54,6 @@ fun SourceTask.setupDetektFolders() {
     exclude("**/.gradle/**")
 }
 
-val changeGitHooksDir by tasks.registering(Exec::class) {
-    group = "git"
-    description = "Changing githooks dir to .githooks"
-
-    fun ExecSpec.executeStringCommand(command: String) {
-        val splitted = command.split(" ")
-        commandLine(*splitted.toTypedArray())
-    }
-
-    doFirst {
-        logger.error("hooksPath before")
-        executeStringCommand("git config core.hooksPath")
-    }
-
-    exec {
-        commandLine("git", "config", "core.hooksPath", ".githooks")
-    }
-
-    doLast {
-        logger.error("hooksPath after")
-        executeStringCommand("git config core.hooksPath")
-    }
-
-    onlyIf {
-        System.getenv("IS_CI") == null
-    }
+tasks.register("clean", Delete::class) {
+    delete(rootProject.layout.buildDirectory)
 }
-
-tasks.getByPath(":composeApp:preBuild").dependsOn(changeGitHooksDir)

@@ -10,7 +10,7 @@ echo "${YELLOW}Running tests before push...${NC}"
 # Run Android/Kotlin tests
 echo ""
 echo "${GREEN}Running Android/Kotlin tests...${NC}"
-./gradlew testDebug
+./gradlew testDevDebugUnitTest
 TEST_RESULT=$?
 
 if [ $TEST_RESULT -ne 0 ]; then

@@ -1,26 +1,29 @@
+import extensions.androidLibraryConfig
+import extensions.apis
 import extensions.commonMainDependencies
 import extensions.implementations
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
-    alias(libs.plugins.conventionPlugin.composeCompiler)
-    alias(libs.plugins.conventionPlugin.kmpSerialization)
+    alias(libs.plugins.conventionPlugin.jsonSerialization)
+    alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
 }
 
-iosConfig {
-    xcFrameworkName = "core-navigation"
-}
-
-android {
-    namespace = "dev.nonoxy.core.navigation"
+androidLibraryConfig {
+    namespace = "dev.nonoxy.residetrack.core.navigation"
 }
 
 commonMainDependencies {
     implementations(
-        libs.compose.navigation,
-        libs.androidx.lifecycle.runtime.compose,
-        compose.dependencies.material3,
+        libs.compose.multiplatform.material3,
+        projects.shared.commonUi,
+    )
 
-        projects.shared.designSystem
+    apis(
+        libs.compose.multiplatform.navigation,
+        // Explicit (not present in KMMTemplate): pins the renamed Compose 1.10.1 shared-transition
+        // API for the Android target. See NavigationSharedTransitionUtils.kt for the full rationale.
+        libs.compose.multiplatform.animation,
+        libs.compose.multiplatform.backhandler,
     )
 }
