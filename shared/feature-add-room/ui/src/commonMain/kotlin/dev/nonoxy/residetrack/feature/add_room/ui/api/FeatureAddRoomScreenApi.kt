@@ -6,14 +6,26 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import dev.nonoxy.residetrack.core.navigation.AddRoomRoute
+import dev.nonoxy.residetrack.core.navigation.Screen
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.ModalBottomSheetConfiguration
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.bottomSheet
 import dev.nonoxy.residetrack.core.navigation.navigateOnResumed
 import dev.nonoxy.residetrack.feature.add_room.ui.AddRoomScreen
+import kotlinx.serialization.Serializable
 
-fun NavController.navigateToAddRoomScreen() {
-    navigateOnResumed(AddRoomRoute)
+@Serializable
+data object AddRoomRoute : Screen
+
+fun NavController.navigateToAddRoomScreen(
+    popUpInclusive: Boolean = true,
+    popUpToScreen: Screen? = null,
+) {
+    navigateOnResumed(AddRoomRoute) {
+        launchSingleTop = true
+        popUpToScreen?.let { screen ->
+            popUpTo(screen) { inclusive = popUpInclusive }
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

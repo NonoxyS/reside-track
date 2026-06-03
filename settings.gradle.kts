@@ -42,9 +42,13 @@ include(
     ":shared:core-presentation",
     ":shared:core-navigation",
     ":shared:core-database",
+    ":shared:core-initializer",
     ":shared:common-ui",
 
     // Features
+    ":shared:feature-splash:presentation",
+    ":shared:feature-splash:ui",
+
     ":shared:feature-rooms:api",
     ":shared:feature-rooms:impl",
     ":shared:feature-rooms:presentation",
