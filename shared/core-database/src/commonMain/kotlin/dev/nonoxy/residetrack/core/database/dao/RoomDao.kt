@@ -20,8 +20,14 @@ abstract class RoomDao {
     @Query("SELECT * FROM rooms WHERE id = :roomId")
     abstract suspend fun getRoomById(roomId: Long): RoomEntity?
 
+    @Query("SELECT COUNT(*) FROM rooms")
+    abstract suspend fun getRoomsCount(): Int
+
     @Insert(onConflict = REPLACE)
     abstract suspend fun insertRoom(room: RoomEntity): Long
+
+    @Insert
+    abstract suspend fun insertRooms(rooms: List<RoomEntity>)
 
     @Update
     abstract suspend fun updateRoom(room: RoomEntity)

@@ -2,6 +2,8 @@ package dev.nonoxy.residetrack.di
 
 import dev.nonoxy.residetrack.common.di.commonModule
 import dev.nonoxy.residetrack.core.database.di.coreDatabaseModule
+import dev.nonoxy.residetrack.core.initializer.di.coreInitializerModule
+import dev.nonoxy.residetrack.feature.splash.presentation.di.featureSplashPresentationModule
 import dev.nonoxy.residetrack.feature.add_room.impl.di.featureAddRoomImplModule
 import dev.nonoxy.residetrack.feature.add_room.presentation.di.featureAddRoomPresentationModule
 import dev.nonoxy.residetrack.feature.manage_students.impl.di.featureManageStudentsImplModule
@@ -26,6 +28,9 @@ fun initKoin(appDeclaration: KoinAppDeclaration) {
             coreDomainModule,
             coreMVIKotlinModule,
             coreDatabaseModule,
+            coreInitializerModule,
+
+            featureSplashPresentationModule,
 
             featureRoomsImplModule,
             featureRoomsPresentationModule,

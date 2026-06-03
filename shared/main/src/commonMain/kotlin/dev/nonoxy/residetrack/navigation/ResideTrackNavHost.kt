@@ -5,9 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import dev.nonoxy.residetrack.core.navigation.RoomsRoute
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.ModalBottomSheetLayout
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
+import dev.nonoxy.residetrack.feature.splash.ui.api.SplashRoute
+import dev.nonoxy.residetrack.feature.splash.ui.api.composableSplashScreen
+import dev.nonoxy.residetrack.feature.rooms.ui.api.navigateToRoomsScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.bottomSheetAddRoomScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.navigateToAddRoomScreen
 import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsExistingRoom
@@ -28,8 +30,14 @@ internal fun ResideTrackNavHost(
         NavHost(
             modifier = modifier,
             navController = navController,
-            startDestination = RoomsRoute
+            startDestination = SplashRoute
         ) {
+            composableSplashScreen(
+                onNavigateToRooms = {
+                    navController.navigateToRoomsScreen(popUpToScreen = SplashRoute)
+                }
+            )
+
             composableRoomsScreen(
                 onNavigateToAddRoomScreen = navController::navigateToAddRoomScreen,
                 onNavigateToManageStudentsExistingRoom = navController::navigateToManageStudentsExistingRoom

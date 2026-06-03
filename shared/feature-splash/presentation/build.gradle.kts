@@ -4,17 +4,14 @@ import extensions.implementations
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
-    alias(libs.plugins.conventionPlugin.jsonSerialization)
 }
 
 androidLibraryConfig {
-    namespace = "dev.nonoxy.residetrack.feature.rooms.impl"
+    namespace = "dev.nonoxy.residetrack.feature.splash.presentation"
 }
 
 commonMainDependencies {
     implementations(
-        projects.shared.coreDatabase,
         projects.shared.coreInitializer,
-        projects.shared.commonResources,
     )
 }

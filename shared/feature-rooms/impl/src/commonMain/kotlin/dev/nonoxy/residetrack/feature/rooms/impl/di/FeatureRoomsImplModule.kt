@@ -9,9 +9,15 @@ import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.RoomMapperImpl
 import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.StudentMapper
 import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.StudentMapperImpl
 import dev.nonoxy.residetrack.feature.rooms.impl.domain.RoomsStoreFactory
+import dev.nonoxy.residetrack.feature.rooms.impl.domain.seed.RoomsSeedInitializer
+import dev.nonoxy.residetrack.core.initializer.Initializer
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val featureRoomsImplModule = module {
+
+    factoryOf(::RoomsSeedInitializer) bind Initializer::class
 
     factory<StudentMapper> {
         StudentMapperImpl()
