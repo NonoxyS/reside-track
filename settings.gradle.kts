@@ -43,6 +43,7 @@ include(
     ":shared:core-navigation",
     ":shared:core-database",
     ":shared:core-initializer",
+    ":shared:core-rooms",
     ":shared:common-ui",
 
     // Features
