@@ -46,6 +46,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration) {
 
             featureUpcomingImplModule,
             featureUpcomingPresentationModule,
+
+            mainModule,
         )
     }
 }
