@@ -1,4 +1,6 @@
 import extensions.androidLibraryConfig
+import extensions.apis
+import extensions.commonMainDependencies
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpFeatureSetup)
@@ -6,4 +8,10 @@ plugins {
 
 androidLibraryConfig {
     namespace = "dev.nonoxy.residetrack.feature.rooms.api"
+}
+
+commonMainDependencies {
+    apis(
+        projects.shared.coreRooms,
+    )
 }

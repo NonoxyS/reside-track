@@ -1,6 +1,6 @@
 package dev.nonoxy.residetrack.feature.rooms.impl.domain
 
-import dev.nonoxy.residetrack.feature.rooms.api.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Intent
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Label
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.State
@@ -8,6 +8,7 @@ import dev.nonoxy.residetrack.feature.rooms.impl.domain.RoomsStoreFactory.Action
 import dev.nonoxy.residetrack.feature.rooms.impl.domain.RoomsStoreFactory.Message
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.catch
 
 internal class RoomsExecutor(
     mainDispatcher: CoroutineDispatcher,
@@ -32,13 +33,11 @@ internal class RoomsExecutor(
 
     private suspend fun loadRoomsData() {
         dispatch(Message.SetIsLoading(isLoading = true))
-        roomsRepository.getAllRooms()
-            .onSuccess { rooms ->
+        roomsRepository.observeRooms()
+            .catch { dispatch(Message.SetError) }
+            .collect { rooms ->
                 val grouped = rooms.groupBy { room -> room.floorNumber }
                 dispatch(Message.SetRoomsOnFloor(roomsOnFloor = grouped))
-            }
-            .onFailure {
-                dispatch(Message.SetError)
             }
     }
 }
