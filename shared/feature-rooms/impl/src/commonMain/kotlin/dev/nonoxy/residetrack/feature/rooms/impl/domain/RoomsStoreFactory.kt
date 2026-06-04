@@ -38,6 +38,8 @@ internal class RoomsStoreFactory(
     }
 
     internal sealed interface Message {
+        data class SetIsLoading(val isLoading: Boolean) : Message
+        data object SetError : Message
         data class SetRoomsOnFloor(val roomsOnFloor: Map<Int, List<Room>>) : Message
     }
 }

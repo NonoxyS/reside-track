@@ -37,7 +37,7 @@ internal fun RoomsTopBar(
             IconButton(onClick = onAddRoomClick) {
                 Icon(
                     painter = painterResource(MR.images.ic_add),
-                    contentDescription = null
+                    contentDescription = stringResource(MR.strings.rooms_add_content_description)
                 )
             }
         },

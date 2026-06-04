@@ -7,6 +7,20 @@ import dev.nonoxy.residetrack.feature.rooms.impl.domain.RoomsStoreFactory.Messag
 internal class RoomsReducer : Reducer<State, Message> {
 
     override fun State.reduce(msg: Message): State = when (msg) {
-        is Message.SetRoomsOnFloor -> copy(roomsOnFloor = msg.roomsOnFloor)
+        is Message.SetIsLoading -> copy(
+            isLoading = msg.isLoading,
+            isError = if (msg.isLoading) false else isError,
+        )
+
+        Message.SetError -> copy(
+            isLoading = false,
+            isError = true,
+        )
+
+        is Message.SetRoomsOnFloor -> copy(
+            isLoading = false,
+            isError = false,
+            roomsOnFloor = msg.roomsOnFloor,
+        )
     }
 }
