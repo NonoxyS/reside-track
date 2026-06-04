@@ -61,6 +61,7 @@ internal class AddRoomStoreFactory(
 
         data class SetIsFormValid(val isValid: Boolean) : Message
         data class SetIsLoading(val isLoading: Boolean) : Message
+        data class SetShowDiscardConfirm(val show: Boolean) : Message
     }
 
     /** Wrapper used because `Reducer.reduce` can't carry a triple of nullable values nicely

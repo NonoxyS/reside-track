@@ -37,6 +37,14 @@ internal class AddRoomExecutor(
             Intent.OnCancelClick -> publish(Label.CloseScreen)
             Intent.OnToggleFloorInput -> dispatch(Message.ToggleFloorInput)
             Intent.OnToggleBedsInput -> dispatch(Message.ToggleBedsInput)
+            Intent.OnDismissRequested ->
+                if (state().isDirty) {
+                    dispatch(Message.SetShowDiscardConfirm(show = true))
+                } else {
+                    publish(Label.CloseScreen)
+                }
+            Intent.OnDiscardConfirmed -> publish(Label.CloseScreen)
+            Intent.OnKeepEditing -> dispatch(Message.SetShowDiscardConfirm(show = false))
         }
     }
 

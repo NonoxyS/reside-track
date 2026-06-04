@@ -33,5 +33,7 @@ internal class UiAddRoomStateMapperImpl : UiAddRoomStateMapper {
         isLoading = item.isLoading,
         isFormValid = item.isFormValid,
         hasExistingRooms = item.hasExistingRooms,
+        isDirty = item.isDirty,
+        showDiscardConfirm = item.showDiscardConfirm,
     )
 }

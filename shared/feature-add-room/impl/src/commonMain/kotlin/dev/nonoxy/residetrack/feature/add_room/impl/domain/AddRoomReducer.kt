@@ -87,5 +87,6 @@ internal class AddRoomReducer : Reducer<State, Message> {
 
         is Message.SetIsFormValid -> copy(isFormValid = msg.isValid)
         is Message.SetIsLoading -> copy(isLoading = msg.isLoading)
+        is Message.SetShowDiscardConfirm -> copy(showDiscardConfirm = msg.show)
     }
 }

@@ -30,5 +30,7 @@ internal class UiManageStudentsStateMapperImpl(
                 isNew = st.isNew,
             )
         }.toPersistentList(),
+        isDirty = item.isDirty,
+        showDiscardConfirm = item.showDiscardConfirm,
     )
 }

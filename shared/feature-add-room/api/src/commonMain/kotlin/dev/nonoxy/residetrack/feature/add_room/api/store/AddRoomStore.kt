@@ -16,7 +16,16 @@ interface AddRoomStore : Store<Intent, State, Label> {
         val isLoading: Boolean = false,
         val isFormValid: Boolean = false,
         val hasExistingRooms: Boolean = false,
+        val showDiscardConfirm: Boolean = false,
     ) {
+        /** Any user-entered input present — used to guard accidental dismiss. */
+        val isDirty: Boolean
+            get() = floorSelection.textField.value.isNotBlank() ||
+                roomNumber.value.isNotBlank() ||
+                bedsSelection.textField.value.isNotBlank() ||
+                floorSelection.showInput ||
+                bedsSelection.showInput
+
         data class TextFieldState(
             val value: String = "",
             val errorKind: AddRoomErrorKind? = null,
@@ -45,6 +54,9 @@ interface AddRoomStore : Store<Intent, State, Label> {
         data object OnCancelClick : Intent
         data object OnToggleFloorInput : Intent
         data object OnToggleBedsInput : Intent
+        data object OnDismissRequested : Intent
+        data object OnDiscardConfirmed : Intent
+        data object OnKeepEditing : Intent
     }
 
     sealed interface Label {

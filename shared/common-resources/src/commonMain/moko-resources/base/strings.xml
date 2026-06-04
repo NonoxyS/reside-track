@@ -54,6 +54,10 @@
     <string name="remove_student_confirm_message">Запись слушателя будет удалена. Действие нельзя отменить.</string>
     <string name="delete">Удалить</string>
     <string name="select_date">Выбрать дату</string>
+    <string name="discard_changes_title">Отменить изменения?</string>
+    <string name="discard_changes_message">Введённые данные не сохранятся.</string>
+    <string name="discard_changes_confirm">Выйти</string>
+    <string name="keep_editing">Продолжить</string>
 
     <string name="new_student">Новый слушатель</string>
     <string name="student_title">Слушатель %1$s</string>

@@ -53,5 +53,7 @@ internal class ManageStudentsStoreFactory(
         data class SetEditableStudents(
             val editableStudents: ImmutableList<State.EditableStudent>,
         ) : Message
+
+        data class SetShowDiscardConfirm(val show: Boolean) : Message
     }
 }
