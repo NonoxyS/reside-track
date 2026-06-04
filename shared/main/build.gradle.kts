@@ -44,6 +44,9 @@ commonMainDependencies {
         libs.compose.multiplatform.navigation,
         libs.koin.composeMultiplatform,
         libs.koin.composeMultiplatform.viewmodelNavigation,
+        libs.kotlin.immutableCollections,
+        libs.compose.icons.core,
+        libs.moko.resources.compose,
     )
 }
 
