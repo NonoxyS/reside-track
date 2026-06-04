@@ -26,6 +26,16 @@ class UpcomingCheckoutsTest {
     }
 
     @Test
+    fun daysLeft_isCorrectAcrossMonthBoundary() {
+        // 2026-06-04 -> 2026-07-02 must be 28 days, not a DatePeriod day-residual of 28-ish via months
+        assertEquals(28, UpcomingCheckouts.daysLeft(LocalDate(2026, 7, 2), today))
+        // a checkout 1 month + 3 days out must NOT count as "near" (<=3)
+        assertEquals(false, UpcomingCheckouts.daysLeft(LocalDate(2026, 7, 7), today) <= 3)
+        // overdue stays near
+        assertEquals(true, UpcomingCheckouts.daysLeft(LocalDate(2026, 6, 1), today) <= 3)
+    }
+
+    @Test
     fun bucketOf_partitionsByUrgency() {
         assertEquals(UpcomingBucket.OVERDUE, UpcomingCheckouts.bucketOf(-1))
         assertEquals(UpcomingBucket.TODAY_TOMORROW, UpcomingCheckouts.bucketOf(0))

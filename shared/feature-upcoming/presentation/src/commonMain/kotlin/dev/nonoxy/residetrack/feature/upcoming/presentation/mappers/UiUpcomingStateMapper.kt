@@ -17,7 +17,8 @@ internal class UiUpcomingStateMapperImpl : UiUpcomingStateMapper {
         items = item.items.map { domain ->
             UiUpcomingItem(
                 roomId = domain.roomId,
-                roomLabel = "${domain.roomNumber} · эт. ${domain.floorNumber}",
+                roomNumber = domain.roomNumber.toString(),
+                floorNumber = domain.floorNumber.toString(),
                 streamNumber = domain.streamNumber.toString(),
                 checkOutDate = domain.checkOutDate.toString(),
                 daysLeft = domain.daysLeft,

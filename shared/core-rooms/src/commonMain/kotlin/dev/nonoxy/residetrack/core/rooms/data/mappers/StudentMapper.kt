@@ -4,10 +4,10 @@ import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.common.utils.toLocalDate
 import dev.nonoxy.residetrack.core.database.entities.StudentEntity
 import dev.nonoxy.residetrack.core.rooms.models.Student
+import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingCheckouts
 import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.minus
 
 internal interface StudentMapper : Mapper<StudentEntity, Student> {
     fun map(item: Student, roomId: Long): StudentEntity
@@ -27,7 +27,7 @@ internal class StudentMapperImpl : StudentMapper {
             streamNumber = item.streamNumber,
             checkInDate = checkInDate,
             checkOutDate = checkOutDate,
-            isCheckOutDateNearOrExpired = checkOutDate.minus(other = currentDate).days <= 3
+            isCheckOutDateNearOrExpired = UpcomingCheckouts.daysLeft(checkOutDate, currentDate) <= 3
         )
     }
 

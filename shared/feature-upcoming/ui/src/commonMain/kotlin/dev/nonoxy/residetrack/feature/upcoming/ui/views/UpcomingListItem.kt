@@ -40,7 +40,7 @@ internal fun UpcomingListItem(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Text(
-                text = item.roomLabel,
+                text = stringResource(MR.strings.upcoming_room_label, item.roomNumber, item.floorNumber),
                 style = MaterialTheme.typography.labelLarge,
                 fontWeight = FontWeight.Bold,
             )

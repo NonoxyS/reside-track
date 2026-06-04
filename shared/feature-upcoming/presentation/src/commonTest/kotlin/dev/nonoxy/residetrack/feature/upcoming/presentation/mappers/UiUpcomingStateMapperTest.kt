@@ -34,7 +34,8 @@ class UiUpcomingStateMapperTest {
 
         assertEquals(1, ui.items.size)
         val item = ui.items.first()
-        assertEquals("14 · эт. 2", item.roomLabel)
+        assertEquals("14", item.roomNumber)
+        assertEquals("2", item.floorNumber)
         assertEquals("305", item.streamNumber)
         assertEquals("2026-06-01", item.checkOutDate)
         assertEquals(-3, item.daysLeft)
