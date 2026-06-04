@@ -31,6 +31,7 @@ internal fun RoomsScreen(
         state = state,
         onRoomClick = viewModel::onRoomClick,
         onAddRoomClick = viewModel::onAddRoomClick,
+        onRetryClick = viewModel::onRetryClick,
         modifier = Modifier.fillMaxSize()
     )
 }

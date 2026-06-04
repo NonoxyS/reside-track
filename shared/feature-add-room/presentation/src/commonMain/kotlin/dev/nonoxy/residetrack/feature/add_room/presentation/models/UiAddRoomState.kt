@@ -11,6 +11,8 @@ data class UiAddRoomState(
     val isLoading: Boolean = false,
     val isFormValid: Boolean = false,
     val hasExistingRooms: Boolean = false,
+    val isDirty: Boolean = false,
+    val showDiscardConfirm: Boolean = false,
 ) {
     data class TextField(
         val value: String = "",

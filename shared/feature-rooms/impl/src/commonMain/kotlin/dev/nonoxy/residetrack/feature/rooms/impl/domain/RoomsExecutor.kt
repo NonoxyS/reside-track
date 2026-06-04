@@ -26,16 +26,19 @@ internal class RoomsExecutor(
                 Label.NavigateToManageStudentsExistingRoom(roomId = intent.roomId.toString())
             )
             Intent.OnAddRoomClick -> publish(Label.NavigateToAddRoomScreen)
+            Intent.OnRetry -> loadRoomsData()
         }
     }
 
     private suspend fun loadRoomsData() {
-        // TODO: silent error swallow inherited from old ViewModel. When State gains
-        //  isError/isLoading fields (post-Phase 4), dispatch a Message.SetError here.
-        val rooms = roomsRepository.getAllRooms().getOrElse { emptyList() }
-        if (rooms.isNotEmpty()) {
-            val grouped = rooms.groupBy { room -> room.floorNumber }
-            dispatch(Message.SetRoomsOnFloor(roomsOnFloor = grouped))
-        }
+        dispatch(Message.SetIsLoading(isLoading = true))
+        roomsRepository.getAllRooms()
+            .onSuccess { rooms ->
+                val grouped = rooms.groupBy { room -> room.floorNumber }
+                dispatch(Message.SetRoomsOnFloor(roomsOnFloor = grouped))
+            }
+            .onFailure {
+                dispatch(Message.SetError)
+            }
     }
 }

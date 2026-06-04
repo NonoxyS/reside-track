@@ -17,6 +17,8 @@ import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomLabe
 import dev.nonoxy.residetrack.feature.add_room.ui.views.AddRoomScreenContent
 import dev.nonoxy.residetrack.common.resources.StringConverter
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
+import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
+import dev.nonoxy.residetrack.core.navigation.bottomsheet.SheetDismissGuard
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
@@ -35,6 +37,17 @@ internal fun AddRoomScreen(
 
     val snackbarHostState = remember { SnackbarHostState() }
     var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
+
+    SheetDismissGuard(enabled = state.isDirty && !state.isLoading) {
+        viewModel.onDismissRequested()
+    }
+
+    if (state.showDiscardConfirm) {
+        DiscardChangesDialog(
+            onConfirm = viewModel::onDiscardConfirmed,
+            onDismiss = viewModel::onKeepEditing,
+        )
+    }
 
     viewModel.label.CollectFlow { label ->
         when (label) {

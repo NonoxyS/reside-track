@@ -30,10 +30,17 @@ internal class ManageStudentsReducer : Reducer<State, Message> {
             errorKind = null,
             room = msg.room,
             editableStudents = msg.editableStudents,
+            isDirty = false,
+            showDiscardConfirm = false,
         )
 
         is Message.SetEditableStudents -> copy(
             editableStudents = msg.editableStudents,
+            isDirty = true,
+        )
+
+        is Message.SetShowDiscardConfirm -> copy(
+            showDiscardConfirm = msg.show,
         )
     }
 }

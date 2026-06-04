@@ -10,4 +10,6 @@ data class UiManageStudentsState(
     val errorKind: ManageStudentsErrorKind? = null,
     val room: UiRoom? = null,
     val editableStudents: ImmutableList<UiEditableStudent> = persistentListOf(),
+    val isDirty: Boolean = false,
+    val showDiscardConfirm: Boolean = false,
 )

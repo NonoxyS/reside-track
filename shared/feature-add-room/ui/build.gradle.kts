@@ -15,5 +15,6 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         libs.kotlin.immutableCollections,
+        libs.compose.icons.core,
     )
 }

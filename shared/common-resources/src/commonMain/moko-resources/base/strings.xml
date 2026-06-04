@@ -13,6 +13,9 @@
     <string name="rooms_room">Комната</string>
     <string name="rooms_check_in">Заезд</string>
     <string name="rooms_check_out">Выезд</string>
+    <string name="rooms_add_content_description">Добавить комнату</string>
+    <string name="rooms_empty_title">Комнаты не добавлены</string>
+    <string name="rooms_empty_hint">Нажмите + чтобы добавить первую комнату</string>
 
     <!-- Add room feature -->
     <string name="add_room_title">Добавить новую комнату</string>
@@ -47,6 +50,14 @@
     <string name="cancel">Отмена</string>
     <string name="close">Закрыть</string>
     <string name="remove_student">Удалить слушателя</string>
+    <string name="remove_student_confirm_title">Удалить слушателя?</string>
+    <string name="remove_student_confirm_message">Запись слушателя будет удалена. Действие нельзя отменить.</string>
+    <string name="delete">Удалить</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="discard_changes_title">Отменить изменения?</string>
+    <string name="discard_changes_message">Введённые данные не сохранятся.</string>
+    <string name="discard_changes_confirm">Выйти</string>
+    <string name="keep_editing">Продолжить</string>
 
     <string name="new_student">Новый слушатель</string>
     <string name="student_title">Слушатель %1$s</string>

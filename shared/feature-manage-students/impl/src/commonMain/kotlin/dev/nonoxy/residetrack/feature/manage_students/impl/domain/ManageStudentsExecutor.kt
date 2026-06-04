@@ -55,6 +55,14 @@ internal class ManageStudentsExecutor(
             is Intent.OnCheckOutDateMillisChange -> handleCheckOutDateMillisChange(intent.studentId, intent.millis)
             Intent.OnSaveAndClose -> handleSaveAndClose()
             Intent.OnClose -> publish(Label.NavigateBack)
+            Intent.OnDismissRequested ->
+                if (state().isDirty) {
+                    dispatch(Message.SetShowDiscardConfirm(show = true))
+                } else {
+                    publish(Label.NavigateBack)
+                }
+            Intent.OnDiscardConfirmed -> publish(Label.NavigateBack)
+            Intent.OnKeepEditing -> dispatch(Message.SetShowDiscardConfirm(show = false))
         }
     }
 

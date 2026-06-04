@@ -94,7 +94,7 @@ internal fun ManageStudentsList(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = null,
+                    contentDescription = stringResource(MR.strings.add_student),
                 )
                 Spacer(modifier = Modifier.width(padding_size_8))
                 Text(stringResource(MR.strings.add_student))

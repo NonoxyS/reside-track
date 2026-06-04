@@ -47,6 +47,12 @@ class AddRoomViewModel internal constructor(
 
     fun onToggleBedsInput() = store.accept(Intent.OnToggleBedsInput)
 
+    fun onDismissRequested() = store.accept(Intent.OnDismissRequested)
+
+    fun onDiscardConfirmed() = store.accept(Intent.OnDiscardConfirmed)
+
+    fun onKeepEditing() = store.accept(Intent.OnKeepEditing)
+
     override fun onCleared() {
         store.dispose()
         super.onCleared()

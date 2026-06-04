@@ -15,6 +15,7 @@ import dev.nonoxy.residetrack.common.utils.orEmptyPersist
 import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiRoom
 import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiRoomsState
 import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiStudent
+import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import kotlinx.collections.immutable.persistentListOf
@@ -28,41 +29,55 @@ internal fun RoomsScreenDetails(
     state: UiRoomsState,
     onRoomClick: (Long) -> Unit,
     onAddRoomClick: () -> Unit,
+    onRetryClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val pagerState = rememberPagerState { state.roomsOnFloor.keys.size }
-    val scope = rememberCoroutineScope()
+    ShowStateData(
+        modifier = modifier,
+        state = state,
+        isLoading = state.isLoading,
+        isError = state.isError,
+        onRetryClick = onRetryClick,
+    ) { currentState ->
+        val pagerState = rememberPagerState { currentState.roomsOnFloor.keys.size }
+        val scope = rememberCoroutineScope()
 
-    Column(modifier = modifier) {
-        RoomsTopBar(
-            modifier = Modifier.padding(horizontal = padding_size_16),
-            totalPlaces = 0,
-            availablePlaces = 0,
-            onAddRoomClick = onAddRoomClick
-        )
-
-        if (state.roomsOnFloor.keys.size > 1) {
-            RoomsTabRow(
-                modifier = Modifier.fillMaxWidth(),
-                floors = state.roomsOnFloor.keys,
-                selectedTabIndex = pagerState.currentPage,
-                onTabClick = { index ->
-                    scope.launch { pagerState.animateScrollToPage(page = index) }
-                }
+        Column(modifier = Modifier.fillMaxSize()) {
+            RoomsTopBar(
+                modifier = Modifier.padding(horizontal = padding_size_16),
+                totalPlaces = currentState.totalPlaces,
+                availablePlaces = currentState.availablePlaces,
+                onAddRoomClick = onAddRoomClick
             )
-        }
 
-        HorizontalPager(
-            modifier = Modifier.fillMaxSize(),
-            state = pagerState,
-            verticalAlignment = Alignment.Top
-        ) { page ->
-            RoomList(
-                rooms = state.roomsOnFloor.get(
-                    key = state.roomsOnFloor.keys.elementAtOrNull(index = page)
-                ).orEmptyPersist(),
-                onRoomClick = onRoomClick
-            )
+            if (currentState.roomsOnFloor.isEmpty()) {
+                RoomsEmptyState(modifier = Modifier.fillMaxSize())
+                return@Column
+            }
+
+            if (currentState.roomsOnFloor.keys.size > 1) {
+                RoomsTabRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    floors = currentState.roomsOnFloor.keys,
+                    selectedTabIndex = pagerState.currentPage,
+                    onTabClick = { index ->
+                        scope.launch { pagerState.animateScrollToPage(page = index) }
+                    }
+                )
+            }
+
+            HorizontalPager(
+                modifier = Modifier.fillMaxSize(),
+                state = pagerState,
+                verticalAlignment = Alignment.Top
+            ) { page ->
+                RoomList(
+                    rooms = currentState.roomsOnFloor.get(
+                        key = currentState.roomsOnFloor.keys.elementAtOrNull(index = page)
+                    ).orEmptyPersist(),
+                    onRoomClick = onRoomClick
+                )
+            }
         }
     }
 }
@@ -73,6 +88,8 @@ private fun Preview() {
     ResideTrackTheme {
         RoomsScreenDetails(
             state = UiRoomsState(
+                totalPlaces = 8,
+                availablePlaces = 6,
                 roomsOnFloor = persistentMapOf(
                     3 to persistentListOf(
                         UiRoom(
@@ -109,6 +126,7 @@ private fun Preview() {
             ),
             onRoomClick = {},
             onAddRoomClick = {},
+            onRetryClick = {},
             modifier = Modifier.fillMaxSize()
         )
     }

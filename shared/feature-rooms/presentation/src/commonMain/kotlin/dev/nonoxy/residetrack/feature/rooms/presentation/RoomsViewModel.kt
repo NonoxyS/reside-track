@@ -28,6 +28,8 @@ class RoomsViewModel internal constructor(
 
     fun onAddRoomClick() = store.accept(Intent.OnAddRoomClick)
 
+    fun onRetryClick() = store.accept(Intent.OnRetry)
+
     override fun onCleared() {
         store.dispose()
         super.onCleared()

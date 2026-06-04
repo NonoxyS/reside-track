@@ -3,12 +3,15 @@ package dev.nonoxy.residetrack.core.navigation.bottomsheet
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -31,9 +34,18 @@ fun ModalBottomSheetHost(
         (currentEntry?.destination as? ModalBottomSheetNavigator.Destination)?.configuration
 
     val scope = rememberCoroutineScope()
+    val dismissDispatcher = remember { SheetDismissDispatcher() }
+    val baseConfirmValueChange = configuration.getConfirmValueChange()
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = configuration.getSkipPartiallyExpanded(),
-        confirmValueChange = configuration.getConfirmValueChange()
+        confirmValueChange = { sheetValue ->
+            if (sheetValue == SheetValue.Hidden && dismissDispatcher.hasEnabledCallback) {
+                dismissDispatcher.dispatch()
+                false
+            } else {
+                baseConfirmValueChange(sheetValue)
+            }
+        }
     )
 
     LaunchedEffect(bottomSheetBackStack.size) {
@@ -48,16 +60,24 @@ fun ModalBottomSheetHost(
 
         if (configuration.getProperties().shouldDismissOnBackPress) {
             BackHandler {
-                scope.launch {
-                    sheetState.hide()
+                if (dismissDispatcher.hasEnabledCallback) {
+                    dismissDispatcher.dispatch()
+                } else {
+                    scope.launch {
+                        sheetState.hide()
+                    }
                 }
             }
         }
 
         ModalBottomSheet(
             onDismissRequest = {
-                currentEntry?.let { entry ->
-                    modalBottomSheetNavigator.dismiss(entry)
+                if (dismissDispatcher.hasEnabledCallback) {
+                    dismissDispatcher.dispatch()
+                } else {
+                    currentEntry?.let { entry ->
+                        modalBottomSheetNavigator.dismiss(entry)
+                    }
                 }
             },
             sheetState = sheetState,
@@ -87,7 +107,11 @@ fun ModalBottomSheetHost(
                     backStackEntry.LocalOwnersProvider(saveableStateHolder) {
                         val destination =
                             backStackEntry.destination as ModalBottomSheetNavigator.Destination
-                        destination.content(backStackEntry)
+                        CompositionLocalProvider(
+                            LocalSheetDismissDispatcher provides dismissDispatcher
+                        ) {
+                            destination.content(backStackEntry)
+                        }
                     }
                 }
             }

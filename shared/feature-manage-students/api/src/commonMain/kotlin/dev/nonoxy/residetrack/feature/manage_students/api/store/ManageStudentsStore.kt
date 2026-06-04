@@ -16,6 +16,8 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
         val errorKind: ManageStudentsErrorKind? = null,
         val room: Room? = null,
         val editableStudents: ImmutableList<EditableStudent> = persistentListOf(),
+        val isDirty: Boolean = false,
+        val showDiscardConfirm: Boolean = false,
     ) {
         data class EditableStudent(
             val id: String,
@@ -40,6 +42,9 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
         data class OnCheckOutDateMillisChange(val studentId: String, val millis: Long) : Intent
         data object OnSaveAndClose : Intent
         data object OnClose : Intent
+        data object OnDismissRequested : Intent
+        data object OnDiscardConfirmed : Intent
+        data object OnKeepEditing : Intent
     }
 
     sealed interface Label {
