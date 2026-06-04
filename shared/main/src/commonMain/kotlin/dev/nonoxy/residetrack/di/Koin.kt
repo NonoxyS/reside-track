@@ -9,6 +9,8 @@ import dev.nonoxy.residetrack.feature.add_room.impl.di.featureAddRoomImplModule
 import dev.nonoxy.residetrack.feature.add_room.presentation.di.featureAddRoomPresentationModule
 import dev.nonoxy.residetrack.feature.manage_students.impl.di.featureManageStudentsImplModule
 import dev.nonoxy.residetrack.feature.manage_students.presentation.di.featureManageStudentsPresentationModule
+import dev.nonoxy.residetrack.feature.upcoming.impl.di.featureUpcomingImplModule
+import dev.nonoxy.residetrack.feature.upcoming.presentation.di.featureUpcomingPresentationModule
 import dev.nonoxy.residetrack.feature.rooms.impl.di.featureRoomsImplModule
 import dev.nonoxy.residetrack.feature.rooms.presentation.di.featureRoomsPresentationModule
 import dev.nonoxy.residetrack.common.resources.di.commonResourcesModule
@@ -41,6 +43,9 @@ fun initKoin(appDeclaration: KoinAppDeclaration) {
             featureAddRoomPresentationModule,
             featureManageStudentsImplModule,
             featureManageStudentsPresentationModule,
+
+            featureUpcomingImplModule,
+            featureUpcomingPresentationModule,
         )
     }
 }
