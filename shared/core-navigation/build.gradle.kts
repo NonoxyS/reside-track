@@ -16,6 +16,7 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         libs.compose.multiplatform.material3,
+        libs.kotlin.immutableCollections,
         projects.shared.commonUi,
     )
 
