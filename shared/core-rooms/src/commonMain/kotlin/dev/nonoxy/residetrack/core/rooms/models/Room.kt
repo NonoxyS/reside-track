@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack.feature.rooms.api.models
+package dev.nonoxy.residetrack.core.rooms.models
 
 data class Room(
     val id: Long = 0,
