@@ -17,6 +17,6 @@ commonMainDependencies {
         libs.kotlin.immutableCollections,
     )
     apis(
-        projects.shared.featureRooms.api,
+        projects.shared.coreRooms,
     )
 }

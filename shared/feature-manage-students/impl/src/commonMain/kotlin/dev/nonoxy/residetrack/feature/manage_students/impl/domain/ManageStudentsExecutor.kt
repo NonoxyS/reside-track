@@ -9,9 +9,9 @@ import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsSt
 import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsSuccessKind
 import dev.nonoxy.residetrack.feature.manage_students.impl.domain.ManageStudentsStoreFactory.Action
 import dev.nonoxy.residetrack.feature.manage_students.impl.domain.ManageStudentsStoreFactory.Message
-import dev.nonoxy.residetrack.feature.rooms.api.models.Room
-import dev.nonoxy.residetrack.feature.rooms.api.models.Student
-import dev.nonoxy.residetrack.feature.rooms.api.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.models.Student
+import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher

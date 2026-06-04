@@ -2,7 +2,7 @@ package dev.nonoxy.residetrack.feature.manage_students.presentation.mappers
 
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiStudent
-import dev.nonoxy.residetrack.feature.rooms.api.models.Student
+import dev.nonoxy.residetrack.core.rooms.models.Student
 
 interface UiStudentMapper : Mapper<Student, UiStudent>
 

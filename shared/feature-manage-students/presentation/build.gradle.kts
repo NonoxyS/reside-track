@@ -14,6 +14,6 @@ commonMainDependencies {
     implementations(
         libs.kotlin.immutableCollections,
         libs.kotlin.datetime,
-        projects.shared.featureRooms.api,
+        projects.shared.coreRooms,
     )
 }
