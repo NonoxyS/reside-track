@@ -94,4 +94,17 @@
     <string name="student_stream_format">Поток: %1$s</string>
     <string name="student_check_in_format">Заселение: %1$s</string>
     <string name="student_check_out_format">Выселение: %1$s</string>
+
+    <!-- Upcoming feature -->
+    <string name="upcoming_title">Скоро освободится</string>
+    <string name="upcoming_tab">Скоро</string>
+    <string name="upcoming_empty_title">Никто не съезжает</string>
+    <string name="upcoming_empty_hint">В ближайшую неделю выселений нет</string>
+    <string name="upcoming_bucket_overdue">Просрочено</string>
+    <string name="upcoming_bucket_today_tomorrow">Сегодня — завтра</string>
+    <string name="upcoming_bucket_this_week">На этой неделе</string>
+    <string name="upcoming_days_left">Осталось дней: %1$s</string>
+    <string name="upcoming_days_overdue">Просрочено на %1$s дн.</string>
+    <string name="rooms_tab">Комнаты</string>
+    <string name="action_retry">Повторить</string>
 </resources>
