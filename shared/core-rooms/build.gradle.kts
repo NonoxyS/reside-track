@@ -1,5 +1,6 @@
 import extensions.androidLibraryConfig
 import extensions.commonMainDependencies
+import extensions.commonTestDependencies
 import extensions.implementations
 
 plugins {
@@ -17,4 +18,8 @@ commonMainDependencies {
         libs.kotlin.datetime,
         libs.kotlin.coroutines.core,
     )
+}
+
+commonTestDependencies {
+    implementations(libs.kotlin.test)
 }
