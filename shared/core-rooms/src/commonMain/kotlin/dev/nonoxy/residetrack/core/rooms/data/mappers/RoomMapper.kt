@@ -1,9 +1,9 @@
-package dev.nonoxy.residetrack.feature.rooms.impl.data.mappers
+package dev.nonoxy.residetrack.core.rooms.data.mappers
 
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
-import dev.nonoxy.residetrack.feature.rooms.api.models.Room
+import dev.nonoxy.residetrack.core.rooms.models.Room
 
 internal interface RoomMapper : Mapper<RoomWithStudents, Room> {
     fun map(item: Room): RoomEntity

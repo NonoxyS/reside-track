@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack.feature.rooms.impl.data
+package dev.nonoxy.residetrack.core.rooms.data
 
 import dev.nonoxy.residetrack.common.utils.coRunCatching
 import dev.nonoxy.residetrack.common.utils.wrapFailure
@@ -6,15 +6,17 @@ import dev.nonoxy.residetrack.common.utils.wrapSuccess
 import dev.nonoxy.residetrack.core.database.dao.RoomDao
 import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
-import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.RoomMapper
-import dev.nonoxy.residetrack.feature.rooms.impl.data.mappers.StudentMapper
-import dev.nonoxy.residetrack.feature.rooms.api.models.Room
-import dev.nonoxy.residetrack.feature.rooms.api.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.data.mappers.RoomMapper
+import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapper
+import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class RoomsRepositoryImpl(
@@ -25,6 +27,11 @@ internal class RoomsRepositoryImpl(
 ) : RoomsRepository {
 
     private val _draftRoom = MutableStateFlow<Room?>(null)
+
+    override fun observeRooms(): Flow<List<Room>> =
+        roomDao.observeAllRoomsWithStudents()
+            .map { rows -> rows.mapToDomain() }
+            .flowOn(ioDispatcher)
 
     override suspend fun getAllRooms(): Result<List<Room>> = withContext(ioDispatcher) {
         coRunCatching(
@@ -142,7 +149,7 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override fun observeDraftRoom(): StateFlow<Room?> = _draftRoom.asStateFlow()
+    override fun observeDraftRoom(): Flow<Room?> = _draftRoom.asStateFlow()
 
     private fun RoomWithStudents.mapToDomain(): Room = roomMapper.map(this)
     private fun List<RoomWithStudents>.mapToDomain(): List<Room> = map { it.mapToDomain() }

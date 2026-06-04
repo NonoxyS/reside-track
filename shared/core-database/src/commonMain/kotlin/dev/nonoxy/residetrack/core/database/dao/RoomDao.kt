@@ -10,6 +10,7 @@ import androidx.room.Update
 import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.entities.StudentEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class RoomDao {
@@ -46,6 +47,10 @@ abstract class RoomDao {
     @Transaction
     @Query("SELECT * FROM rooms")
     abstract suspend fun getAllRoomsWithStudents(): List<RoomWithStudents>
+
+    @Transaction
+    @Query("SELECT * FROM rooms")
+    abstract fun observeAllRoomsWithStudents(): Flow<List<RoomWithStudents>>
 
     @Transaction
     @Query("SELECT * FROM rooms WHERE floorNumber = :floor")
