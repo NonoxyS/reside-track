@@ -1,5 +1,7 @@
 package dev.nonoxy.residetrack.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,10 +17,17 @@ internal fun TabContainerNavHost(
     onNavigateToManageStudentsExistingRoom: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Tabs are sibling destinations — switching between them is instant.
+    // Depth navigation (add room, manage students) lives in the outer
+    // ResideTrackNavHost and keeps its transitions.
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = RoomsRoute,
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None },
     ) {
         composableRoomsScreen(
             onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
