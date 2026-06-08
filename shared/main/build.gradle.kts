@@ -7,6 +7,7 @@ import plugins.composeBundle
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
+    alias(libs.plugins.conventionPlugin.jsonSerialization)
     alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
 }
 
