@@ -133,7 +133,23 @@ fun ResideTrackDatePicker(
             DatePicker(
                 state = datePickerState,
                 colors = DatePickerDefaults.colors(
-                    containerColor = ResideTrackTheme.colors.surface
+                    containerColor = ResideTrackTheme.colors.surface,
+                    titleContentColor = ResideTrackTheme.colors.textBody,
+                    headlineContentColor = ResideTrackTheme.colors.textPrimary,
+                    weekdayContentColor = ResideTrackTheme.colors.textCaption,
+                    subheadContentColor = ResideTrackTheme.colors.textBody,
+                    navigationContentColor = ResideTrackTheme.colors.textPrimary,
+                    yearContentColor = ResideTrackTheme.colors.textBody,
+                    currentYearContentColor = ResideTrackTheme.colors.textAccent,
+                    selectedYearContentColor = ResideTrackTheme.colors.white,
+                    selectedYearContainerColor = ResideTrackTheme.colors.textAccent,
+                    dayContentColor = ResideTrackTheme.colors.textPrimary,
+                    disabledDayContentColor = ResideTrackTheme.colors.textDisable,
+                    selectedDayContentColor = ResideTrackTheme.colors.white,
+                    selectedDayContainerColor = ResideTrackTheme.colors.textAccent,
+                    todayContentColor = ResideTrackTheme.colors.textAccent,
+                    todayDateBorderColor = ResideTrackTheme.colors.textAccent,
+                    dividerColor = ResideTrackTheme.colors.borderDefault,
                 )
             )
         }
