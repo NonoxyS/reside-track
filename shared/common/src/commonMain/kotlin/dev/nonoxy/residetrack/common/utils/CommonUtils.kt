@@ -16,3 +16,13 @@ fun <T> ImmutableList<T>?.orEmptyPersist(): ImmutableList<T> = this ?: persisten
 fun <T> ImmutableSet<T>?.orEmptyPersist(): ImmutableSet<T> = this ?: persistentSetOf()
 
 fun <K, V> ImmutableMap<K, V>?.orEmptyPersist(): ImmutableMap<K, V> = this ?: persistentMapOf()
+
+inline fun <T> unsafeLazy(crossinline initializer: () -> T): Lazy<T> = lazy(mode = LazyThreadSafetyMode.NONE) {
+    initializer()
+}
+
+inline fun <T> publicationLazy(crossinline initializer: () -> T): Lazy<T> = lazy(
+    mode = LazyThreadSafetyMode.PUBLICATION
+) {
+    initializer()
+}

@@ -10,15 +10,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
+import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_24
-import kotlinx.collections.immutable.persistentListOf
-import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.common.utils.unsafeLazy
+import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
 import dev.nonoxy.residetrack.res.MR
+import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+private val horizontalPaddingModifier by unsafeLazy {
+    Modifier.padding(horizontal = padding_size_24)
+}
 
 @Composable
 internal fun AddRoomScreenContent(
@@ -35,9 +40,7 @@ internal fun AddRoomScreenContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(state = rememberScrollState())
-            .padding(horizontal = padding_size_24),
+        modifier = modifier.verticalScroll(state = rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(padding_size_20),
     ) {
         Text(
@@ -45,6 +48,7 @@ internal fun AddRoomScreenContent(
             style = ResideTrackTheme.typography.head2.copy(
                 color = ResideTrackTheme.colors.textPrimary,
             ),
+            modifier = horizontalPaddingModifier
         )
 
         Column(
@@ -59,12 +63,14 @@ internal fun AddRoomScreenContent(
                 onInputValueChange = onFloorNumberInputValueChange,
                 onFloorSelect = onFloorNumberSelect,
                 onToggleInput = onToggleFloorInput,
+                titleModifier = horizontalPaddingModifier
             )
 
             RoomNumberSection(
                 textFieldState = state.roomNumber,
                 isLoading = state.isLoading,
                 onInputValueChange = onRoomNumberInputValueChange,
+                modifier = horizontalPaddingModifier
             )
 
             BedsSelectionSection(
@@ -75,6 +81,7 @@ internal fun AddRoomScreenContent(
                 onInputValueChange = onBedsCountInputValueChange,
                 onBedsSelect = onBedsCountSelect,
                 onToggleInput = onToggleBedsInput,
+                titleModifier = horizontalPaddingModifier
             )
         }
 
@@ -85,6 +92,7 @@ internal fun AddRoomScreenContent(
             isLoading = state.isLoading,
             onCancelClick = onCancelClick,
             onCreateClick = onCreateRoomClick,
+            modifier = horizontalPaddingModifier
         )
     }
 }

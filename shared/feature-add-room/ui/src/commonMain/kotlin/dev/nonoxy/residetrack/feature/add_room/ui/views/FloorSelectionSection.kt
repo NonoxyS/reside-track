@@ -7,15 +7,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
-import dev.nonoxy.residetrack.feature.add_room.ui.localized
+import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
+import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
+import dev.nonoxy.residetrack.feature.add_room.ui.localized
+import dev.nonoxy.residetrack.res.MR
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import dev.icerock.moko.resources.compose.stringResource
-import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -28,6 +28,7 @@ internal fun FloorSelectionSection(
     onInputValueChange: (String) -> Unit,
     onFloorSelect: (Int) -> Unit,
     onToggleInput: () -> Unit,
+    titleModifier: Modifier = Modifier,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,6 +43,7 @@ internal fun FloorSelectionSection(
                         style = ResideTrackTheme.typography.head3.copy(
                             color = ResideTrackTheme.colors.textCaption,
                         ),
+                        modifier = titleModifier,
                     )
                 }
             }
