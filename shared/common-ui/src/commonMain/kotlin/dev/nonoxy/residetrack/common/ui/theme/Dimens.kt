@@ -33,7 +33,6 @@ val padding_size_64: Dp = 64.dp
 val padding_size_68: Dp = 68.dp
 val padding_size_75: Dp = 75.dp
 val padding_size_76: Dp = 76.dp
-val padding_size_85: Dp = 85.dp
 val padding_size_96: Dp = 96.dp
 val padding_size_200: Dp = 200.dp
 

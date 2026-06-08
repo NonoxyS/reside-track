@@ -8,9 +8,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -19,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.core.navigation.bottombar.BottomBarItem
 import dev.nonoxy.residetrack.core.navigation.bottombar.FloatingBottomBar
+import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
 import dev.nonoxy.residetrack.feature.rooms.ui.api.RoomsRoute
 import dev.nonoxy.residetrack.feature.upcoming.ui.api.UpcomingRoute
 import dev.nonoxy.residetrack.navigation.TabContainerNavHost
@@ -59,13 +66,18 @@ internal fun TabContainerScreen(
         ),
     )
 
+    var barHeightPx by remember { mutableIntStateOf(0) }
+    val barInset = with(LocalDensity.current) { barHeightPx.toDp() }
+
     Box(modifier = Modifier.fillMaxSize()) {
-        TabContainerNavHost(
-            navController = innerNavController,
-            onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
-            onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom,
-            modifier = Modifier.fillMaxSize(),
-        )
+        CompositionLocalProvider(LocalFloatingBottomBarInset provides barInset) {
+            TabContainerNavHost(
+                navController = innerNavController,
+                onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
+                onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
         FloatingBottomBar(
             items = items,
             selectedKey = selectedKey,
@@ -79,6 +91,7 @@ internal fun TabContainerScreen(
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .onSizeChanged { barHeightPx = it.height }
                 .navigationBarsPadding()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
         )
