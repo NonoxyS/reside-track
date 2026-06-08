@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -46,15 +48,15 @@ fun FloatingBottomBar(
         shadowElevation = padding_size_8,
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = padding_size_8),
+            modifier = Modifier.fillMaxSize().padding(horizontal = padding_size_8),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             items.forEach { item ->
                 BottomBarTab(
                     item = item,
                     selected = item.key == selectedKey,
                     onSelect = { onSelect(item.key) },
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
                 )
             }
         }
@@ -66,6 +68,7 @@ private fun BottomBarTab(
     item: BottomBarItem,
     selected: Boolean,
     onSelect: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val contentColor = if (selected) {
         ResideTrackTheme.colors.textAccent
@@ -73,11 +76,12 @@ private fun BottomBarTab(
         ResideTrackTheme.colors.textCaption
     }
     Row(
-        modifier = Modifier
+        modifier = modifier
+            .clip(ResideTrackTheme.shapes.cornerRadius40)
             .selectable(selected = selected, onClick = onSelect)
             .padding(horizontal = padding_size_12, vertical = padding_size_8),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(padding_size_6),
+        horizontalArrangement = Arrangement.spacedBy(padding_size_6, Alignment.CenterHorizontally),
     ) {
         Box {
             Icon(
