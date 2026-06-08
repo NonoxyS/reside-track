@@ -15,7 +15,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.nonoxy.residetrack.feature.add_room.presentation.AddRoomViewModel
 import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomLabel
 import dev.nonoxy.residetrack.feature.add_room.ui.views.AddRoomScreenContent
-import dev.nonoxy.residetrack.common.resources.StringConverter
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.SheetDismissGuard
@@ -23,7 +22,6 @@ import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -33,7 +31,6 @@ internal fun AddRoomScreen(
     viewModel: AddRoomViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val stringConverter: StringConverter = koinInject()
 
     val snackbarHostState = remember { SnackbarHostState() }
     var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
@@ -57,7 +54,7 @@ internal fun AddRoomScreen(
                 currentSnackbarType = SnackbarType.INFO
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = label.kind.localized(stringConverter),
+                    message = label.message,
                     withDismissAction = true,
                 )
             }
@@ -65,7 +62,7 @@ internal fun AddRoomScreen(
                 currentSnackbarType = SnackbarType.ERROR
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = label.kind.localized(stringConverter),
+                    message = label.message,
                     withDismissAction = true,
                 )
             }

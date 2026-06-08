@@ -15,7 +15,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.nonoxy.residetrack.feature.manage_students.presentation.ManageStudentsViewModel
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsLabel
 import dev.nonoxy.residetrack.feature.manage_students.ui.views.ManageStudentsContent
-import dev.nonoxy.residetrack.common.resources.StringConverter
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.SheetDismissGuard
@@ -23,7 +22,6 @@ import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -32,7 +30,6 @@ internal fun ManageStudentsScreen(
     viewModel: ManageStudentsViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val stringConverter: StringConverter = koinInject()
 
     val snackbarHostState = remember { SnackbarHostState() }
     var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
@@ -55,7 +52,7 @@ internal fun ManageStudentsScreen(
                 currentSnackbarType = SnackbarType.ERROR
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = label.kind.localized(stringConverter),
+                    message = label.message,
                     withDismissAction = true,
                 )
             }
@@ -63,7 +60,7 @@ internal fun ManageStudentsScreen(
                 currentSnackbarType = SnackbarType.INFO
                 snackbarHostState.currentSnackbarData?.dismiss()
                 snackbarHostState.showSnackbar(
-                    message = label.kind.localized(stringConverter),
+                    message = label.message,
                     withDismissAction = true,
                 )
             }

@@ -21,7 +21,7 @@ val featureManageStudentsPresentationModule = module {
     factoryOf<UiStudentMapper>(::UiStudentMapperImpl)
     factoryOf(::UiRoomMapperImpl) bind UiRoomMapper::class
     factoryOf(::UiManageStudentsStateMapperImpl) bind UiManageStudentsStateMapper::class
-    factoryOf<UiManageStudentsLabelMapper>(::UiManageStudentsLabelMapperImpl)
+    factoryOf(::UiManageStudentsLabelMapperImpl) bind UiManageStudentsLabelMapper::class
 
     viewModel { params ->
         val mode = params.get<ManageStudentsMode>()
