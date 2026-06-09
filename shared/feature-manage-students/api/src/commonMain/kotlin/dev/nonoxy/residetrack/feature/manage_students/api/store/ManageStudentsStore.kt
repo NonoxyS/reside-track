@@ -18,6 +18,7 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
         val editableStudents: ImmutableList<EditableStudent> = persistentListOf(),
         val isDirty: Boolean = false,
         val showDiscardConfirm: Boolean = false,
+        val openDatePicker: OpenPicker? = null,
     ) {
         data class EditableStudent(
             val id: String,
@@ -29,7 +30,12 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
             val checkOutDateMillis: Long? = null,
             val isNew: Boolean = false,
         )
+
+        /** Identifies the single date picker currently open on the screen. */
+        data class OpenPicker(val studentId: String, val field: DateField)
     }
+
+    enum class DateField { CHECK_IN, CHECK_OUT }
 
     sealed interface Intent {
         data object LoadStudents : Intent
@@ -40,6 +46,8 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
         data class OnCheckOutDateChange(val studentId: String, val value: String) : Intent
         data class OnCheckInDateMillisChange(val studentId: String, val millis: Long) : Intent
         data class OnCheckOutDateMillisChange(val studentId: String, val millis: Long) : Intent
+        data class OnDatePickerOpen(val studentId: String, val field: DateField) : Intent
+        data object OnDatePickerDismiss : Intent
         data object OnSaveAndClose : Intent
         data object OnClose : Intent
         data object OnDismissRequested : Intent

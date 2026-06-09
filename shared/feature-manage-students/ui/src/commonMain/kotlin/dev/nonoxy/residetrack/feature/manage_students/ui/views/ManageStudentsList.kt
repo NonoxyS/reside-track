@@ -18,7 +18,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiEditableStudent
+import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiOpenDatePicker
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
@@ -30,6 +32,7 @@ import dev.nonoxy.residetrack.res.MR
 @Composable
 internal fun ManageStudentsList(
     students: ImmutableList<UiEditableStudent>,
+    openDatePicker: UiOpenDatePicker?,
     onAddStudent: () -> Unit,
     onRemoveStudent: (String) -> Unit,
     onStreamNumberChange: (String, String) -> Unit,
@@ -37,6 +40,8 @@ internal fun ManageStudentsList(
     onCheckOutDateChange: (String, String) -> Unit,
     onCheckInDateMillisChange: (String, Long) -> Unit,
     onCheckOutDateMillisChange: (String, Long) -> Unit,
+    onOpenPicker: (String, UiDateField) -> Unit,
+    onDismissPicker: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -65,6 +70,9 @@ internal fun ManageStudentsList(
             EditableStudentCard(
                 modifier = Modifier.fillMaxWidth().animateItem(),
                 student = student,
+                openField = openDatePicker
+                    ?.takeIf { it.studentId == student.id }
+                    ?.field,
                 onStreamNumberChange = { value ->
                     onStreamNumberChange(student.id, value)
                 },
@@ -74,6 +82,10 @@ internal fun ManageStudentsList(
                 onCheckOutDateMillisChange = { value ->
                     onCheckOutDateMillisChange(student.id, value)
                 },
+                onOpenPicker = { field ->
+                    onOpenPicker(student.id, field)
+                },
+                onDismissPicker = onDismissPicker,
                 onRemove = {
                     onRemoveStudent(student.id)
                 },

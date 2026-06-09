@@ -53,6 +53,9 @@ internal class ManageStudentsExecutor(
             is Intent.OnCheckOutDateChange -> handleCheckOutDateChange(intent.studentId, intent.value)
             is Intent.OnCheckInDateMillisChange -> handleCheckInDateMillisChange(intent.studentId, intent.millis)
             is Intent.OnCheckOutDateMillisChange -> handleCheckOutDateMillisChange(intent.studentId, intent.millis)
+            is Intent.OnDatePickerOpen ->
+                dispatch(Message.SetOpenDatePicker(State.OpenPicker(intent.studentId, intent.field)))
+            Intent.OnDatePickerDismiss -> dispatch(Message.SetOpenDatePicker(null))
             Intent.OnSaveAndClose -> handleSaveAndClose()
             Intent.OnClose -> publish(Label.NavigateBack)
             Intent.OnDismissRequested ->
@@ -99,8 +102,8 @@ internal class ManageStudentsExecutor(
                     streamNumber = student.streamNumber.toString(),
                     checkInDate = dateDisplayFormat.format(student.checkInDate),
                     checkOutDate = dateDisplayFormat.format(student.checkOutDate),
-                    checkInDateMillis = 1L,
-                    checkOutDateMillis = 1L,
+                    checkInDateMillis = student.checkInDate.toUtcMillis(),
+                    checkOutDateMillis = student.checkOutDate.toUtcMillis(),
                     isNew = false,
                 )
             }.toImmutableList()
@@ -303,16 +306,21 @@ internal class ManageStudentsExecutor(
             }
     }
 
+    // Check-in/out are calendar dates without a time component. The Material date
+    // picker emits and consumes UTC-midnight millis, so we canonicalize on UTC to
+    // keep the displayed day equal to the picked day in every timezone.
     private fun formatDateFromMillis(millis: Long): String {
         val instant = Instant.fromEpochMilliseconds(millis)
-        val localDate = instant.toLocalDateTime(TimeZone.currentSystemDefault()).date
+        val localDate = instant.toLocalDateTime(TimeZone.UTC).date
         return dateDisplayFormat.format(localDate)
     }
 
     private fun parseDateToMillis(dateString: String): Long? = try {
-        val localDate = dateDisplayFormat.parse(dateString)
-        localDate.atStartOfDayIn(TimeZone.currentSystemDefault()).toEpochMilliseconds()
+        dateDisplayFormat.parse(dateString).toUtcMillis()
     } catch (_: Exception) {
         null
     }
+
+    private fun LocalDate.toUtcMillis(): Long =
+        atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
 }

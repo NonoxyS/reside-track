@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsState
 import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
 
@@ -19,6 +20,8 @@ internal fun ManageStudentsContent(
     onCheckOutDateChange: (String, String) -> Unit,
     onCheckInDateMillisChange: (String, Long) -> Unit,
     onCheckOutDateMillisChange: (String, Long) -> Unit,
+    onOpenPicker: (String, UiDateField) -> Unit,
+    onDismissPicker: () -> Unit,
     onSaveAndClose: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -39,6 +42,7 @@ internal fun ManageStudentsContent(
 
             ManageStudentsList(
                 students = currentState.editableStudents,
+                openDatePicker = currentState.openDatePicker,
                 onAddStudent = onAddStudent,
                 onRemoveStudent = onRemoveStudent,
                 onStreamNumberChange = onStreamNumberChange,
@@ -46,6 +50,8 @@ internal fun ManageStudentsContent(
                 onCheckOutDateChange = onCheckOutDateChange,
                 onCheckInDateMillisChange = onCheckInDateMillisChange,
                 onCheckOutDateMillisChange = onCheckOutDateMillisChange,
+                onOpenPicker = onOpenPicker,
+                onDismissPicker = onDismissPicker,
                 modifier = Modifier.weight(1f),
             )
 

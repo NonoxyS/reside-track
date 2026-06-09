@@ -15,12 +15,12 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -43,7 +43,7 @@ fun ResideTrackDatePicker(
     onShowDatePickerStateChange: (showDatePicker: Boolean) -> Unit,
     value: String,
     placeholder: String,
-    selectedDateMillis: Long?,
+    datePickerState: DatePickerState,
     onDateSelect: (Long) -> Unit,
     modifier: Modifier = Modifier,
     saveButtonText: String = stringResource(MR.strings.save),
@@ -91,10 +91,7 @@ fun ResideTrackDatePicker(
     }
 
     if (showDatePicker) {
-        val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = selectedDateMillis
-        )
-        val confirmEnabled by remember {
+        val confirmEnabled by remember(datePickerState) {
             derivedStateOf { datePickerState.selectedDateMillis != null }
         }
 

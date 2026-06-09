@@ -93,6 +93,8 @@ internal fun ManageStudentsScreen(
             onCheckOutDateChange = viewModel::onCheckOutDateChange,
             onCheckInDateMillisChange = viewModel::onCheckInDateMillisChange,
             onCheckOutDateMillisChange = viewModel::onCheckOutDateMillisChange,
+            onOpenPicker = viewModel::onDatePickerOpen,
+            onDismissPicker = viewModel::onDatePickerDismiss,
             onSaveAndClose = viewModel::onSaveAndClose,
         )
     }

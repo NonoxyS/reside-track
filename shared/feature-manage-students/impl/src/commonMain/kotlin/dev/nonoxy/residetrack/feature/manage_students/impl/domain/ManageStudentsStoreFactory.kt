@@ -55,5 +55,7 @@ internal class ManageStudentsStoreFactory(
         ) : Message
 
         data class SetShowDiscardConfirm(val show: Boolean) : Message
+
+        data class SetOpenDatePicker(val openPicker: State.OpenPicker?) : Message
     }
 }
