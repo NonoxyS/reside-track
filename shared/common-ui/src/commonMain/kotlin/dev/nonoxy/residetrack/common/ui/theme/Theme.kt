@@ -18,7 +18,7 @@ fun ResideTrackTheme(
 
     val textSelectionColors = TextSelectionColors(
         handleColor = ResideTrackDarkColors.textAccent,
-        backgroundColor = ResideTrackDarkColors.textAccent.copy(alpha = 0.4f)
+        backgroundColor = ResideTrackDarkColors.textAccent.copy(alpha = 0.4f),
     )
 
     MaterialTheme {

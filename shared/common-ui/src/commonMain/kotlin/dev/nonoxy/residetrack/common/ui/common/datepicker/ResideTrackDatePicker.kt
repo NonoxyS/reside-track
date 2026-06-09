@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -43,9 +44,9 @@ fun ResideTrackDatePicker(
     onShowDatePickerStateChange: (showDatePicker: Boolean) -> Unit,
     value: String,
     placeholder: String,
-    datePickerState: DatePickerState,
     onDateSelect: (Long) -> Unit,
     modifier: Modifier = Modifier,
+    datePickerState: DatePickerState = rememberDatePickerState(),
     saveButtonText: String = stringResource(MR.strings.save),
     cancelButtonText: String = stringResource(MR.strings.cancel),
 ) {
