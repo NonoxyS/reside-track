@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
+import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
 import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiRoom
 import kotlinx.collections.immutable.ImmutableList
 
@@ -24,8 +25,10 @@ internal fun RoomList(
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(
-            horizontal = padding_size_16,
-            vertical = padding_size_20
+            start = padding_size_16,
+            end = padding_size_16,
+            top = padding_size_20,
+            bottom = LocalFloatingBottomBarInset.current + padding_size_20,
         ),
         verticalArrangement = Arrangement.spacedBy(padding_size_8)
     ) {

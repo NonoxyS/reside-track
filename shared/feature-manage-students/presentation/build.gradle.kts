@@ -12,8 +12,9 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
+        projects.shared.commonResources,
+        projects.shared.coreRooms,
         libs.kotlin.immutableCollections,
         libs.kotlin.datetime,
-        projects.shared.featureRooms.api,
     )
 }

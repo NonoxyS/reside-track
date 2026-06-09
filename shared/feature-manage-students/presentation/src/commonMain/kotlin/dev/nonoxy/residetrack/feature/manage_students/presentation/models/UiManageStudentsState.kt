@@ -12,4 +12,5 @@ data class UiManageStudentsState(
     val editableStudents: ImmutableList<UiEditableStudent> = persistentListOf(),
     val isDirty: Boolean = false,
     val showDiscardConfirm: Boolean = false,
+    val openDatePicker: UiOpenDatePicker? = null,
 )

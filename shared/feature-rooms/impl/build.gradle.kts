@@ -15,6 +15,7 @@ commonMainDependencies {
     implementations(
         projects.shared.coreDatabase,
         projects.shared.coreInitializer,
+        projects.shared.coreRooms,
         projects.shared.commonResources,
     )
 }

@@ -9,8 +9,8 @@ import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsSt
 import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsStore.Intent
 import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsStore.Label
 import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsStore.State
-import dev.nonoxy.residetrack.feature.rooms.api.models.Room
-import dev.nonoxy.residetrack.feature.rooms.api.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -55,5 +55,7 @@ internal class ManageStudentsStoreFactory(
         ) : Message
 
         data class SetShowDiscardConfirm(val show: Boolean) : Message
+
+        data class SetOpenDatePicker(val openPicker: State.OpenPicker?) : Message
     }
 }

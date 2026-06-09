@@ -21,6 +21,9 @@ fun DiscardChangesDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = ResideTrackTheme.colors.surface,
+        titleContentColor = ResideTrackTheme.colors.textPrimary,
+        textContentColor = ResideTrackTheme.colors.textBody,
         title = {
             Text(text = stringResource(MR.strings.discard_changes_title))
         },
@@ -37,7 +40,10 @@ fun DiscardChangesDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(MR.strings.keep_editing))
+                Text(
+                    text = stringResource(MR.strings.keep_editing),
+                    color = ResideTrackTheme.colors.textPrimary
+                )
             }
         }
     )

@@ -1,7 +1,7 @@
 package dev.nonoxy.residetrack.feature.rooms.api.store
 
 import com.arkivanov.mvikotlin.core.store.Store
-import dev.nonoxy.residetrack.feature.rooms.api.models.Room
+import dev.nonoxy.residetrack.core.rooms.models.Room
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Intent
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Label
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.State

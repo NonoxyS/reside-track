@@ -7,6 +7,7 @@ import plugins.composeBundle
 
 plugins {
     alias(libs.plugins.conventionPlugin.kmpLibrary)
+    alias(libs.plugins.conventionPlugin.jsonSerialization)
     alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)
 }
 
@@ -44,6 +45,9 @@ commonMainDependencies {
         libs.compose.multiplatform.navigation,
         libs.koin.composeMultiplatform,
         libs.koin.composeMultiplatform.viewmodelNavigation,
+        libs.kotlin.immutableCollections,
+        libs.compose.icons.core,
+        libs.moko.resources.compose,
     )
 }
 

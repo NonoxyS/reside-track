@@ -2,7 +2,7 @@ package dev.nonoxy.residetrack.feature.manage_students.presentation.mappers
 
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiRoom
-import dev.nonoxy.residetrack.feature.rooms.api.models.Room
+import dev.nonoxy.residetrack.core.rooms.models.Room
 import kotlinx.collections.immutable.toImmutableList
 
 interface UiRoomMapper : Mapper<Room, UiRoom>

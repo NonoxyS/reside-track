@@ -7,12 +7,13 @@ import dev.nonoxy.residetrack.feature.add_room.presentation.mappers.UiAddRoomSta
 import dev.nonoxy.residetrack.feature.add_room.presentation.mappers.UiAddRoomStateMapperImpl
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val featureAddRoomPresentationModule = module {
 
     factoryOf<UiAddRoomStateMapper>(::UiAddRoomStateMapperImpl)
-    factoryOf<UiAddRoomLabelMapper>(::UiAddRoomLabelMapperImpl)
+    factoryOf(::UiAddRoomLabelMapperImpl) bind UiAddRoomLabelMapper::class
 
     viewModelOf(::AddRoomViewModel)
 }

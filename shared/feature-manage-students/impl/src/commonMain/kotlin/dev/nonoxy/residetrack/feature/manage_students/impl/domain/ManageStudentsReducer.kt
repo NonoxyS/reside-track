@@ -42,5 +42,9 @@ internal class ManageStudentsReducer : Reducer<State, Message> {
         is Message.SetShowDiscardConfirm -> copy(
             showDiscardConfirm = msg.show,
         )
+
+        is Message.SetOpenDatePicker -> copy(
+            openDatePicker = msg.openPicker,
+        )
     }
 }

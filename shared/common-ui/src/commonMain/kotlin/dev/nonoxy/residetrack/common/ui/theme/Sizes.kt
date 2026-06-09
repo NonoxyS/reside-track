@@ -14,5 +14,6 @@ val size_40: Dp = 40.dp
 val size_42: Dp = 42.dp
 val size_44: Dp = 44.dp
 val size_48: Dp = 48.dp
+val size_64: Dp = 64.dp
 val size_76: Dp = 76.dp
 val size_100: Dp = 100.dp

@@ -3,9 +3,11 @@ package dev.nonoxy.residetrack.feature.manage_students.presentation
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.states
 import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsStore
+import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsStore.DateField
 import dev.nonoxy.residetrack.feature.manage_students.api.store.ManageStudentsStore.Intent
 import dev.nonoxy.residetrack.feature.manage_students.presentation.mappers.UiManageStudentsLabelMapper
 import dev.nonoxy.residetrack.feature.manage_students.presentation.mappers.UiManageStudentsStateMapper
+import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsLabel
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsState
 import dev.nonoxy.residetrack.core.presentation.viewmodel.BaseViewModel
@@ -45,6 +47,11 @@ class ManageStudentsViewModel internal constructor(
     fun onCheckOutDateMillisChange(studentId: String, millis: Long) =
         store.accept(Intent.OnCheckOutDateMillisChange(studentId = studentId, millis = millis))
 
+    fun onDatePickerOpen(studentId: String, field: UiDateField) =
+        store.accept(Intent.OnDatePickerOpen(studentId = studentId, field = field.toDomain()))
+
+    fun onDatePickerDismiss() = store.accept(Intent.OnDatePickerDismiss)
+
     fun onSaveAndClose() = store.accept(Intent.OnSaveAndClose)
 
     fun onClose() = store.accept(Intent.OnClose)
@@ -58,5 +65,10 @@ class ManageStudentsViewModel internal constructor(
     override fun onCleared() {
         store.dispose()
         super.onCleared()
+    }
+
+    private fun UiDateField.toDomain(): DateField = when (this) {
+        UiDateField.CHECK_IN -> DateField.CHECK_IN
+        UiDateField.CHECK_OUT -> DateField.CHECK_OUT
     }
 }

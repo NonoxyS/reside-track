@@ -15,8 +15,10 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -28,11 +30,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.size_24
 import dev.nonoxy.residetrack.common.ui.theme.size_48
-import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.res.MR
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,11 +44,11 @@ fun ResideTrackDatePicker(
     onShowDatePickerStateChange: (showDatePicker: Boolean) -> Unit,
     value: String,
     placeholder: String,
-    selectedDateMillis: Long?,
     onDateSelect: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    saveButtonText: String = "Сохранить",
-    cancelButtonText: String = "Отмена"
+    datePickerState: DatePickerState = rememberDatePickerState(),
+    saveButtonText: String = stringResource(MR.strings.save),
+    cancelButtonText: String = stringResource(MR.strings.cancel),
 ) {
     Row(
         modifier = modifier
@@ -90,14 +92,12 @@ fun ResideTrackDatePicker(
     }
 
     if (showDatePicker) {
-        val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = selectedDateMillis
-        )
-        val confirmEnabled by remember {
+        val confirmEnabled by remember(datePickerState) {
             derivedStateOf { datePickerState.selectedDateMillis != null }
         }
 
         DatePickerDialog(
+            colors = datePickerColors,
             onDismissRequest = { onShowDatePickerStateChange(false) },
             confirmButton = {
                 TextButton(
@@ -132,10 +132,44 @@ fun ResideTrackDatePicker(
         ) {
             DatePicker(
                 state = datePickerState,
-                colors = DatePickerDefaults.colors(
-                    containerColor = ResideTrackTheme.colors.surface
-                )
+                colors = datePickerColors
             )
         }
     }
 }
+
+private val datePickerColors
+    @Composable get() = DatePickerDefaults.colors(
+        containerColor = ResideTrackTheme.colors.surface,
+        titleContentColor = ResideTrackTheme.colors.textBody,
+        headlineContentColor = ResideTrackTheme.colors.textPrimary,
+        weekdayContentColor = ResideTrackTheme.colors.textCaption,
+        subheadContentColor = ResideTrackTheme.colors.textBody,
+        navigationContentColor = ResideTrackTheme.colors.textPrimary,
+        yearContentColor = ResideTrackTheme.colors.textBody,
+        currentYearContentColor = ResideTrackTheme.colors.textAccent,
+        selectedYearContentColor = ResideTrackTheme.colors.white,
+        selectedYearContainerColor = ResideTrackTheme.colors.textAccent,
+        dayContentColor = ResideTrackTheme.colors.textPrimary,
+        disabledDayContentColor = ResideTrackTheme.colors.textDisable,
+        selectedDayContentColor = ResideTrackTheme.colors.white,
+        selectedDayContainerColor = ResideTrackTheme.colors.textAccent,
+        todayContentColor = ResideTrackTheme.colors.textAccent,
+        todayDateBorderColor = ResideTrackTheme.colors.textAccent,
+        dividerColor = ResideTrackTheme.colors.borderDefault,
+        dateTextFieldColors = OutlinedTextFieldDefaults.colors(
+            focusedTextColor = ResideTrackTheme.colors.textPrimary,
+            unfocusedTextColor = ResideTrackTheme.colors.textPrimary,
+            cursorColor = ResideTrackTheme.colors.textAccent,
+            focusedBorderColor = ResideTrackTheme.colors.borderActive,
+            unfocusedBorderColor = ResideTrackTheme.colors.borderDefault,
+            focusedLabelColor = ResideTrackTheme.colors.textAccent,
+            unfocusedLabelColor = ResideTrackTheme.colors.textCaption,
+            focusedPlaceholderColor = ResideTrackTheme.colors.textCaption,
+            unfocusedPlaceholderColor = ResideTrackTheme.colors.textCaption,
+            errorTextColor = ResideTrackTheme.colors.textPrimary,
+            errorBorderColor = ResideTrackTheme.colors.borderError,
+            errorLabelColor = ResideTrackTheme.colors.textError,
+            errorCursorColor = ResideTrackTheme.colors.textError,
+        ),
+    )

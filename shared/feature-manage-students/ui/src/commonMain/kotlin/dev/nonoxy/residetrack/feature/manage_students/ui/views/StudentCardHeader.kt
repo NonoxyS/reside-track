@@ -59,6 +59,9 @@ internal fun StudentCardHeader(
     if (showRemoveConfirm) {
         AlertDialog(
             onDismissRequest = { showRemoveConfirm = false },
+            containerColor = ResideTrackTheme.colors.surface,
+            titleContentColor = ResideTrackTheme.colors.textPrimary,
+            textContentColor = ResideTrackTheme.colors.textBody,
             title = {
                 Text(text = stringResource(MR.strings.remove_student_confirm_title))
             },
@@ -80,7 +83,10 @@ internal fun StudentCardHeader(
             },
             dismissButton = {
                 TextButton(onClick = { showRemoveConfirm = false }) {
-                    Text(text = stringResource(MR.strings.cancel))
+                    Text(
+                        text = stringResource(MR.strings.cancel),
+                        color = ResideTrackTheme.colors.textPrimary
+                    )
                 }
             }
         )

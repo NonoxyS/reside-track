@@ -4,7 +4,9 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -16,13 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.util.fastForEach
+import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
+import dev.nonoxy.residetrack.res.MR
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import dev.icerock.moko.resources.compose.stringResource
-import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -38,6 +40,8 @@ internal fun FloorSelectionChips(
         modifier = modifier.horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(padding_size_8)
     ) {
+        Spacer(modifier = Modifier.width(padding_size_16))
+
         existingFloors.fastForEach { floor ->
             FilterChip(
                 onClick = { onFloorSelect(floor) },
@@ -91,6 +95,7 @@ internal fun FloorSelectionChips(
                 selectedLabelColor = ResideTrackTheme.colors.white
             )
         )
+        Spacer(modifier = Modifier.width(padding_size_16))
     }
 }
 
@@ -107,6 +112,8 @@ internal fun BedsSelectionChips(
         modifier = modifier.horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(padding_size_8)
     ) {
+        Spacer(modifier = Modifier.width(padding_size_16))
+
         existingBedsCounts.fastForEach { bedsCount ->
             FilterChip(
                 onClick = { onBedsSelect(bedsCount) },
@@ -160,6 +167,7 @@ internal fun BedsSelectionChips(
                 selectedLabelColor = ResideTrackTheme.colors.white
             )
         )
+        Spacer(modifier = Modifier.width(padding_size_16))
     }
 }
 
@@ -205,7 +213,6 @@ private fun FloorSelectionChipsPreview() {
 private fun BedsSelectionChipsPreview() {
     ResideTrackTheme {
         Column(
-            modifier = Modifier.padding(padding_size_16),
             verticalArrangement = Arrangement.spacedBy(padding_size_16)
         ) {
             Text(

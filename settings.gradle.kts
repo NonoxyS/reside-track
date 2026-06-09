@@ -43,6 +43,7 @@ include(
     ":shared:core-navigation",
     ":shared:core-database",
     ":shared:core-initializer",
+    ":shared:core-rooms",
     ":shared:common-ui",
 
     // Features
@@ -63,6 +64,11 @@ include(
     ":shared:feature-manage-students:impl",
     ":shared:feature-manage-students:presentation",
     ":shared:feature-manage-students:ui",
+
+    ":shared:feature-upcoming:api",
+    ":shared:feature-upcoming:impl",
+    ":shared:feature-upcoming:presentation",
+    ":shared:feature-upcoming:ui",
 
     ":shared:template-module"
 )
