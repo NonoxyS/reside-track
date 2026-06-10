@@ -25,6 +25,7 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_96
 import kotlinx.collections.immutable.ImmutableList
 import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.res.MR
@@ -46,7 +47,12 @@ internal fun ManageStudentsList(
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(padding_size_16),
+        contentPadding = PaddingValues(
+            start = padding_size_16,
+            end = padding_size_16,
+            top = padding_size_16,
+            bottom = padding_size_96,
+        ),
         verticalArrangement = Arrangement.spacedBy(padding_size_12),
     ) {
         if (students.isNotEmpty()) {

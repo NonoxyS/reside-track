@@ -1,8 +1,10 @@
 package dev.nonoxy.residetrack.feature.manage_students.ui.views
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsState
@@ -40,25 +42,28 @@ internal fun ManageStudentsContent(
                 onCloseClick = onCloseClick,
             )
 
-            ManageStudentsList(
-                students = currentState.editableStudents,
-                openDatePicker = currentState.openDatePicker,
-                onAddStudent = onAddStudent,
-                onRemoveStudent = onRemoveStudent,
-                onStreamNumberChange = onStreamNumberChange,
-                onCheckInDateChange = onCheckInDateChange,
-                onCheckOutDateChange = onCheckOutDateChange,
-                onCheckInDateMillisChange = onCheckInDateMillisChange,
-                onCheckOutDateMillisChange = onCheckOutDateMillisChange,
-                onOpenPicker = onOpenPicker,
-                onDismissPicker = onDismissPicker,
-                modifier = Modifier.weight(1f),
-            )
+            Box(modifier = Modifier.weight(1f).fillMaxSize()) {
+                ManageStudentsList(
+                    students = currentState.editableStudents,
+                    openDatePicker = currentState.openDatePicker,
+                    onAddStudent = onAddStudent,
+                    onRemoveStudent = onRemoveStudent,
+                    onStreamNumberChange = onStreamNumberChange,
+                    onCheckInDateChange = onCheckInDateChange,
+                    onCheckOutDateChange = onCheckOutDateChange,
+                    onCheckInDateMillisChange = onCheckInDateMillisChange,
+                    onCheckOutDateMillisChange = onCheckOutDateMillisChange,
+                    onOpenPicker = onOpenPicker,
+                    onDismissPicker = onDismissPicker,
+                    modifier = Modifier.fillMaxSize(),
+                )
 
-            ManageStudentsBottomButtons(
-                onCloseClick = onCloseClick,
-                onSaveAndClose = onSaveAndClose,
-            )
+                EditorActionButtons(
+                    onCloseClick = onCloseClick,
+                    onSaveAndClose = onSaveAndClose,
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                )
+            }
         }
     }
 }
