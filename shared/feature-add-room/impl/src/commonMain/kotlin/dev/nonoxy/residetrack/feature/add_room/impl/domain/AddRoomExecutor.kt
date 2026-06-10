@@ -11,6 +11,7 @@ import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.A
 import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.Message
 import dev.nonoxy.residetrack.core.rooms.models.Room
 import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -141,9 +142,12 @@ internal class AddRoomExecutor(
         val bedsCount = current.bedsSelection.textField.value.toInt()
 
         val existingRooms = roomsRepository.getAllRooms().getOrElse { emptyList() }
-        val duplicateExists = existingRooms.any { room ->
-            room.floorNumber == floorNumber && room.roomNumber == roomNumber
-        }
+        val duplicateExists = RoomNumberConflict.exists(
+            rooms = existingRooms,
+            floorNumber = floorNumber,
+            roomNumber = roomNumber,
+            excludeRoomId = null,
+        )
         if (duplicateExists) {
             dispatch(Message.SetIsLoading(isLoading = false))
             publish(
