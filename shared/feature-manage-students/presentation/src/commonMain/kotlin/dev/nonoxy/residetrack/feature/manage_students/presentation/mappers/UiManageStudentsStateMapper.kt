@@ -6,6 +6,7 @@ import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiDate
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiEditableStudent
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsState
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiOpenDatePicker
+import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiRoomParams
 import kotlinx.collections.immutable.toPersistentList
 
 internal interface UiManageStudentsStateMapper {
@@ -38,6 +39,11 @@ internal class UiManageStudentsStateMapperImpl(
         openDatePicker = item.openDatePicker?.let { open ->
             UiOpenDatePicker(studentId = open.studentId, field = open.field.toUi())
         },
+        showRoomParams = item.showRoomParams,
+        roomParams = item.roomParams?.let {
+            UiRoomParams(it.floorNumber, it.roomNumber, it.bedsCount, it.roomNumberError)
+        },
+        showDeleteConfirm = item.showDeleteConfirm,
     )
 
     private fun DateField.toUi(): UiDateField = when (this) {

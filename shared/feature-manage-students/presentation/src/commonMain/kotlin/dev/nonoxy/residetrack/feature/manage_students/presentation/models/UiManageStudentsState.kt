@@ -13,4 +13,7 @@ data class UiManageStudentsState(
     val isDirty: Boolean = false,
     val showDiscardConfirm: Boolean = false,
     val openDatePicker: UiOpenDatePicker? = null,
+    val showRoomParams: Boolean = false,
+    val roomParams: UiRoomParams? = null,
+    val showDeleteConfirm: Boolean = false,
 )

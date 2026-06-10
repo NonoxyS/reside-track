@@ -62,6 +62,16 @@ class ManageStudentsViewModel internal constructor(
 
     fun onKeepEditing() = store.accept(Intent.OnKeepEditing)
 
+    fun onEditRoomParamsClick() = store.accept(Intent.OnEditRoomParamsClick)
+    fun onRoomParamsDismiss() = store.accept(Intent.OnRoomParamsDismiss)
+    fun onRoomParamsFloorChange(value: String) = store.accept(Intent.OnRoomParamsFloorChange(value))
+    fun onRoomParamsRoomNumberChange(value: String) = store.accept(Intent.OnRoomParamsRoomNumberChange(value))
+    fun onRoomParamsBedsChange(value: String) = store.accept(Intent.OnRoomParamsBedsChange(value))
+    fun onSaveRoomParams() = store.accept(Intent.OnSaveRoomParams)
+    fun onDeleteRoomClick() = store.accept(Intent.OnDeleteRoomClick)
+    fun onDeleteRoomConfirm() = store.accept(Intent.OnDeleteRoomConfirm)
+    fun onDeleteRoomDismiss() = store.accept(Intent.OnDeleteRoomDismiss)
+
     override fun onCleared() {
         store.dispose()
         super.onCleared()
