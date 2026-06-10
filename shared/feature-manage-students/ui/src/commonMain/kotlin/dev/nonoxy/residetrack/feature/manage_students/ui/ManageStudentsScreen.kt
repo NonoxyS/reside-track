@@ -15,6 +15,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.nonoxy.residetrack.feature.manage_students.presentation.ManageStudentsViewModel
 import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiManageStudentsLabel
 import dev.nonoxy.residetrack.feature.manage_students.ui.views.ManageStudentsContent
+import dev.nonoxy.residetrack.feature.manage_students.ui.views.DeleteRoomDialog
+import dev.nonoxy.residetrack.feature.manage_students.ui.views.RoomParamsSheet
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -44,6 +46,27 @@ internal fun ManageStudentsScreen(
         DiscardChangesDialog(
             onConfirm = viewModel::onDiscardConfirmed,
             onDismiss = viewModel::onKeepEditing,
+        )
+    }
+
+    if (state.showRoomParams && state.roomParams != null) {
+        RoomParamsSheet(
+            params = state.roomParams!!,
+            onFloorChange = viewModel::onRoomParamsFloorChange,
+            onRoomNumberChange = viewModel::onRoomParamsRoomNumberChange,
+            onBedsChange = viewModel::onRoomParamsBedsChange,
+            onSave = viewModel::onSaveRoomParams,
+            onDelete = viewModel::onDeleteRoomClick,
+            onDismiss = viewModel::onRoomParamsDismiss,
+        )
+    }
+
+    if (state.showDeleteConfirm) {
+        DeleteRoomDialog(
+            roomNumber = state.room?.roomNumber.orEmpty(),
+            studentCount = state.editableStudents.size,
+            onConfirm = viewModel::onDeleteRoomConfirm,
+            onDismiss = viewModel::onDeleteRoomDismiss,
         )
     }
 
@@ -88,6 +111,7 @@ internal fun ManageStudentsScreen(
             state = state,
             onRetryClick = viewModel::onRetryLoadStudents,
             onCloseClick = viewModel::onClose,
+            onEditRoomParamsClick = viewModel::onEditRoomParamsClick,
             onAddStudent = viewModel::onAddStudent,
             onRemoveStudent = viewModel::onRemoveStudent,
             onStreamNumberChange = viewModel::onStreamNumberChange,

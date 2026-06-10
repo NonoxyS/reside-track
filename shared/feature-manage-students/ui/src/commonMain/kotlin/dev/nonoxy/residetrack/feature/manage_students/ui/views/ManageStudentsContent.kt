@@ -15,6 +15,7 @@ internal fun ManageStudentsContent(
     state: UiManageStudentsState,
     onRetryClick: () -> Unit,
     onCloseClick: () -> Unit,
+    onEditRoomParamsClick: () -> Unit,
     onAddStudent: () -> Unit,
     onRemoveStudent: (String) -> Unit,
     onStreamNumberChange: (String, String) -> Unit,
@@ -41,6 +42,14 @@ internal fun ManageStudentsContent(
                 room = currentState.room,
                 onCloseClick = onCloseClick,
             )
+
+            val room = currentState.room
+            if (room != null) {
+                RoomSummaryHeader(
+                    room = room,
+                    onEditClick = onEditRoomParamsClick,
+                )
+            }
 
             Box(modifier = Modifier.weight(1f).fillMaxSize()) {
                 ManageStudentsList(
