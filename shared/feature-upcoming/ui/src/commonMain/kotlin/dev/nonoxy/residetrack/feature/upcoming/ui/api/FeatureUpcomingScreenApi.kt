@@ -10,9 +10,9 @@ import kotlinx.serialization.Serializable
 data object UpcomingRoute : Screen
 
 fun NavGraphBuilder.composableUpcomingScreen(
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit,
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit,
 ) {
     composable<UpcomingRoute> {
-        UpcomingScreen(onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom)
+        UpcomingScreen(onNavigateToRoomEditorExistingRoom = onNavigateToRoomEditorExistingRoom)
     }
 }

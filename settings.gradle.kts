@@ -60,10 +60,10 @@ include(
     ":shared:feature-add-room:presentation",
     ":shared:feature-add-room:ui",
 
-    ":shared:feature-manage-students:api",
-    ":shared:feature-manage-students:impl",
-    ":shared:feature-manage-students:presentation",
-    ":shared:feature-manage-students:ui",
+    ":shared:feature-room-editor:api",
+    ":shared:feature-room-editor:impl",
+    ":shared:feature-room-editor:presentation",
+    ":shared:feature-room-editor:ui",
 
     ":shared:feature-upcoming:api",
     ":shared:feature-upcoming:impl",

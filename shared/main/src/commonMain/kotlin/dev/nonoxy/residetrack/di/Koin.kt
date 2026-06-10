@@ -7,8 +7,8 @@ import dev.nonoxy.residetrack.core.rooms.di.coreRoomsModule
 import dev.nonoxy.residetrack.feature.splash.presentation.di.featureSplashPresentationModule
 import dev.nonoxy.residetrack.feature.add_room.impl.di.featureAddRoomImplModule
 import dev.nonoxy.residetrack.feature.add_room.presentation.di.featureAddRoomPresentationModule
-import dev.nonoxy.residetrack.feature.manage_students.impl.di.featureManageStudentsImplModule
-import dev.nonoxy.residetrack.feature.manage_students.presentation.di.featureManageStudentsPresentationModule
+import dev.nonoxy.residetrack.feature.room_editor.impl.di.featureRoomEditorImplModule
+import dev.nonoxy.residetrack.feature.room_editor.presentation.di.featureRoomEditorPresentationModule
 import dev.nonoxy.residetrack.feature.upcoming.impl.di.featureUpcomingImplModule
 import dev.nonoxy.residetrack.feature.upcoming.presentation.di.featureUpcomingPresentationModule
 import dev.nonoxy.residetrack.feature.rooms.impl.di.featureRoomsImplModule
@@ -41,8 +41,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration) {
 
             featureAddRoomImplModule,
             featureAddRoomPresentationModule,
-            featureManageStudentsImplModule,
-            featureManageStudentsPresentationModule,
+            featureRoomEditorImplModule,
+            featureRoomEditorPresentationModule,
 
             featureUpcomingImplModule,
             featureUpcomingPresentationModule,

@@ -13,7 +13,7 @@ internal class UiRoomsLabelMapperImpl : UiRoomsLabelMapper {
         RoomsStore.Label.NavigateToAddRoomScreen ->
             UiRoomsLabel.NavigateToAddRoomScreen
 
-        is RoomsStore.Label.NavigateToManageStudentsExistingRoom ->
-            UiRoomsLabel.NavigateToManageStudentsExistingRoom(roomId = item.roomId)
+        is RoomsStore.Label.NavigateToRoomEditorExistingRoom ->
+            UiRoomsLabel.NavigateToRoomEditorExistingRoom(roomId = item.roomId)
     }
 }

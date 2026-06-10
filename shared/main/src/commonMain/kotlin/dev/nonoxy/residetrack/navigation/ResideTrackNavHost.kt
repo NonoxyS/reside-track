@@ -12,10 +12,10 @@ import dev.nonoxy.residetrack.feature.splash.ui.api.SplashRoute
 import dev.nonoxy.residetrack.feature.splash.ui.api.composableSplashScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.bottomSheetAddRoomScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.navigateToAddRoomScreen
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.composableManageStudentsExistingRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.composableManageStudentsDraftRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsExistingRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsDraftRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.composableRoomEditorExistingRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.composableRoomEditorDraftRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.navigateToRoomEditorExistingRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.navigateToRoomEditorDraftRoom
 import dev.nonoxy.residetrack.ui.tabcontainer.TabContainerScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,20 +44,20 @@ internal fun ResideTrackNavHost(
             composable<TabContainerRoute> {
                 TabContainerScreen(
                     onNavigateToAddRoomScreen = navController::navigateToAddRoomScreen,
-                    onNavigateToManageStudentsExistingRoom = navController::navigateToManageStudentsExistingRoom,
+                    onNavigateToRoomEditorExistingRoom = navController::navigateToRoomEditorExistingRoom,
                 )
             }
 
             bottomSheetAddRoomScreen(
                 onNavigateBack = navController::popBackStack,
-                onNavigateToManageStudentsDraftRoom = navController::navigateToManageStudentsDraftRoom
+                onNavigateToRoomEditorDraftRoom = navController::navigateToRoomEditorDraftRoom
             )
 
-            composableManageStudentsExistingRoom(
+            composableRoomEditorExistingRoom(
                 onNavigateBack = navController::popBackStack
             )
 
-            composableManageStudentsDraftRoom(
+            composableRoomEditorDraftRoom(
                 onNavigateBack = navController::popBackStack
             )
         }

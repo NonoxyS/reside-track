@@ -18,7 +18,7 @@ internal class UiAddRoomLabelMapperImpl(
 
     override fun map(item: AddRoomStore.Label): UiAddRoomLabel = when (item) {
         AddRoomStore.Label.CloseScreen -> UiAddRoomLabel.CloseScreen
-        AddRoomStore.Label.NavigateToManageStudentsDraftRoom -> UiAddRoomLabel.NavigateToManageStudentsDraftRoom
+        AddRoomStore.Label.NavigateToRoomEditorDraftRoom -> UiAddRoomLabel.NavigateToRoomEditorDraftRoom
         is AddRoomStore.Label.ShowSuccess -> UiAddRoomLabel.ShowSuccess(message = item.kind.toMessage())
         is AddRoomStore.Label.ShowError -> UiAddRoomLabel.ShowError(message = item.kind.toMessage())
     }

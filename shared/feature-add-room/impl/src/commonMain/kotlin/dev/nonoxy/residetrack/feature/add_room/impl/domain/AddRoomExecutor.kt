@@ -174,7 +174,7 @@ internal class AddRoomExecutor(
                 roomsRepository.saveDraftRoom(persistedRoom).fold(
                     onSuccess = {
                         dispatch(Message.SetIsLoading(isLoading = false))
-                        publish(Label.NavigateToManageStudentsDraftRoom)
+                        publish(Label.NavigateToRoomEditorDraftRoom)
                     },
                     onFailure = {
                         dispatch(Message.SetIsLoading(isLoading = false))

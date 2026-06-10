@@ -39,7 +39,7 @@ private const val UPCOMING_KEY = "upcoming"
 @Composable
 internal fun TabContainerScreen(
     onNavigateToAddRoomScreen: () -> Unit,
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit,
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit,
     viewModel: TabContainerViewModel = koinViewModel(),
 ) {
     val innerNavController = rememberNavController()
@@ -74,7 +74,7 @@ internal fun TabContainerScreen(
             TabContainerNavHost(
                 navController = innerNavController,
                 onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
-                onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom,
+                onNavigateToRoomEditorExistingRoom = onNavigateToRoomEditorExistingRoom,
                 modifier = Modifier.fillMaxSize(),
             )
         }

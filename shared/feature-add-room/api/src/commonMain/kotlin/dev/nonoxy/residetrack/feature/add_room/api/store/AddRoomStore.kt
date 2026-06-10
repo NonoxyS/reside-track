@@ -61,7 +61,7 @@ interface AddRoomStore : Store<Intent, State, Label> {
 
     sealed interface Label {
         data object CloseScreen : Label
-        data object NavigateToManageStudentsDraftRoom : Label
+        data object NavigateToRoomEditorDraftRoom : Label
         data class ShowSuccess(val kind: AddRoomSuccessKind) : Label
         data class ShowError(val kind: AddRoomErrorKind) : Label
     }

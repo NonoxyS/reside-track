@@ -24,7 +24,7 @@ internal class RoomsExecutor(
     override suspend fun suspendExecuteIntent(intent: Intent) {
         when (intent) {
             is Intent.OnRoomClick -> publish(
-                Label.NavigateToManageStudentsExistingRoom(roomId = intent.roomId.toString())
+                Label.NavigateToRoomEditorExistingRoom(roomId = intent.roomId.toString())
             )
             Intent.OnAddRoomClick -> publish(Label.NavigateToAddRoomScreen)
             Intent.OnRetry -> loadRoomsData()
