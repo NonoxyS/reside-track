@@ -46,5 +46,10 @@ internal class ManageStudentsReducer : Reducer<State, Message> {
         is Message.SetOpenDatePicker -> copy(
             openDatePicker = msg.openPicker,
         )
+
+        is Message.SetShowRoomParams -> copy(showRoomParams = msg.show)
+        is Message.SetRoomParams -> copy(roomParams = msg.params)
+        is Message.SetShowDeleteConfirm -> copy(showDeleteConfirm = msg.show)
+        is Message.SetRoom -> copy(room = msg.room)
     }
 }

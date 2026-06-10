@@ -19,6 +19,9 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
         val isDirty: Boolean = false,
         val showDiscardConfirm: Boolean = false,
         val openDatePicker: OpenPicker? = null,
+        val showRoomParams: Boolean = false,
+        val roomParams: RoomParams? = null,
+        val showDeleteConfirm: Boolean = false,
     ) {
         data class EditableStudent(
             val id: String,
@@ -33,6 +36,14 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
 
         /** Identifies the single date picker currently open on the screen. */
         data class OpenPicker(val studentId: String, val field: DateField)
+
+        /** Editable buffer for the room-params sheet (separate from saved [room]). */
+        data class RoomParams(
+            val floorNumber: String,
+            val roomNumber: String,
+            val bedsCount: String,
+            val roomNumberError: Boolean = false,
+        )
     }
 
     enum class DateField { CHECK_IN, CHECK_OUT }
@@ -53,6 +64,15 @@ interface ManageStudentsStore : Store<Intent, State, Label> {
         data object OnDismissRequested : Intent
         data object OnDiscardConfirmed : Intent
         data object OnKeepEditing : Intent
+        data object OnEditRoomParamsClick : Intent
+        data object OnRoomParamsDismiss : Intent
+        data class OnRoomParamsFloorChange(val value: String) : Intent
+        data class OnRoomParamsRoomNumberChange(val value: String) : Intent
+        data class OnRoomParamsBedsChange(val value: String) : Intent
+        data object OnSaveRoomParams : Intent
+        data object OnDeleteRoomClick : Intent
+        data object OnDeleteRoomConfirm : Intent
+        data object OnDeleteRoomDismiss : Intent
     }
 
     sealed interface Label {
@@ -71,8 +91,13 @@ sealed interface ManageStudentsErrorKind {
     data object InvalidDateRange : ManageStudentsErrorKind
     data object InvalidDateFormat : ManageStudentsErrorKind
     data object DuplicateStreamNumbers : ManageStudentsErrorKind
+    data object RoomNumberTaken : ManageStudentsErrorKind
+    data object FailedToUpdateRoom : ManageStudentsErrorKind
+    data object FailedToDeleteRoom : ManageStudentsErrorKind
 }
 
 sealed interface ManageStudentsSuccessKind {
     data object StudentsSaved : ManageStudentsSuccessKind
+    data object RoomUpdated : ManageStudentsSuccessKind
+    data object RoomDeleted : ManageStudentsSuccessKind
 }

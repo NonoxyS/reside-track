@@ -12,6 +12,7 @@ import dev.nonoxy.residetrack.feature.manage_students.impl.domain.ManageStudents
 import dev.nonoxy.residetrack.core.rooms.models.Room
 import dev.nonoxy.residetrack.core.rooms.models.Student
 import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -66,6 +67,16 @@ internal class ManageStudentsExecutor(
                 }
             Intent.OnDiscardConfirmed -> publish(Label.NavigateBack)
             Intent.OnKeepEditing -> dispatch(Message.SetShowDiscardConfirm(show = false))
+            Intent.OnEditRoomParamsClick -> handleEditRoomParamsClick()
+            Intent.OnRoomParamsDismiss -> dispatch(Message.SetShowRoomParams(show = false))
+            is Intent.OnRoomParamsFloorChange -> updateRoomParam { it.copy(floorNumber = digits(intent.value)) }
+            is Intent.OnRoomParamsRoomNumberChange ->
+                updateRoomParam { it.copy(roomNumber = digits(intent.value), roomNumberError = false) }
+            is Intent.OnRoomParamsBedsChange -> updateRoomParam { it.copy(bedsCount = digits(intent.value)) }
+            Intent.OnSaveRoomParams -> handleSaveRoomParams()
+            Intent.OnDeleteRoomClick -> dispatch(Message.SetShowDeleteConfirm(show = true))
+            Intent.OnDeleteRoomDismiss -> dispatch(Message.SetShowDeleteConfirm(show = false))
+            Intent.OnDeleteRoomConfirm -> handleDeleteRoom()
         }
     }
 
@@ -306,6 +317,77 @@ internal class ManageStudentsExecutor(
             }
     }
 
+    private fun digits(value: String): String =
+        value.filter { it.isDigit() }.take(MAX_ROOM_INPUT_LENGTH)
+
+    private fun updateRoomParam(transform: (State.RoomParams) -> State.RoomParams) {
+        val current = state().roomParams ?: return
+        dispatch(Message.SetRoomParams(transform(current)))
+    }
+
+    private fun handleEditRoomParamsClick() {
+        val room = state().room ?: return
+        dispatch(
+            Message.SetRoomParams(
+                State.RoomParams(
+                    floorNumber = room.floorNumber.toString(),
+                    roomNumber = room.roomNumber.toString(),
+                    bedsCount = room.bedsCount.toString(),
+                )
+            )
+        )
+        dispatch(Message.SetShowRoomParams(show = true))
+    }
+
+    private suspend fun handleSaveRoomParams() {
+        if (mode !is ManageStudentsMode.ExistingRoom) return
+        val room = state().room ?: return
+        val params = state().roomParams ?: return
+
+        val floor = params.floorNumber.toIntOrNull()
+        val number = params.roomNumber.toIntOrNull()
+        val beds = params.bedsCount.toIntOrNull()
+        if (floor == null || number == null || beds == null || beds <= 0) {
+            publish(Label.ShowError(kind = ManageStudentsErrorKind.FailedToUpdateRoom))
+            return
+        }
+
+        val existingRooms = roomsRepository.getAllRooms().getOrElse { emptyList() }
+        if (RoomNumberConflict.exists(existingRooms, floor, number, excludeRoomId = room.id)) {
+            dispatch(Message.SetRoomParams(params.copy(roomNumberError = true)))
+            publish(Label.ShowError(kind = ManageStudentsErrorKind.RoomNumberTaken))
+            return
+        }
+
+        roomsRepository.updateRoomMetadata(
+            roomId = room.id,
+            floorNumber = floor,
+            roomNumber = number,
+            bedsCount = beds,
+        ).onSuccess {
+            dispatch(Message.SetRoom(room.copy(floorNumber = floor, roomNumber = number, bedsCount = beds)))
+            dispatch(Message.SetShowRoomParams(show = false))
+            publish(Label.ShowSuccess(kind = ManageStudentsSuccessKind.RoomUpdated))
+        }.onFailure {
+            publish(Label.ShowError(kind = ManageStudentsErrorKind.FailedToUpdateRoom))
+        }
+    }
+
+    private suspend fun handleDeleteRoom() {
+        if (mode !is ManageStudentsMode.ExistingRoom) return
+        val room = state().room ?: return
+        roomsRepository.deleteRoom(roomId = room.id)
+            .onSuccess {
+                dispatch(Message.SetShowDeleteConfirm(show = false))
+                publish(Label.ShowSuccess(kind = ManageStudentsSuccessKind.RoomDeleted))
+                publish(Label.NavigateBack)
+            }
+            .onFailure {
+                dispatch(Message.SetShowDeleteConfirm(show = false))
+                publish(Label.ShowError(kind = ManageStudentsErrorKind.FailedToDeleteRoom))
+            }
+    }
+
     // Check-in/out are calendar dates without a time component. The Material date
     // picker emits and consumes UTC-midnight millis, so we canonicalize on UTC to
     // keep the displayed day equal to the picked day in every timezone.
@@ -324,3 +406,5 @@ internal class ManageStudentsExecutor(
     private fun LocalDate.toUtcMillis(): Long =
         atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
 }
+
+private const val MAX_ROOM_INPUT_LENGTH = 4
