@@ -17,13 +17,15 @@ import dev.nonoxy.residetrack.feature.manage_students.presentation.models.UiMana
 import dev.nonoxy.residetrack.feature.manage_students.ui.views.ManageStudentsContent
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
-import dev.nonoxy.residetrack.core.navigation.bottomsheet.SheetDismissGuard
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.backhandler.BackHandler
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun ManageStudentsScreen(
     onNavigateBack: () -> Unit,
@@ -34,7 +36,7 @@ internal fun ManageStudentsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
 
-    SheetDismissGuard(enabled = state.isDirty && !state.isLoading) {
+    BackHandler(enabled = state.isDirty && !state.isLoading) {
         viewModel.onDismissRequested()
     }
 

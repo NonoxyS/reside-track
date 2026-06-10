@@ -12,8 +12,8 @@ import dev.nonoxy.residetrack.feature.splash.ui.api.SplashRoute
 import dev.nonoxy.residetrack.feature.splash.ui.api.composableSplashScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.bottomSheetAddRoomScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.navigateToAddRoomScreen
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsExistingRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsDraftRoom
+import dev.nonoxy.residetrack.feature.manage_students.ui.api.composableManageStudentsExistingRoom
+import dev.nonoxy.residetrack.feature.manage_students.ui.api.composableManageStudentsDraftRoom
 import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsExistingRoom
 import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsDraftRoom
 import dev.nonoxy.residetrack.ui.tabcontainer.TabContainerScreen
@@ -53,11 +53,11 @@ internal fun ResideTrackNavHost(
                 onNavigateToManageStudentsDraftRoom = navController::navigateToManageStudentsDraftRoom
             )
 
-            bottomSheetManageStudentsExistingRoom(
+            composableManageStudentsExistingRoom(
                 onNavigateBack = navController::popBackStack
             )
 
-            bottomSheetManageStudentsDraftRoom(
+            composableManageStudentsDraftRoom(
                 onNavigateBack = navController::popBackStack
             )
         }
