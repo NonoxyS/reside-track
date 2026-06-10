@@ -113,6 +113,42 @@ internal class RoomsRepositoryImpl(
         )
     }
 
+    override suspend fun updateRoomMetadata(
+        roomId: Long,
+        floorNumber: Int,
+        roomNumber: Int,
+        bedsCount: Int,
+    ): Result<Unit> = withContext(ioDispatcher) {
+        coRunCatching(
+            tryBlock = {
+                roomDao.updateRoomMetadata(
+                    roomId = roomId,
+                    floorNumber = floorNumber,
+                    roomNumber = roomNumber,
+                    bedsCount = bedsCount,
+                )
+                Unit.wrapSuccess()
+            },
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error updating room metadata: $roomId" }
+                throwable.wrapFailure()
+            }
+        )
+    }
+
+    override suspend fun deleteRoom(roomId: Long): Result<Unit> = withContext(ioDispatcher) {
+        coRunCatching(
+            tryBlock = {
+                roomDao.deleteRoomWithStudents(roomId = roomId)
+                Unit.wrapSuccess()
+            },
+            catchBlock = { throwable ->
+                Napier.e(throwable) { "Error deleting room: $roomId" }
+                throwable.wrapFailure()
+            }
+        )
+    }
+
     override suspend fun saveDraftRoom(room: Room): Result<Unit> = withContext(ioDispatcher) {
         coRunCatching(
             tryBlock = {

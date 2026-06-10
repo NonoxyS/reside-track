@@ -15,6 +15,17 @@ interface RoomsRepository {
 
     suspend fun saveRoom(room: Room): Result<Long>
 
+    /** Updates only floor/room/beds for [roomId]; leaves students untouched. */
+    suspend fun updateRoomMetadata(
+        roomId: Long,
+        floorNumber: Int,
+        roomNumber: Int,
+        bedsCount: Int,
+    ): Result<Unit>
+
+    /** Deletes the room and its students. */
+    suspend fun deleteRoom(roomId: Long): Result<Unit>
+
     suspend fun saveDraftRoom(room: Room): Result<Unit>
     suspend fun getDraftRoom(): Result<Room?>
     suspend fun clearDraftRoom(): Result<Unit>
