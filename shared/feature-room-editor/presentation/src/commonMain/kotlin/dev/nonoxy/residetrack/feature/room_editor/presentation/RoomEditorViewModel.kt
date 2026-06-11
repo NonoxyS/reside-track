@@ -30,7 +30,12 @@ class RoomEditorViewModel internal constructor(
 
     fun onAddStudent() = store.accept(Intent.OnAddStudent)
 
-    fun onRemoveStudent(studentId: String) = store.accept(Intent.OnRemoveStudent(studentId = studentId))
+    fun onRemoveStudent(studentId: String) =
+        store.accept(Intent.OnRemoveStudentRequested(studentId = studentId))
+
+    fun onRemoveStudentConfirmed() = store.accept(Intent.OnRemoveStudentConfirmed)
+
+    fun onRemoveStudentDismissed() = store.accept(Intent.OnRemoveStudentDismissed)
 
     fun onStreamNumberChange(studentId: String, value: String) =
         store.accept(Intent.OnStreamNumberChange(studentId = studentId, value = value))

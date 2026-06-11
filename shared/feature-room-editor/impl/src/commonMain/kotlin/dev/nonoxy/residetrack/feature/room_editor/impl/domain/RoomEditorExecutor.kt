@@ -48,7 +48,10 @@ internal class RoomEditorExecutor(
         when (intent) {
             Intent.LoadStudents -> loadStudents()
             Intent.OnAddStudent -> handleAddStudent()
-            is Intent.OnRemoveStudent -> handleRemoveStudent(intent.studentId)
+            is Intent.OnRemoveStudentRequested ->
+                dispatch(Message.SetRemovingStudentId(intent.studentId))
+            Intent.OnRemoveStudentConfirmed -> handleRemoveStudentConfirmed()
+            Intent.OnRemoveStudentDismissed -> dispatch(Message.SetRemovingStudentId(null))
             is Intent.OnStreamNumberChange -> handleStreamNumberChange(intent.studentId, intent.value)
             is Intent.OnCheckInDateChange -> handleCheckInDateChange(intent.studentId, intent.value)
             is Intent.OnCheckOutDateChange -> handleCheckOutDateChange(intent.studentId, intent.value)
@@ -146,11 +149,13 @@ internal class RoomEditorExecutor(
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 
-    private fun handleRemoveStudent(studentId: String) {
+    private fun handleRemoveStudentConfirmed() {
+        val studentId = state().removingStudentId ?: return
         val updated = state().editableStudents
             .filterNot { it.id == studentId }
             .toImmutableList()
         dispatch(Message.SetEditableStudents(editableStudents = updated))
+        dispatch(Message.SetRemovingStudentId(null))
     }
 
     private fun handleStreamNumberChange(studentId: String, value: String) {

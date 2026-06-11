@@ -16,4 +16,5 @@ data class UiRoomEditorState(
     val showRoomParams: Boolean = false,
     val roomParams: UiRoomParams? = null,
     val showDeleteConfirm: Boolean = false,
+    val removingStudentId: String? = null,
 )

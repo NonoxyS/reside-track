@@ -44,6 +44,7 @@ internal class UiRoomEditorStateMapperImpl(
             UiRoomParams(it.floorNumber, it.roomNumber, it.bedsCount, it.roomNumberError)
         },
         showDeleteConfirm = item.showDeleteConfirm,
+        removingStudentId = item.removingStudentId,
     )
 
     private fun DateField.toUi(): UiDateField = when (this) {

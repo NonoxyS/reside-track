@@ -62,5 +62,6 @@ internal class RoomEditorStoreFactory(
         data class SetRoomParams(val params: State.RoomParams?) : Message
         data class SetShowDeleteConfirm(val show: Boolean) : Message
         data class SetRoom(val room: Room) : Message
+        data class SetRemovingStudentId(val studentId: String?) : Message
     }
 }

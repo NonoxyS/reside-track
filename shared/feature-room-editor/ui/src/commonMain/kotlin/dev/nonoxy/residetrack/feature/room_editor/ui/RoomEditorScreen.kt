@@ -16,6 +16,7 @@ import dev.nonoxy.residetrack.feature.room_editor.presentation.RoomEditorViewMod
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiRoomEditorLabel
 import dev.nonoxy.residetrack.feature.room_editor.ui.views.RoomEditorContent
 import dev.nonoxy.residetrack.feature.room_editor.ui.views.DeleteRoomDialog
+import dev.nonoxy.residetrack.feature.room_editor.ui.views.RemoveStudentDialog
 import dev.nonoxy.residetrack.feature.room_editor.ui.views.RoomParamsSheet
 import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
@@ -58,6 +59,13 @@ internal fun RoomEditorScreen(
             onSave = viewModel::onSaveRoomParams,
             onDelete = viewModel::onDeleteRoomClick,
             onDismiss = viewModel::onRoomParamsDismiss,
+        )
+    }
+
+    if (state.removingStudentId != null) {
+        RemoveStudentDialog(
+            onConfirm = viewModel::onRemoveStudentConfirmed,
+            onDismiss = viewModel::onRemoveStudentDismissed,
         )
     }
 

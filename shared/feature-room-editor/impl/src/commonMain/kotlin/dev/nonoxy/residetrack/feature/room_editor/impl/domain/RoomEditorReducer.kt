@@ -32,6 +32,7 @@ internal class RoomEditorReducer : Reducer<State, Message> {
             editableStudents = msg.editableStudents,
             isDirty = false,
             showDiscardConfirm = false,
+            removingStudentId = null,
         )
 
         is Message.SetEditableStudents -> copy(
@@ -51,5 +52,6 @@ internal class RoomEditorReducer : Reducer<State, Message> {
         is Message.SetRoomParams -> copy(roomParams = msg.params)
         is Message.SetShowDeleteConfirm -> copy(showDeleteConfirm = msg.show)
         is Message.SetRoom -> copy(room = msg.room)
+        is Message.SetRemovingStudentId -> copy(removingStudentId = msg.studentId)
     }
 }

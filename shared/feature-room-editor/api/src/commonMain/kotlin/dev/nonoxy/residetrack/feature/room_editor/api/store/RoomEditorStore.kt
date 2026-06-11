@@ -22,6 +22,7 @@ interface RoomEditorStore : Store<Intent, State, Label> {
         val showRoomParams: Boolean = false,
         val roomParams: RoomParams? = null,
         val showDeleteConfirm: Boolean = false,
+        val removingStudentId: String? = null,
     ) {
         data class EditableStudent(
             val id: String,
@@ -51,7 +52,9 @@ interface RoomEditorStore : Store<Intent, State, Label> {
     sealed interface Intent {
         data object LoadStudents : Intent
         data object OnAddStudent : Intent
-        data class OnRemoveStudent(val studentId: String) : Intent
+        data class OnRemoveStudentRequested(val studentId: String) : Intent
+        data object OnRemoveStudentConfirmed : Intent
+        data object OnRemoveStudentDismissed : Intent
         data class OnStreamNumberChange(val studentId: String, val value: String) : Intent
         data class OnCheckInDateChange(val studentId: String, val value: String) : Intent
         data class OnCheckOutDateChange(val studentId: String, val value: String) : Intent
