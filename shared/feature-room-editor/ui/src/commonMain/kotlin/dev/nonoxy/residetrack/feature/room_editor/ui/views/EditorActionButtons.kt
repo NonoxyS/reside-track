@@ -14,13 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_24
+import dev.nonoxy.residetrack.common.ui.theme.size_1
 import dev.nonoxy.residetrack.res.MR
 
 /** Floating Cancel/Save row. Sits over the scrolling list; a top gradient scrim keeps the
@@ -50,7 +50,7 @@ internal fun EditorActionButtons(
             OutlinedButton(
                 onClick = onCloseClick,
                 modifier = Modifier.weight(1f),
-                border = BorderStroke(width = 1.dp, color = ResideTrackTheme.colors.borderDefault),
+                border = BorderStroke(width = size_1, color = ResideTrackTheme.colors.borderDefault),
                 colors = ButtonDefaults.outlinedButtonColors(
                     contentColor = ResideTrackTheme.colors.textCaption,
                 ),

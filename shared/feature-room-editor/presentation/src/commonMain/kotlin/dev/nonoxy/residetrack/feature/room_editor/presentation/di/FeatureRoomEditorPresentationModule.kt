@@ -8,8 +8,6 @@ import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiRoomEdi
 import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiRoomEditorStateMapperImpl
 import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiRoomMapper
 import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiRoomMapperImpl
-import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiStudentMapper
-import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiStudentMapperImpl
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.parameter.parametersOf
@@ -18,7 +16,6 @@ import org.koin.dsl.module
 
 val featureRoomEditorPresentationModule = module {
 
-    factoryOf<UiStudentMapper>(::UiStudentMapperImpl)
     factoryOf(::UiRoomMapperImpl) bind UiRoomMapper::class
     factoryOf(::UiRoomEditorStateMapperImpl) bind UiRoomEditorStateMapper::class
     factoryOf(::UiRoomEditorLabelMapperImpl) bind UiRoomEditorLabelMapper::class

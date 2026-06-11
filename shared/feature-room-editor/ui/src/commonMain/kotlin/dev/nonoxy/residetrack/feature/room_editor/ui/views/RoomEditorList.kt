@@ -17,7 +17,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiEditableStudent
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiOpenDatePicker
@@ -26,6 +25,7 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_96
+import dev.nonoxy.residetrack.common.ui.theme.size_1
 import kotlinx.collections.immutable.ImmutableList
 import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.res.MR
@@ -103,7 +103,7 @@ internal fun RoomEditorList(
                 onClick = onAddStudent,
                 modifier = Modifier.fillMaxWidth(),
                 border = BorderStroke(
-                    width = 1.dp,
+                    width = size_1,
                     color = ResideTrackTheme.colors.borderDefault,
                 ),
                 colors = ButtonDefaults.outlinedButtonColors(
