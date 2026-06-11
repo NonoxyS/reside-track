@@ -19,11 +19,14 @@ import dev.nonoxy.residetrack.core.mvikotlin.di.coreMVIKotlinModule
 import io.github.aakira.napier.Napier
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.mp.KoinPlatform
 
-fun initKoin(appDeclaration: KoinAppDeclaration) {
-    Napier.d(message = "initKoin")
+fun initKoin(appDeclaration: KoinAppDeclaration? = null) {
+    Napier.d(message = "start initKoin")
+
+    if (KoinPlatform.getKoinOrNull() != null) return
     startKoin {
-        appDeclaration()
+        appDeclaration?.invoke(this)
         modules(
             commonModule,
             commonResourcesModule,
@@ -50,4 +53,6 @@ fun initKoin(appDeclaration: KoinAppDeclaration) {
             mainModule,
         )
     }
+
+    Napier.d(message = "finish initKoin")
 }
