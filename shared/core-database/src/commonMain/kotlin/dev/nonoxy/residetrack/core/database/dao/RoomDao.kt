@@ -15,12 +15,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class RoomDao {
 
-    @Query("SELECT * FROM rooms")
-    abstract suspend fun getAllRooms(): List<RoomEntity>
-
-    @Query("SELECT * FROM rooms WHERE id = :roomId")
-    abstract suspend fun getRoomById(roomId: Long): RoomEntity?
-
     @Query("SELECT COUNT(*) FROM rooms")
     abstract suspend fun getRoomsCount(): Int
 
@@ -51,16 +45,6 @@ abstract class RoomDao {
     @Transaction
     @Query("SELECT * FROM rooms")
     abstract fun observeAllRoomsWithStudents(): Flow<List<RoomWithStudents>>
-
-    @Transaction
-    @Query("SELECT * FROM rooms WHERE floorNumber = :floor")
-    abstract suspend fun getRoomsWithStudentsByFloor(floor: Int): List<RoomWithStudents>
-
-    @Query("SELECT * FROM rooms WHERE bedsCount > 0")
-    abstract suspend fun getRoomsWithAvailableBeds(): List<RoomEntity>
-
-    @Query("SELECT * FROM rooms WHERE floorNumber = :floor")
-    abstract suspend fun getRoomsByFloor(floor: Int): List<RoomEntity>
 
     @Query("DELETE FROM students WHERE roomId = :roomId")
     protected abstract suspend fun deleteStudentsByRoomId(roomId: Long)

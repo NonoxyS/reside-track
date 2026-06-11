@@ -1,5 +1,6 @@
 package dev.nonoxy.residetrack.core.rooms.data
 
+import dev.nonoxy.residetrack.common.coroutines.CoroutineDispatchers
 import dev.nonoxy.residetrack.common.utils.coRunCatching
 import dev.nonoxy.residetrack.common.utils.wrapFailure
 import dev.nonoxy.residetrack.common.utils.wrapSuccess
@@ -11,7 +12,6 @@ import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapper
 import dev.nonoxy.residetrack.core.rooms.models.Room
 import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
 import io.github.aakira.napier.Napier
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +23,7 @@ internal class RoomsRepositoryImpl(
     private val roomDao: RoomDao,
     private val roomMapper: RoomMapper,
     private val studentMapper: StudentMapper,
-    private val ioDispatcher: CoroutineDispatcher = dev.nonoxy.residetrack.common.coroutines.ioDispatcher
+    private val dispatchers: CoroutineDispatchers,
 ) : RoomsRepository {
 
     private val _draftRoom = MutableStateFlow<Room?>(null)
@@ -31,9 +31,9 @@ internal class RoomsRepositoryImpl(
     override fun observeRooms(): Flow<List<Room>> =
         roomDao.observeAllRoomsWithStudents()
             .map { rows -> rows.mapToDomain() }
-            .flowOn(ioDispatcher)
+            .flowOn(dispatchers.io)
 
-    override suspend fun getAllRooms(): Result<List<Room>> = withContext(ioDispatcher) {
+    override suspend fun getAllRooms(): Result<List<Room>> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 roomDao.getAllRoomsWithStudents()
@@ -47,25 +47,9 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun getRoomsByFloor(
-        floorNumber: Int
-    ): Result<List<Room>> = withContext(ioDispatcher) {
-        coRunCatching(
-            tryBlock = {
-                roomDao.getRoomsWithStudentsByFloor(floor = floorNumber)
-                    .mapToDomain()
-                    .wrapSuccess()
-            },
-            catchBlock = { throwable ->
-                Napier.e(throwable) { "Error occur on getting rooms by floor: $floorNumber" }
-                throwable.wrapFailure()
-            }
-        )
-    }
-
     override suspend fun getRoomByNumber(
         roomNumber: Int
-    ): Result<Room?> = withContext(ioDispatcher) {
+    ): Result<Room?> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 roomDao.getRoomWithStudentsByRoomNumber(roomNumber = roomNumber)
@@ -81,7 +65,7 @@ internal class RoomsRepositoryImpl(
 
     override suspend fun getRoomById(
         roomId: Long
-    ): Result<Room?> = withContext(ioDispatcher) {
+    ): Result<Room?> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 roomDao.getRoomWithStudentsById(roomId = roomId)
@@ -95,7 +79,7 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun saveRoom(room: Room): Result<Long> = withContext(ioDispatcher) {
+    override suspend fun saveRoom(room: Room): Result<Long> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 val roomEntity = room.mapToEntity()
@@ -118,7 +102,7 @@ internal class RoomsRepositoryImpl(
         floorNumber: Int,
         roomNumber: Int,
         bedsCount: Int,
-    ): Result<Unit> = withContext(ioDispatcher) {
+    ): Result<Unit> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 roomDao.updateRoomMetadata(
@@ -136,7 +120,7 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun deleteRoom(roomId: Long): Result<Unit> = withContext(ioDispatcher) {
+    override suspend fun deleteRoom(roomId: Long): Result<Unit> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 roomDao.deleteRoomWithStudents(roomId = roomId)
@@ -149,7 +133,7 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun saveDraftRoom(room: Room): Result<Unit> = withContext(ioDispatcher) {
+    override suspend fun saveDraftRoom(room: Room): Result<Unit> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 _draftRoom.value = room
@@ -162,7 +146,7 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun getDraftRoom(): Result<Room?> = withContext(ioDispatcher) {
+    override suspend fun getDraftRoom(): Result<Room?> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = { _draftRoom.value.wrapSuccess() },
             catchBlock = { throwable ->
@@ -172,7 +156,7 @@ internal class RoomsRepositoryImpl(
         )
     }
 
-    override suspend fun clearDraftRoom(): Result<Unit> = withContext(ioDispatcher) {
+    override suspend fun clearDraftRoom(): Result<Unit> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
                 _draftRoom.value = null

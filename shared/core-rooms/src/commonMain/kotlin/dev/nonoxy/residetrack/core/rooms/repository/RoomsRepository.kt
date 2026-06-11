@@ -9,7 +9,6 @@ interface RoomsRepository {
     fun observeRooms(): Flow<List<Room>>
 
     suspend fun getAllRooms(): Result<List<Room>>
-    suspend fun getRoomsByFloor(floorNumber: Int): Result<List<Room>>
     suspend fun getRoomByNumber(roomNumber: Int): Result<Room?>
     suspend fun getRoomById(roomId: Long): Result<Room?>
 
