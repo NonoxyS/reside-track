@@ -1,32 +1,39 @@
 package valueSource
 
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.ValueSource
 import org.gradle.api.provider.ValueSourceParameters
 import org.gradle.process.ExecOperations
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
-abstract class GitCommitCountValueSource : ValueSource<Int, ValueSourceParameters.None> {
+abstract class GitCommitCountValueSource : ValueSource<Int, GitCommitCountValueSource.Params> {
+
+    interface Params : ValueSourceParameters {
+        val workingDir: DirectoryProperty
+    }
 
     @get:Inject
     abstract val execOperations: ExecOperations
 
     override fun obtain(): Int {
-        val output = ByteArrayOutputStream()
+        val stdout = ByteArrayOutputStream()
+        val stderr = ByteArrayOutputStream()
 
         return try {
             execOperations.exec {
+                workingDir = parameters.workingDir.get().asFile
                 commandLine("git", "rev-list", "--count", "HEAD")
-                // The stream is closed after the process completes. <- From documentation for standardOutput
-                standardOutput = output
+                standardOutput = stdout
+                errorOutput = stderr
             }.rethrowFailure()
 
-            val count = output.toString().trim().toInt()
-            count
+            stdout.toString().trim().toInt()
         } catch (throwable: Throwable) {
+            val details = stderr.toString().trim().ifBlank { throwable.message.orEmpty() }
             throw IllegalStateException(
-                "Error occur during getting Git commit count",
-                throwable
+                "Error obtaining git commit count: $details",
+                throwable,
             )
         }
     }

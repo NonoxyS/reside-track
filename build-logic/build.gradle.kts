@@ -16,19 +16,9 @@ dependencies {
 gradlePlugin {
     plugins {
 
-        register("AndroidLibrary") {
-            id = "android-library"
-            implementationClass = "plugins.AndroidLibraryPlugin"
-        }
-
         register("KmpLibrary") {
             id = "kmp-library"
             implementationClass = "plugins.KmpLibraryPlugin"
-        }
-
-        register("KmpLibraryLegacy") {
-            id = "kmp-library-legacy"
-            implementationClass = "plugins.KmpLibraryLegacyPlugin"
         }
 
         register("KmpFeatureSetup") {

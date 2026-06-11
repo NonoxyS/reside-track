@@ -48,8 +48,6 @@ koin = "4.1.1"
 
 # Detekt
 detekt = "1.23.8"
-detekt-compose-kode = "1.4.0"
-detekt-compose-twitter = "0.0.26"
 
 # Moko
 moko-resources = "0.26.0"
@@ -136,15 +134,11 @@ androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", vers
 # Detekt
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 detekt-libraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-libraries", version.ref = "detekt" }
-detekt-compose-kode = { module = "ru.kode:detekt-rules-compose", version.ref = "detekt-compose-kode" }
-detekt-compose-twitter = { module = "com.twitter.compose.rules:detekt", version.ref = "detekt-compose-twitter" }
 
 [plugins]
 # Convention plugins
 conventionPlugin-composeMultiplatformSetup = { id = "compose-multiplatform-setup", version = "" }
-conventionPlugin-androidLibrary = { id = "android-library", version = "" }
 conventionPlugin-kmpLibrary = { id = "kmp-library", version = "" }
-conventionPlugin-kmpLibraryLegacy = { id = "kmp-library-legacy", version = "" }
 conventionPlugin-kmpFeatureSetup = { id = "kmp-feature-setup", version = "" }
 conventionPlugin-jsonSerialization = { id = "json-serialization", version = "" }
 
