@@ -1,7 +1,9 @@
 package dev.nonoxy.residetrack.feature.room_editor.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -10,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.nonoxy.residetrack.feature.room_editor.presentation.RoomEditorViewModel
@@ -18,7 +21,6 @@ import dev.nonoxy.residetrack.feature.room_editor.ui.views.RoomEditorContent
 import dev.nonoxy.residetrack.feature.room_editor.ui.views.DeleteRoomDialog
 import dev.nonoxy.residetrack.feature.room_editor.ui.views.RemoveStudentDialog
 import dev.nonoxy.residetrack.feature.room_editor.ui.views.RoomParamsSheet
-import dev.nonoxy.residetrack.common.ui.common.dialog.DialogScaffold
 import dev.nonoxy.residetrack.common.ui.common.dialog.DiscardChangesDialog
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.backhandler.BackHandler
@@ -26,6 +28,7 @@ import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
 import dev.nonoxy.residetrack.common.ui.common.snackbar.SnackbarType
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -100,22 +103,13 @@ internal fun RoomEditorScreen(
         }
     }
 
-    DialogScaffold(
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                snackbar = { snackbarData ->
-                    when (currentSnackbarType) {
-                        SnackbarType.ERROR -> ResideTrackErrorSnackbar(snackbarData = snackbarData)
-                        SnackbarType.INFO -> ResideTrackSnackbar(snackbarData = snackbarData)
-                        else -> null
-                    }
-                },
-            )
-        },
-    ) { paddingValues ->
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(ResideTrackTheme.colors.background),
+    ) {
         RoomEditorContent(
-            modifier = Modifier.fillMaxSize().padding(paddingValues),
+            modifier = Modifier.fillMaxSize(),
             state = state,
             onRetryClick = viewModel::onRetryLoadStudents,
             onCloseClick = viewModel::onClose,
@@ -130,6 +124,20 @@ internal fun RoomEditorScreen(
             onOpenPicker = viewModel::onDatePickerOpen,
             onDismissPicker = viewModel::onDatePickerDismiss,
             onSaveAndClose = viewModel::onSaveAndClose,
+        )
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding(),
+            snackbar = { snackbarData ->
+                when (currentSnackbarType) {
+                    SnackbarType.ERROR -> ResideTrackErrorSnackbar(snackbarData = snackbarData)
+                    SnackbarType.INFO -> ResideTrackSnackbar(snackbarData = snackbarData)
+                    else -> Unit
+                }
+            },
         )
     }
 }
