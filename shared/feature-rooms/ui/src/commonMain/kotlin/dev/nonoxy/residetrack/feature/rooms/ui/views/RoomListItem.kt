@@ -51,7 +51,6 @@ internal fun RoomListItem(
             room = uiRoom.roomNumber,
             totalBeds = uiRoom.bedsCount,
             occupiedBeds = uiRoom.students.size.toString(),
-            colorForSizeHolderText = backgroundColor
         )
 
         VerticalDivider(color = ResideTrackTheme.colors.textCaption)
@@ -78,7 +77,6 @@ private fun RoomInfo(
     room: String,
     totalBeds: String,
     occupiedBeds: String,
-    colorForSizeHolderText: Color,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -92,13 +90,16 @@ private fun RoomInfo(
         )
 
         Box {
+            // Invisible width-holder: reserves space for the widest (5-digit) room number so
+            // the column width stays stable regardless of the actual number. Transparent (not
+            // background-colored) so it never leaks visibly when colors don't match the surface.
             Text(
                 text = buildString {
                     append(stringResource(resource = MR.strings.rooms_room))
-                    append(": 12345") // Hold exactly for 5-symbol room number
+                    append(": 12345")
                 },
                 style = ResideTrackTheme.typography.head4,
-                color = colorForSizeHolderText
+                color = Color.Transparent
             )
 
             Text(
