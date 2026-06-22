@@ -2,9 +2,7 @@ package dev.nonoxy.residetrack.feature.room_editor.ui.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +17,7 @@ import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_24
@@ -38,7 +37,7 @@ internal fun RoomParamsSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(),
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = ResideTrackTheme.colors.background,
     ) {
         Column(
@@ -83,21 +82,26 @@ internal fun RoomParamsSheet(
                 keyboardType = KeyboardType.Number,
             )
 
-            Spacer(modifier = Modifier.height(padding_size_12))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = padding_size_12),
+                verticalArrangement = Arrangement.spacedBy(padding_size_4),
+            ) {
+                ResideTrackButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = stringResource(MR.strings.room_editor_save_params),
+                        style = ResideTrackTheme.typography.paragraph,
+                        color = ResideTrackTheme.colors.white,
+                    )
+                }
 
-            ResideTrackButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(MR.strings.room_editor_save_params),
-                    style = ResideTrackTheme.typography.paragraph,
-                    color = ResideTrackTheme.colors.white,
-                )
-            }
-
-            TextButton(onClick = onDelete, modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(MR.strings.room_editor_delete_room),
-                    color = ResideTrackTheme.colors.textError,
-                )
+                TextButton(onClick = onDelete, modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = stringResource(MR.strings.room_editor_delete_room),
+                        color = ResideTrackTheme.colors.textError,
+                    )
+                }
             }
         }
     }
