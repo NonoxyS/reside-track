@@ -3,12 +3,15 @@ package dev.nonoxy.residetrack.feature.room_editor.ui.views
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiRoomEditorState
 import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 
 @Composable
 internal fun RoomEditorContent(
@@ -36,18 +39,14 @@ internal fun RoomEditorContent(
         onRetryClick = onRetryClick,
     ) { currentState ->
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().statusBarsPadding(),
         ) {
-            RoomEditorTopBar(
-                room = currentState.room,
-                onCloseClick = onCloseClick,
-            )
-
             val room = currentState.room
             if (room != null) {
                 RoomSummaryHeader(
                     room = room,
                     onEditClick = onEditRoomParamsClick,
+                    modifier = Modifier.padding(top = padding_size_8),
                 )
             }
 
