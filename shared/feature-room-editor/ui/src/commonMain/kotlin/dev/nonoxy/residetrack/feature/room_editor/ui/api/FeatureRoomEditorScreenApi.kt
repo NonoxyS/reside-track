@@ -31,18 +31,6 @@ fun NavController.navigateToRoomEditorExistingRoom(
     }
 }
 
-fun NavController.navigateToRoomEditorDraftRoom(
-    popUpInclusive: Boolean = true,
-    popUpToScreen: Screen? = null,
-) {
-    navigateOnResumed(RoomEditorDraftRoomRoute) {
-        launchSingleTop = true
-        popUpToScreen?.let { screen ->
-            popUpTo(screen) { inclusive = popUpInclusive }
-        }
-    }
-}
-
 fun NavGraphBuilder.composableRoomEditorExistingRoom(
     onNavigateBack: () -> Unit,
 ) {
