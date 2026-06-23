@@ -20,6 +20,6 @@ interface UpcomingStore : Store<Intent, State, Label> {
     }
 
     sealed interface Label {
-        data class NavigateToManageStudentsExistingRoom(val roomId: String) : Label
+        data class NavigateToRoomEditorExistingRoom(val roomId: String) : Label
     }
 }

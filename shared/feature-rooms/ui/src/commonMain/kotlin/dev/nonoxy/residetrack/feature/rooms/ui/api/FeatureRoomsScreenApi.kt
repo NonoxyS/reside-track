@@ -11,12 +11,12 @@ data object RoomsRoute : Screen
 
 fun NavGraphBuilder.composableRoomsScreen(
     onNavigateToAddRoomScreen: () -> Unit,
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit
 ) {
     composable<RoomsRoute> {
         RoomsScreen(
             onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
-            onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom
+            onNavigateToRoomEditorExistingRoom = onNavigateToRoomEditorExistingRoom
         )
     }
 }

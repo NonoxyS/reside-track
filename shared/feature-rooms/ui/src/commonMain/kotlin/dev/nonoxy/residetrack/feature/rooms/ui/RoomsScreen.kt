@@ -14,7 +14,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 internal fun RoomsScreen(
     onNavigateToAddRoomScreen: () -> Unit,
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit,
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit,
     viewModel: RoomsViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -22,8 +22,8 @@ internal fun RoomsScreen(
     viewModel.label.CollectFlow { label ->
         when (label) {
             UiRoomsLabel.NavigateToAddRoomScreen -> onNavigateToAddRoomScreen()
-            is UiRoomsLabel.NavigateToManageStudentsExistingRoom ->
-                onNavigateToManageStudentsExistingRoom(label.roomId)
+            is UiRoomsLabel.NavigateToRoomEditorExistingRoom ->
+                onNavigateToRoomEditorExistingRoom(label.roomId)
         }
     }
 

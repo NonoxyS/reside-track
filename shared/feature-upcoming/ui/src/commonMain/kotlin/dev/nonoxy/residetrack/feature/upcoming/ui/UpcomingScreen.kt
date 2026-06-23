@@ -13,15 +13,15 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun UpcomingScreen(
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit,
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit,
     viewModel: UpcomingViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     viewModel.label.CollectFlow { label ->
         when (label) {
-            is UiUpcomingLabel.NavigateToManageStudentsExistingRoom ->
-                onNavigateToManageStudentsExistingRoom(label.roomId)
+            is UiUpcomingLabel.NavigateToRoomEditorExistingRoom ->
+                onNavigateToRoomEditorExistingRoom(label.roomId)
         }
     }
 

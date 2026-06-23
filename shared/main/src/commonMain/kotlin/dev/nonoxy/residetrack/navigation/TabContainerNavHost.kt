@@ -14,11 +14,11 @@ import dev.nonoxy.residetrack.feature.upcoming.ui.api.composableUpcomingScreen
 internal fun TabContainerNavHost(
     navController: NavHostController,
     onNavigateToAddRoomScreen: () -> Unit,
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit,
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     // Tabs are sibling destinations — switching between them is instant.
-    // Depth navigation (add room, manage students) lives in the outer
+    // Depth navigation (add room, room editor) lives in the outer
     // ResideTrackNavHost and keeps its transitions.
     NavHost(
         modifier = modifier,
@@ -31,10 +31,10 @@ internal fun TabContainerNavHost(
     ) {
         composableRoomsScreen(
             onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
-            onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom,
+            onNavigateToRoomEditorExistingRoom = onNavigateToRoomEditorExistingRoom,
         )
         composableUpcomingScreen(
-            onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom,
+            onNavigateToRoomEditorExistingRoom = onNavigateToRoomEditorExistingRoom,
         )
     }
 }

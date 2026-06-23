@@ -3,12 +3,12 @@ package dev.nonoxy.residetrack.feature.splash.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.nonoxy.residetrack.common.ui.common.loader.ResideTrackLoader
 import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
+import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.feature.splash.presentation.SplashScreenViewModel
 import dev.nonoxy.residetrack.feature.splash.presentation.models.UiSplashLabel
 import org.koin.compose.viewmodel.koinViewModel
@@ -27,9 +27,9 @@ internal fun SplashScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
+            .background(ResideTrackTheme.colors.background),
         contentAlignment = Alignment.Center,
     ) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        ResideTrackLoader()
     }
 }

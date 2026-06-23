@@ -10,7 +10,7 @@ internal interface UiUpcomingLabelMapper {
 internal class UiUpcomingLabelMapperImpl : UiUpcomingLabelMapper {
 
     override fun map(item: UpcomingStore.Label): UiUpcomingLabel = when (item) {
-        is UpcomingStore.Label.NavigateToManageStudentsExistingRoom ->
-            UiUpcomingLabel.NavigateToManageStudentsExistingRoom(roomId = item.roomId)
+        is UpcomingStore.Label.NavigateToRoomEditorExistingRoom ->
+            UiUpcomingLabel.NavigateToRoomEditorExistingRoom(roomId = item.roomId)
     }
 }

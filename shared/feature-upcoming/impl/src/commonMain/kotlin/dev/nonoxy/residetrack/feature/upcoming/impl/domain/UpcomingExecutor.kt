@@ -25,7 +25,7 @@ internal class UpcomingExecutor(
     override suspend fun suspendExecuteIntent(intent: Intent) {
         when (intent) {
             is Intent.OnStudentClick -> publish(
-                Label.NavigateToManageStudentsExistingRoom(roomId = intent.roomId.toString())
+                Label.NavigateToRoomEditorExistingRoom(roomId = intent.roomId.toString())
             )
             Intent.OnRetry -> observeUpcoming()
         }

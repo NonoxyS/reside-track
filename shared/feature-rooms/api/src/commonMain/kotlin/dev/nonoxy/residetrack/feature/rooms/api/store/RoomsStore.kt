@@ -22,6 +22,6 @@ interface RoomsStore : Store<Intent, State, Label> {
 
     sealed interface Label {
         data object NavigateToAddRoomScreen : Label
-        data class NavigateToManageStudentsExistingRoom(val roomId: String) : Label
+        data class NavigateToRoomEditorExistingRoom(val roomId: String) : Label
     }
 }

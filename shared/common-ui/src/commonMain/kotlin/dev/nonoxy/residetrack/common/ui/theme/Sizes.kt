@@ -3,6 +3,7 @@ package dev.nonoxy.residetrack.common.ui.theme
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+val size_1: Dp = 1.dp
 val size_4: Dp = 4.dp
 val size_20: Dp = 20.dp
 val size_24: Dp = 24.dp

@@ -20,9 +20,3 @@ fun <K, V> ImmutableMap<K, V>?.orEmptyPersist(): ImmutableMap<K, V> = this ?: pe
 inline fun <T> unsafeLazy(crossinline initializer: () -> T): Lazy<T> = lazy(mode = LazyThreadSafetyMode.NONE) {
     initializer()
 }
-
-inline fun <T> publicationLazy(crossinline initializer: () -> T): Lazy<T> = lazy(
-    mode = LazyThreadSafetyMode.PUBLICATION
-) {
-    initializer()
-}

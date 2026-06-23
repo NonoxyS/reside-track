@@ -27,7 +27,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 internal fun AddRoomScreen(
     onNavigateBack: () -> Unit,
-    onNavigateToManageStudentsDraftRoom: () -> Unit,
+    onNavigateToRoomEditorDraftRoom: () -> Unit,
     viewModel: AddRoomViewModel = koinViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -49,7 +49,7 @@ internal fun AddRoomScreen(
     viewModel.label.CollectFlow { label ->
         when (label) {
             UiAddRoomLabel.CloseScreen -> onNavigateBack()
-            UiAddRoomLabel.NavigateToManageStudentsDraftRoom -> onNavigateToManageStudentsDraftRoom()
+            UiAddRoomLabel.NavigateToRoomEditorDraftRoom -> onNavigateToRoomEditorDraftRoom()
             is UiAddRoomLabel.ShowSuccess -> {
                 currentSnackbarType = SnackbarType.INFO
                 snackbarHostState.currentSnackbarData?.dismiss()

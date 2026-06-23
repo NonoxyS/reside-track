@@ -14,9 +14,7 @@ plugins {
 
     // Convention plugins
     alias(libs.plugins.conventionPlugin.composeMultiplatformSetup) apply false
-    alias(libs.plugins.conventionPlugin.androidLibrary) apply false
     alias(libs.plugins.conventionPlugin.kmpLibrary) apply false
-    alias(libs.plugins.conventionPlugin.kmpLibraryLegacy) apply false
     alias(libs.plugins.conventionPlugin.kmpFeatureSetup) apply false
     alias(libs.plugins.conventionPlugin.jsonSerialization) apply false
 }

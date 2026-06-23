@@ -17,12 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.core.navigation.bottombar.BottomBarItem
 import dev.nonoxy.residetrack.core.navigation.bottombar.FloatingBottomBar
 import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
@@ -39,7 +40,7 @@ private const val UPCOMING_KEY = "upcoming"
 @Composable
 internal fun TabContainerScreen(
     onNavigateToAddRoomScreen: () -> Unit,
-    onNavigateToManageStudentsExistingRoom: (String) -> Unit,
+    onNavigateToRoomEditorExistingRoom: (String) -> Unit,
     viewModel: TabContainerViewModel = koinViewModel(),
 ) {
     val innerNavController = rememberNavController()
@@ -74,7 +75,7 @@ internal fun TabContainerScreen(
             TabContainerNavHost(
                 navController = innerNavController,
                 onNavigateToAddRoomScreen = onNavigateToAddRoomScreen,
-                onNavigateToManageStudentsExistingRoom = onNavigateToManageStudentsExistingRoom,
+                onNavigateToRoomEditorExistingRoom = onNavigateToRoomEditorExistingRoom,
                 modifier = Modifier.fillMaxSize(),
             )
         }
@@ -93,7 +94,7 @@ internal fun TabContainerScreen(
                 .align(Alignment.BottomCenter)
                 .onSizeChanged { barHeightPx = it.height }
                 .navigationBarsPadding()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = padding_size_16, vertical = padding_size_12),
         )
     }
 }

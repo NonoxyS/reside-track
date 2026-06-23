@@ -10,12 +10,13 @@ import dev.nonoxy.residetrack.core.navigation.bottomsheet.ModalBottomSheetLayout
 import dev.nonoxy.residetrack.core.navigation.bottomsheet.rememberModalBottomSheetNavigator
 import dev.nonoxy.residetrack.feature.splash.ui.api.SplashRoute
 import dev.nonoxy.residetrack.feature.splash.ui.api.composableSplashScreen
+import dev.nonoxy.residetrack.feature.add_room.ui.api.AddRoomRoute
 import dev.nonoxy.residetrack.feature.add_room.ui.api.bottomSheetAddRoomScreen
 import dev.nonoxy.residetrack.feature.add_room.ui.api.navigateToAddRoomScreen
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsExistingRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.bottomSheetManageStudentsDraftRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsExistingRoom
-import dev.nonoxy.residetrack.feature.manage_students.ui.api.navigateToManageStudentsDraftRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.RoomEditorDraftRoomRoute
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.composableRoomEditorExistingRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.composableRoomEditorDraftRoom
+import dev.nonoxy.residetrack.feature.room_editor.ui.api.navigateToRoomEditorExistingRoom
 import dev.nonoxy.residetrack.ui.tabcontainer.TabContainerScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,20 +45,28 @@ internal fun ResideTrackNavHost(
             composable<TabContainerRoute> {
                 TabContainerScreen(
                     onNavigateToAddRoomScreen = navController::navigateToAddRoomScreen,
-                    onNavigateToManageStudentsExistingRoom = navController::navigateToManageStudentsExistingRoom,
+                    onNavigateToRoomEditorExistingRoom = navController::navigateToRoomEditorExistingRoom,
                 )
             }
 
             bottomSheetAddRoomScreen(
                 onNavigateBack = navController::popBackStack,
-                onNavigateToManageStudentsDraftRoom = navController::navigateToManageStudentsDraftRoom
+                // Navigate directly (not navigateOnResumed): the add-room bottom sheet is a
+                // FloatingWindow entry that never reaches RESUMED, so the resumed-guard would
+                // silently drop this hand-off. popUpTo removes the sheet so Back returns to rooms.
+                onNavigateToRoomEditorDraftRoom = {
+                    navController.navigate(RoomEditorDraftRoomRoute) {
+                        popUpTo(AddRoomRoute) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
 
-            bottomSheetManageStudentsExistingRoom(
+            composableRoomEditorExistingRoom(
                 onNavigateBack = navController::popBackStack
             )
 
-            bottomSheetManageStudentsDraftRoom(
+            composableRoomEditorDraftRoom(
                 onNavigateBack = navController::popBackStack
             )
         }

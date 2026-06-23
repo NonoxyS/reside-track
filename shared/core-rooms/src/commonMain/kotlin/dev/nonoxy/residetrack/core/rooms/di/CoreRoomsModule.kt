@@ -6,19 +6,15 @@ import dev.nonoxy.residetrack.core.rooms.data.mappers.RoomMapperImpl
 import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapper
 import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapperImpl
 import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.new
 import org.koin.dsl.module
 
 val coreRoomsModule = module {
 
-    factory<StudentMapper> { StudentMapperImpl() }
+    factoryOf<StudentMapper>(::StudentMapperImpl)
 
-    factory<RoomMapper> { RoomMapperImpl(studentMapper = get()) }
+    factory<RoomMapper> { new(::RoomMapperImpl) }
 
-    factory<RoomsRepository> {
-        RoomsRepositoryImpl(
-            roomDao = get(),
-            roomMapper = get(),
-            studentMapper = get(),
-        )
-    }
+    single<RoomsRepository> { new(::RoomsRepositoryImpl) }
 }

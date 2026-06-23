@@ -107,4 +107,18 @@
     <string name="upcoming_days_overdue">Просрочено на %1$s дн.</string>
     <string name="rooms_tab">Комнаты</string>
     <string name="action_retry">Повторить</string>
+
+    <!-- Room editor: params + delete -->
+    <string name="room_editor_params_title">Параметры комнаты</string>
+    <string name="room_editor_edit_params">Изменить параметры комнаты</string>
+    <string name="room_editor_summary">Этаж %1$s · комната %2$s</string>
+    <string name="room_editor_save_params">Сохранить</string>
+    <string name="room_editor_delete_room">Удалить комнату</string>
+    <string name="room_editor_delete_confirm_title">Удалить комнату %1$s?</string>
+    <string name="room_editor_delete_confirm_message">Комната и все её слушатели (%1$d) будут удалены безвозвратно.</string>
+    <string name="error_room_number_taken">Комната с таким номером уже есть на этом этаже</string>
+    <string name="error_failed_to_update_room">Не удалось обновить комнату</string>
+    <string name="error_failed_to_delete_room">Не удалось удалить комнату</string>
+    <string name="room_updated_successfully">Параметры комнаты обновлены</string>
+    <string name="room_deleted_successfully">Комната удалена</string>
 </resources>

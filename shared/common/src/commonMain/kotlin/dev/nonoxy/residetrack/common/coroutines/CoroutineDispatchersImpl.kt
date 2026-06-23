@@ -11,7 +11,4 @@ internal class CoroutineDispatchersImpl : CoroutineDispatchers {
 
     override val default: CoroutineDispatcher
         get() = defaultDispatcher
-
-    override val unconfined: CoroutineDispatcher
-        get() = unconfinedDispatcher
 }
