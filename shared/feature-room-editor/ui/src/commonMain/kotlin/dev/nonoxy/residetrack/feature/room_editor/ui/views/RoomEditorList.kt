@@ -115,7 +115,10 @@ internal fun RoomEditorList(
                     contentDescription = stringResource(MR.strings.add_student),
                 )
                 Spacer(modifier = Modifier.width(padding_size_8))
-                Text(stringResource(MR.strings.add_student))
+                Text(
+                    text = stringResource(MR.strings.add_student),
+                    style = ResideTrackTheme.typography.paragraph,
+                )
             }
         }
 
