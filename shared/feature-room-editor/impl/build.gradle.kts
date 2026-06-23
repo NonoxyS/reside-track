@@ -1,5 +1,6 @@
 import extensions.androidLibraryConfig
 import extensions.commonMainDependencies
+import extensions.commonTestDependencies
 import extensions.implementations
 
 plugins {
@@ -13,5 +14,13 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         libs.kotlin.immutableCollections,
+    )
+}
+
+commonTestDependencies {
+    implementations(
+        libs.kotlin.test,
+        libs.kotlin.coroutines.test,
+        libs.kotlin.datetime,
     )
 }

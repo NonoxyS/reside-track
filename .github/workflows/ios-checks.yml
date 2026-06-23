@@ -20,3 +20,27 @@ jobs:
       - name: SwiftFormat
         if: always()
         run: cd linters/swiftformat && swiftformat --lint ../../iosApp/
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Run unit tests
+        run: ./gradlew iosSimulatorArm64Test
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: '**/build/test-results/iosSimulatorArm64Test/*.xml'
+          retention-days: 1
