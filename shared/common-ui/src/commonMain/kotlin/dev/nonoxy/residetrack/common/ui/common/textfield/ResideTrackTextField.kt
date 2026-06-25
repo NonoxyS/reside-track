@@ -38,7 +38,9 @@ fun ResideTrackTextField(
         errorTextColor = ResideTrackTheme.colors.textPrimary,
         focusedContainerColor = ResideTrackTheme.colors.surface,
         unfocusedContainerColor = ResideTrackTheme.colors.surface,
-        disabledContainerColor = ResideTrackTheme.colors.fillInactive.copy(alpha = 0.1f)
+        disabledContainerColor = ResideTrackTheme.colors.fillInactive.copy(alpha = 0.1f),
+        cursorColor = ResideTrackTheme.colors.textAccent,
+        errorCursorColor = ResideTrackTheme.colors.textError
     ),
     textStyle: TextStyle = ResideTrackTheme.typography.paragraph,
     keyboardType: KeyboardType = KeyboardType.Text,
