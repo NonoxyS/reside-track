@@ -1,5 +1,6 @@
 package dev.nonoxy.residetrack.feature.rooms.impl.domain
 
+import dev.nonoxy.residetrack.core.rooms.models.Room
 import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Intent
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Label
@@ -36,7 +37,11 @@ internal class RoomsExecutor(
         roomsRepository.observeRooms()
             .catch { dispatch(Message.SetError) }
             .collect { rooms ->
-                val grouped = rooms.groupBy { room -> room.floorNumber }
+                // DB query returns rooms unordered (no ORDER BY); sort here so floors
+                // page in ascending order and rooms read top-down within a floor.
+                val grouped = rooms
+                    .sortedWith(compareBy(Room::floorNumber, Room::roomNumber))
+                    .groupBy { room -> room.floorNumber }
                 dispatch(Message.SetRoomsOnFloor(roomsOnFloor = grouped))
             }
     }

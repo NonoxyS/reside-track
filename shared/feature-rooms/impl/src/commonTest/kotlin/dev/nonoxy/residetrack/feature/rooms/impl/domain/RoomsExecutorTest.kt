@@ -55,6 +55,26 @@ class RoomsExecutorTest {
     }
 
     @Test
+    fun `LoadInitial sorts floors ascending and rooms by number within a floor`() = runTest {
+        val repository = FakeRoomsRepository(
+            rooms = listOf(
+                room(id = 1, floor = 3, number = 32),
+                room(id = 2, floor = 1, number = 12),
+                room(id = 3, floor = 1, number = 11),
+                room(id = 4, floor = 2, number = 21),
+            ),
+        )
+
+        val store = createStore(repository)
+
+        val state = store.state
+        assertEquals(listOf(1, 2, 3), state.roomsOnFloor.keys.toList())
+        assertEquals(listOf(11, 12), state.roomsOnFloor.getValue(1).map { room -> room.roomNumber })
+
+        store.dispose()
+    }
+
+    @Test
     fun `observeRooms failure sets error and clears loading`() = runTest {
         val repository = FakeRoomsRepository().apply { observeRoomsError = RuntimeException("boom") }
 
