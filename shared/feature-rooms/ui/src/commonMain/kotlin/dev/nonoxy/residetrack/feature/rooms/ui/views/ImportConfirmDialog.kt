@@ -16,6 +16,8 @@ import dev.nonoxy.residetrack.res.MR
 internal fun ImportConfirmDialog(
     roomCount: Int,
     studentCount: Int,
+    currentRoomCount: Int,
+    currentStudentCount: Int,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -30,9 +32,23 @@ internal fun ImportConfirmDialog(
         text = {
             Column {
                 Text(text = stringResource(MR.strings.backup_import_dialog_message))
+                // "Сейчас" in error colour makes the data about to be destroyed the loud part;
+                // "Станет" shows what replaces it, so the magnitude of the loss is explicit.
                 Text(
                     modifier = Modifier.padding(top = padding_size_8),
-                    text = stringResource(MR.strings.backup_import_dialog_counts, roomCount, studentCount),
+                    text = stringResource(
+                        MR.strings.backup_import_current,
+                        stringResource(MR.plurals.backup_rooms_count, currentRoomCount, currentRoomCount),
+                        stringResource(MR.plurals.backup_students_count, currentStudentCount, currentStudentCount),
+                    ),
+                    color = ResideTrackTheme.colors.textError,
+                )
+                Text(
+                    text = stringResource(
+                        MR.strings.backup_import_after,
+                        stringResource(MR.plurals.backup_rooms_count, roomCount, roomCount),
+                        stringResource(MR.plurals.backup_students_count, studentCount, studentCount),
+                    ),
                     color = ResideTrackTheme.colors.textCaption,
                 )
             }

@@ -28,7 +28,12 @@ internal class UiRoomsStateMapperImpl(
                 .mapValues { entry -> entry.value.let(roomMapper::map).toPersistentList() }
                 .toPersistentMap(),
             importConfirmation = item.importConfirmation?.let { backup ->
-                UiImportConfirmation(roomCount = backup.roomCount, studentCount = backup.studentCount)
+                UiImportConfirmation(
+                    roomCount = backup.roomCount,
+                    studentCount = backup.studentCount,
+                    currentRoomCount = allRooms.size,
+                    currentStudentCount = occupiedPlaces,
+                )
             },
         )
     }

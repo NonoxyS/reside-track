@@ -12,4 +12,16 @@
         <item quantity="many">Свободно %1$d мест</item>
         <item quantity="other">Свободно %1$d мест</item>
     </plurals>
+    <plurals name="backup_rooms_count">
+        <item quantity="one">%1$d комната</item>
+        <item quantity="few">%1$d комнаты</item>
+        <item quantity="many">%1$d комнат</item>
+        <item quantity="other">%1$d комнат</item>
+    </plurals>
+    <plurals name="backup_students_count">
+        <item quantity="one">%1$d жилец</item>
+        <item quantity="few">%1$d жильца</item>
+        <item quantity="many">%1$d жильцов</item>
+        <item quantity="other">%1$d жильцов</item>
+    </plurals>
 </resources>

@@ -128,7 +128,8 @@
     <string name="backup_menu_content_description">Меню резервной копии</string>
     <string name="backup_import_dialog_title">Восстановить из копии?</string>
     <string name="backup_import_dialog_message">Все текущие комнаты и жильцы будут заменены данными из файла. Действие необратимо.</string>
-    <string name="backup_import_dialog_counts">Найдено: комнат — %1$d, жильцов — %2$d</string>
+    <string name="backup_import_current">Сейчас: %1$s, %2$s</string>
+    <string name="backup_import_after">Станет: %1$s, %2$s</string>
     <string name="backup_import_confirm">Восстановить</string>
     <string name="backup_cancel">Отменить</string>
     <string name="backup_export_success">Резервная копия создана</string>

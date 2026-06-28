@@ -1,11 +1,14 @@
 package dev.nonoxy.residetrack.feature.rooms.presentation.mappers
 
+import dev.nonoxy.residetrack.core.backup.domain.model.Backup
+import dev.nonoxy.residetrack.core.backup.domain.model.BackupRoom
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.model.Student
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class UiRoomsStateMapperTest {
@@ -69,5 +72,32 @@ class UiRoomsStateMapperTest {
         assertTrue(ui.isLoading)
         assertEquals(0, ui.totalPlaces)
         assertTrue(ui.roomsOnFloor.isEmpty())
+    }
+
+    @Test
+    fun `import confirmation carries both incoming and current-to-be-destroyed counts`() {
+        val state = RoomsStore.State(
+            roomsOnFloor = mapOf(
+                2 to listOf(
+                    room(id = 1, floor = 2, number = 21, beds = 4, students = listOf(student(1), student(2))),
+                ),
+                3 to listOf(
+                    room(id = 2, floor = 3, number = 31, beds = 3, students = listOf(student(3))),
+                ),
+            ),
+            importConfirmation = Backup(
+                rooms = listOf(
+                    BackupRoom(floorNumber = 5, roomNumber = 50, bedsCount = 2, students = emptyList()),
+                ),
+            ),
+        )
+
+        val confirmation = mapper.map(state).importConfirmation
+
+        assertNotNull(confirmation)
+        assertEquals(1, confirmation.roomCount) // incoming backup
+        assertEquals(0, confirmation.studentCount)
+        assertEquals(2, confirmation.currentRoomCount) // about to be wiped
+        assertEquals(3, confirmation.currentStudentCount)
     }
 }

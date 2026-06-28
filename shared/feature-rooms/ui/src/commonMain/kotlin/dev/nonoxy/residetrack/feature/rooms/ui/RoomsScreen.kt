@@ -46,6 +46,8 @@ internal fun RoomsScreen(
         ImportConfirmDialog(
             roomCount = confirmation.roomCount,
             studentCount = confirmation.studentCount,
+            currentRoomCount = confirmation.currentRoomCount,
+            currentStudentCount = confirmation.currentStudentCount,
             onConfirm = viewModel::onRestoreConfirm,
             onDismiss = viewModel::onRestoreCancel,
         )
