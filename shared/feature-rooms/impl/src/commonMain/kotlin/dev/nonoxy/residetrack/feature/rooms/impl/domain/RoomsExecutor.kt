@@ -54,8 +54,7 @@ internal class RoomsExecutor(
     }
 
     private suspend fun exportBackup() {
-        // Nothing to back up yet — refuse instead of writing a misleading "empty backup" file
-        // and reporting success. roomsOnFloor mirrors the DB contents already loaded into state.
+        // roomsOnFloor mirrors the DB already in state, so emptiness is checkable without a repo call.
         if (state().roomsOnFloor.isEmpty()) {
             publish(Label.ShowBackupError(BackupErrorKind.ExportNoData))
             return
@@ -75,8 +74,7 @@ internal class RoomsExecutor(
     private suspend fun parseBackup(json: String) {
         backupRepository.parse(json)
             .onSuccess { backup ->
-                // A backup with no rooms would only wipe existing data on restore — block it
-                // rather than letting the user confirm a destructive no-op.
+                // Empty backup would only wipe data on restore — block rather than confirm a no-op.
                 if (backup.isEmpty) {
                     publish(Label.ShowBackupError(BackupErrorKind.ImportEmpty))
                 } else {
@@ -96,8 +94,7 @@ internal class RoomsExecutor(
     private suspend fun restoreBackup() {
         val backup = state().importConfirmation ?: return
         dispatch(Message.SetImportConfirmation(backup = null))
-        // Show loading during the replace-all write. On success the observeRooms stream re-emits the
-        // restored data and clears loading; on failure we clear it here since nothing re-emits.
+        // observeRooms re-emits on success and clears loading; on failure nothing re-emits so we clear it.
         dispatch(Message.SetIsLoading(isLoading = true))
         backupRepository.restore(backup)
             .onSuccess { publish(Label.ShowBackupSuccess(BackupSuccessKind.Restored)) }

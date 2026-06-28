@@ -29,7 +29,7 @@ internal actual fun rememberBackupFilePicker(
     ) { uri ->
         val json = pendingJson
         pendingJson = null
-        // Null uri means the user cancelled — stay silent. Only report once a destination was chosen.
+        // Null uri = cancelled; report only once a destination was chosen.
         if (uri != null && json != null) {
             scope.launch {
                 val written = withContext(Dispatchers.IO) {

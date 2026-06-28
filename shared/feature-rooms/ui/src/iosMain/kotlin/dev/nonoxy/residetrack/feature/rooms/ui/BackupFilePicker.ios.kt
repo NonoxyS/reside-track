@@ -87,7 +87,6 @@ private class IosBackupFilePicker(
         )
     }
 
-    /** Writes [json] to a temp file and returns its URL, or null if the write failed. */
     private fun writeTempFile(json: String, name: String): NSURL? {
         val dir = NSURL.fileURLWithPath(NSTemporaryDirectory(), isDirectory = true)
         val url = dir.URLByAppendingPathComponent(name) ?: return null

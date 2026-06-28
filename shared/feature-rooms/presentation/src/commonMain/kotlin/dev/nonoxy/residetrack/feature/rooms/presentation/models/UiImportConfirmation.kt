@@ -1,12 +1,9 @@
 package dev.nonoxy.residetrack.feature.rooms.presentation.models
 
-/**
- * Counts shown in the import confirmation dialog. Both the incoming backup and the data about to be
- * destroyed are exposed so the user sees the full consequence of a destructive replace-all restore.
- */
 data class UiImportConfirmation(
     val roomCount: Int,
     val studentCount: Int,
+    // current* = data the replace-all will destroy; shown so the user sees the full consequence.
     val currentRoomCount: Int,
     val currentStudentCount: Int,
 )

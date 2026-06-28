@@ -95,9 +95,9 @@ class UiRoomsStateMapperTest {
         val confirmation = mapper.map(state).importConfirmation
 
         assertNotNull(confirmation)
-        assertEquals(1, confirmation.roomCount) // incoming backup
+        assertEquals(1, confirmation.roomCount)
         assertEquals(0, confirmation.studentCount)
-        assertEquals(2, confirmation.currentRoomCount) // about to be wiped
+        assertEquals(2, confirmation.currentRoomCount)
         assertEquals(3, confirmation.currentStudentCount)
     }
 }
