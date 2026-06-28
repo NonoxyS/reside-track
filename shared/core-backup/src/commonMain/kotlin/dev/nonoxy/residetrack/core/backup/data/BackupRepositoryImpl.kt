@@ -6,6 +6,7 @@ import dev.nonoxy.residetrack.core.backup.data.mapper.toRoomDtos
 import dev.nonoxy.residetrack.core.backup.data.model.BACKUP_FORMAT_VERSION
 import dev.nonoxy.residetrack.core.backup.data.model.BackupFileDto
 import dev.nonoxy.residetrack.core.backup.domain.model.Backup
+import dev.nonoxy.residetrack.core.backup.domain.model.UnsupportedBackupVersionException
 import dev.nonoxy.residetrack.core.backup.domain.repository.BackupRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,8 +34,8 @@ internal class BackupRepositoryImpl(
     override suspend fun parse(rawJson: String): Result<Backup> = runCatching {
         withContext(Dispatchers.Default) {
             val dto = json.decodeFromString<BackupFileDto>(rawJson)
-            require(dto.version == BACKUP_FORMAT_VERSION) {
-                "Unsupported backup version: ${dto.version}"
+            if (dto.version != BACKUP_FORMAT_VERSION) {
+                throw UnsupportedBackupVersionException(dto.version)
             }
             dto.rooms.toDomain()
         }

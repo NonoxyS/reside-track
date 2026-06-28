@@ -9,6 +9,9 @@ enum class BackupErrorKind {
     /** The picked file could not be read or parsed as a backup. */
     ImportReadFailed,
 
+    /** The picked file is a backup, but its format version is not supported by this build. */
+    ImportVersionUnsupported,
+
     /** The picked file parsed but holds no rooms, so restoring would only wipe existing data. */
     ImportEmpty,
     RestoreFailed,

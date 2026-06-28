@@ -1,6 +1,7 @@
 package dev.nonoxy.residetrack.feature.rooms.impl.domain
 
 import dev.nonoxy.residetrack.common.utils.currentLocalDate
+import dev.nonoxy.residetrack.core.backup.domain.model.UnsupportedBackupVersionException
 import dev.nonoxy.residetrack.core.backup.domain.repository.BackupRepository
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
@@ -82,7 +83,14 @@ internal class RoomsExecutor(
                     dispatch(Message.SetImportConfirmation(backup = backup))
                 }
             }
-            .onFailure { publish(Label.ShowBackupError(BackupErrorKind.ImportReadFailed)) }
+            .onFailure { error ->
+                val kind = if (error is UnsupportedBackupVersionException) {
+                    BackupErrorKind.ImportVersionUnsupported
+                } else {
+                    BackupErrorKind.ImportReadFailed
+                }
+                publish(Label.ShowBackupError(kind))
+            }
     }
 
     private suspend fun restoreBackup() {

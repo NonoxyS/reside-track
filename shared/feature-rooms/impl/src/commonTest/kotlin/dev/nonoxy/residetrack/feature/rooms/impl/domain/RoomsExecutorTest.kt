@@ -4,6 +4,7 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import dev.nonoxy.residetrack.core.backup.domain.model.Backup
 import dev.nonoxy.residetrack.core.backup.domain.model.BackupRoom
+import dev.nonoxy.residetrack.core.backup.domain.model.UnsupportedBackupVersionException
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.feature.rooms.api.store.BackupErrorKind
 import dev.nonoxy.residetrack.feature.rooms.api.store.BackupSuccessKind
@@ -241,6 +242,21 @@ class RoomsExecutorTest {
         advanceUntilIdle()
 
         assertEquals(listOf<Label>(Label.ShowBackupError(BackupErrorKind.ImportReadFailed)), labels)
+        assertNull(store.state.importConfirmation)
+
+        store.dispose()
+    }
+
+    @Test
+    fun `OnBackupFileLoaded with an unsupported version shows a version error`() = runTest {
+        val backup = FakeBackupRepository(parseResult = Result.failure(UnsupportedBackupVersionException(999)))
+        val store = createStore(FakeRoomsRepository(), backup)
+        val labels = collectLabels(store)
+
+        store.accept(Intent.OnBackupFileLoaded(json = "{\"version\":999}"))
+        advanceUntilIdle()
+
+        assertEquals(listOf<Label>(Label.ShowBackupError(BackupErrorKind.ImportVersionUnsupported)), labels)
         assertNull(store.state.importConfirmation)
 
         store.dispose()

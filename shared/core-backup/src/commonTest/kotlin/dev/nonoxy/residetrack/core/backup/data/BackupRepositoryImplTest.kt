@@ -3,6 +3,7 @@ package dev.nonoxy.residetrack.core.backup.data
 import dev.nonoxy.residetrack.core.backup.domain.model.Backup
 import dev.nonoxy.residetrack.core.backup.domain.model.BackupRoom
 import dev.nonoxy.residetrack.core.backup.domain.model.BackupStudent
+import dev.nonoxy.residetrack.core.backup.domain.model.UnsupportedBackupVersionException
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
@@ -79,7 +80,9 @@ class BackupRepositoryImplTest {
 
         val result = repository.parse(futureFile)
 
-        assertTrue(result.isFailure)
+        val error = result.exceptionOrNull()
+        assertTrue(error is UnsupportedBackupVersionException)
+        assertEquals(999, error.version)
     }
 
     @Test

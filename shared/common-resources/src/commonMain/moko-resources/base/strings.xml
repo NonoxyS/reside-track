@@ -137,6 +137,7 @@
     <string name="backup_export_error">Не удалось создать резервную копию</string>
     <string name="backup_import_empty">Файл не содержит данных для восстановления</string>
     <string name="backup_import_success">Данные восстановлены</string>
-    <string name="backup_import_error">Не удалось прочитать файл</string>
+    <string name="backup_import_error">Не похоже на файл резервной копии</string>
+    <string name="backup_import_error_version">Версия резервной копии не поддерживается</string>
     <string name="backup_restore_error">Не удалось восстановить данные</string>
 </resources>
