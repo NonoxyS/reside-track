@@ -281,6 +281,27 @@ class RoomsExecutorTest {
     }
 
     @Test
+    fun `OnRestoreConfirm failure clears loading and shows a restore error`() = runTest {
+        val backup = FakeBackupRepository(
+            parseResult = Result.success(sampleBackup),
+            restoreResult = Result.failure(RuntimeException("disk full")),
+        )
+        val store = createStore(FakeRoomsRepository(), backup)
+        val labels = collectLabels(store)
+        store.accept(Intent.OnBackupFileLoaded(json = "{}"))
+        advanceUntilIdle()
+
+        store.accept(Intent.OnRestoreConfirm)
+        advanceUntilIdle()
+
+        assertEquals(listOf<Label>(Label.ShowBackupError(BackupErrorKind.RestoreFailed)), labels)
+        assertFalse(store.state.isLoading)
+        assertNull(store.state.importConfirmation)
+
+        store.dispose()
+    }
+
+    @Test
     fun `OnRestoreCancel clears the confirmation without restoring`() = runTest {
         val backup = FakeBackupRepository(parseResult = Result.success(sampleBackup))
         val store = createStore(FakeRoomsRepository(), backup)

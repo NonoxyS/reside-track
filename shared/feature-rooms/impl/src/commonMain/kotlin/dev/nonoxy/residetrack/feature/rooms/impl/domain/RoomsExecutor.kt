@@ -96,9 +96,15 @@ internal class RoomsExecutor(
     private suspend fun restoreBackup() {
         val backup = state().importConfirmation ?: return
         dispatch(Message.SetImportConfirmation(backup = null))
+        // Show loading during the replace-all write. On success the observeRooms stream re-emits the
+        // restored data and clears loading; on failure we clear it here since nothing re-emits.
+        dispatch(Message.SetIsLoading(isLoading = true))
         backupRepository.restore(backup)
             .onSuccess { publish(Label.ShowBackupSuccess(BackupSuccessKind.Restored)) }
-            .onFailure { publish(Label.ShowBackupError(BackupErrorKind.RestoreFailed)) }
+            .onFailure {
+                dispatch(Message.SetIsLoading(isLoading = false))
+                publish(Label.ShowBackupError(BackupErrorKind.RestoreFailed))
+            }
     }
 
     private suspend fun loadRoomsData() {
