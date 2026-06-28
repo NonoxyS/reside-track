@@ -9,8 +9,8 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Intent
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Label
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.State
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 

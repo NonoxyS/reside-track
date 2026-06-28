@@ -2,7 +2,7 @@ package dev.nonoxy.residetrack.feature.upcoming.impl.domain
 
 import dev.nonoxy.residetrack.common.utils.currentLocalDate
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore.Intent
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore.Label
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore.State

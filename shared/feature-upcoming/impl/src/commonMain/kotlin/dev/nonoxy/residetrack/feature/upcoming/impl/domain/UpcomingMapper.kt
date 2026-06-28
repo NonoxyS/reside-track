@@ -1,7 +1,7 @@
 package dev.nonoxy.residetrack.feature.upcoming.impl.domain
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingCheckouts
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingCheckouts
 import dev.nonoxy.residetrack.feature.upcoming.api.models.UpcomingItem
 import kotlinx.datetime.LocalDate
 

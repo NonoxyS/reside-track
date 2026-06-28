@@ -30,6 +30,18 @@ class RoomsViewModel internal constructor(
 
     fun onRetryClick() = store.accept(Intent.OnRetry)
 
+    fun onExportClick() = store.accept(Intent.OnExportClick)
+
+    fun onExportCompleted(success: Boolean) = store.accept(Intent.OnExportCompleted(success = success))
+
+    fun onImportClick() = store.accept(Intent.OnImportClick)
+
+    fun onBackupFileLoaded(json: String) = store.accept(Intent.OnBackupFileLoaded(json = json))
+
+    fun onRestoreConfirm() = store.accept(Intent.OnRestoreConfirm)
+
+    fun onRestoreCancel() = store.accept(Intent.OnRestoreCancel)
+
     override fun onCleared() {
         store.dispose()
         super.onCleared()

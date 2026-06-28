@@ -1,5 +1,6 @@
 package dev.nonoxy.residetrack.feature.rooms.ui.views
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -9,6 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.icerock.moko.resources.compose.painterResource
@@ -22,6 +27,8 @@ internal fun RoomsTopBar(
     totalPlaces: Int,
     availablePlaces: Int,
     onAddRoomClick: () -> Unit,
+    onBackupExportClick: () -> Unit,
+    onBackupImportClick: () -> Unit,
     modifier: Modifier = Modifier,
     colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(
         containerColor = ResideTrackTheme.colors.background,
@@ -38,6 +45,22 @@ internal fun RoomsTopBar(
                 Icon(
                     painter = painterResource(MR.images.ic_add),
                     contentDescription = stringResource(MR.strings.rooms_add_content_description)
+                )
+            }
+
+            Box {
+                var menuExpanded by remember { mutableStateOf(false) }
+                IconButton(onClick = { menuExpanded = true }) {
+                    Icon(
+                        painter = painterResource(MR.images.ic_more),
+                        contentDescription = stringResource(MR.strings.backup_menu_content_description)
+                    )
+                }
+                BackupMenu(
+                    expanded = menuExpanded,
+                    onDismiss = { menuExpanded = false },
+                    onExportClick = onBackupExportClick,
+                    onImportClick = onBackupImportClick,
                 )
             }
         },
@@ -73,7 +96,9 @@ private fun Preview() {
         RoomsTopBar(
             totalPlaces = 617,
             availablePlaces = 613,
-            onAddRoomClick = {}
+            onAddRoomClick = {},
+            onBackupExportClick = {},
+            onBackupImportClick = {},
         )
     }
 }

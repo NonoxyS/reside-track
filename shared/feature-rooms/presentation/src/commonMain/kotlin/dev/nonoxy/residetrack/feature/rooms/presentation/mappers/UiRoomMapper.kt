@@ -1,7 +1,7 @@
 package dev.nonoxy.residetrack.feature.rooms.presentation.mappers
 
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiRoom
 import kotlinx.collections.immutable.toImmutableList
 

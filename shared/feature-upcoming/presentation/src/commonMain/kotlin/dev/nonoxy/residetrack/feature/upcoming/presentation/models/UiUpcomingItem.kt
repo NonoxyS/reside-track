@@ -1,6 +1,6 @@
 package dev.nonoxy.residetrack.feature.upcoming.presentation.models
 
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 
 data class UiUpcomingItem(
     val roomId: Long,

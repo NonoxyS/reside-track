@@ -3,8 +3,8 @@ package dev.nonoxy.residetrack.ui.tabcontainer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.nonoxy.residetrack.common.utils.currentLocalDate
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingCheckouts
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingCheckouts
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

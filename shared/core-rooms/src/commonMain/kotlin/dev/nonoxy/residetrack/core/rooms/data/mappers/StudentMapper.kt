@@ -3,8 +3,8 @@ package dev.nonoxy.residetrack.core.rooms.data.mappers
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.common.utils.toLocalDate
 import dev.nonoxy.residetrack.core.database.entities.StudentEntity
-import dev.nonoxy.residetrack.core.rooms.models.Student
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingCheckouts
+import dev.nonoxy.residetrack.core.rooms.domain.model.Student
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingCheckouts
 import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn

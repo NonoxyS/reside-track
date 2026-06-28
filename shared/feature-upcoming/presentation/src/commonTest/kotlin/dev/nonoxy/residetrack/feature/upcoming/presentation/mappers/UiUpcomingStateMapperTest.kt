@@ -1,6 +1,6 @@
 package dev.nonoxy.residetrack.feature.upcoming.presentation.mappers
 
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.api.models.UpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore
 import kotlinx.datetime.LocalDate

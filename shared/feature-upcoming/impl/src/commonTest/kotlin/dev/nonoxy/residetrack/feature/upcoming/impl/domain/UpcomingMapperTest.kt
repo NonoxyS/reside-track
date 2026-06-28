@@ -1,8 +1,8 @@
 package dev.nonoxy.residetrack.feature.upcoming.impl.domain
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.models.Student
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Student
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals

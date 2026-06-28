@@ -5,7 +5,7 @@ import dev.nonoxy.residetrack.core.rooms.data.mappers.RoomMapper
 import dev.nonoxy.residetrack.core.rooms.data.mappers.RoomMapperImpl
 import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapper
 import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapperImpl
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.new
 import org.koin.dsl.module

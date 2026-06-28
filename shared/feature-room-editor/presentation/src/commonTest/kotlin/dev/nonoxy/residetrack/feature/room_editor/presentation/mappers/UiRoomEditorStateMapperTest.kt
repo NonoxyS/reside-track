@@ -1,6 +1,6 @@
 package dev.nonoxy.residetrack.feature.room_editor.presentation.mappers
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorErrorKind
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.DateField

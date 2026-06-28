@@ -18,7 +18,7 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.res.MR
 import kotlinx.collections.immutable.ImmutableList

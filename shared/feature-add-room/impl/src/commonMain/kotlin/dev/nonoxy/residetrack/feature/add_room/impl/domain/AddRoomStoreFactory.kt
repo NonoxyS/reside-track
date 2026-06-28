@@ -7,7 +7,7 @@ import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Intent
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Label
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.State
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 

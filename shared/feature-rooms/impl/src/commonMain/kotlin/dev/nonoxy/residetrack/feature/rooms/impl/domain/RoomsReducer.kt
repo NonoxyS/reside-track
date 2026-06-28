@@ -22,5 +22,9 @@ internal class RoomsReducer : Reducer<State, Message> {
             isError = false,
             roomsOnFloor = msg.roomsOnFloor,
         )
+
+        is Message.SetImportConfirmation -> copy(
+            importConfirmation = msg.backup,
+        )
     }
 }

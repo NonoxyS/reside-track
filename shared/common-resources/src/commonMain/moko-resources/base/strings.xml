@@ -121,4 +121,23 @@
     <string name="error_failed_to_delete_room">Не удалось удалить комнату</string>
     <string name="room_updated_successfully">Параметры комнаты обновлены</string>
     <string name="room_deleted_successfully">Комната удалена</string>
+
+    <!-- Backup: export/import -->
+    <string name="backup_menu_export">Создать резервную копию</string>
+    <string name="backup_menu_import">Восстановить из копии</string>
+    <string name="backup_menu_content_description">Меню резервной копии</string>
+    <string name="backup_import_dialog_title">Восстановить из копии?</string>
+    <string name="backup_import_dialog_message">Все текущие комнаты и жильцы будут заменены данными из файла. Действие необратимо.</string>
+    <string name="backup_import_current">Сейчас: %1$s, %2$s</string>
+    <string name="backup_import_after">Станет: %1$s, %2$s</string>
+    <string name="backup_import_confirm">Восстановить</string>
+    <string name="backup_cancel">Отменить</string>
+    <string name="backup_export_success">Резервная копия создана</string>
+    <string name="backup_export_empty">Нет данных для резервной копии</string>
+    <string name="backup_export_error">Не удалось создать резервную копию</string>
+    <string name="backup_import_empty">Файл не содержит данных для восстановления</string>
+    <string name="backup_import_success">Данные восстановлены</string>
+    <string name="backup_import_error">Не похоже на файл резервной копии</string>
+    <string name="backup_import_error_version">Версия резервной копии не поддерживается</string>
+    <string name="backup_restore_error">Не удалось восстановить данные</string>
 </resources>

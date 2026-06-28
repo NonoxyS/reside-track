@@ -1,6 +1,7 @@
 package dev.nonoxy.residetrack.feature.rooms.presentation.mappers
 
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore
+import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiImportConfirmation
 import dev.nonoxy.residetrack.feature.rooms.presentation.models.UiRoomsState
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
@@ -25,7 +26,15 @@ internal class UiRoomsStateMapperImpl(
             availablePlaces = (totalPlaces - occupiedPlaces).coerceAtLeast(0),
             roomsOnFloor = item.roomsOnFloor
                 .mapValues { entry -> entry.value.let(roomMapper::map).toPersistentList() }
-                .toPersistentMap()
+                .toPersistentMap(),
+            importConfirmation = item.importConfirmation?.let { backup ->
+                UiImportConfirmation(
+                    roomCount = backup.roomCount,
+                    studentCount = backup.studentCount,
+                    currentRoomCount = allRooms.size,
+                    currentStudentCount = occupiedPlaces,
+                )
+            },
         )
     }
 }
