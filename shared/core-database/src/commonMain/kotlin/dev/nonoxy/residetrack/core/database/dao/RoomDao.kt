@@ -112,6 +112,9 @@ abstract class RoomDao {
         rooms: List<RoomEntity>,
         studentsByRoom: List<List<StudentEntity>>,
     ) {
+        require(rooms.size == studentsByRoom.size) {
+            "rooms (${rooms.size}) and studentsByRoom (${studentsByRoom.size}) must be parallel lists"
+        }
         deleteAllRooms()
         rooms.forEachIndexed { index, room ->
             val roomId = insertRoom(room.copy(id = 0))
