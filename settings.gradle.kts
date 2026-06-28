@@ -44,6 +44,7 @@ include(
     ":shared:core-database",
     ":shared:core-initializer",
     ":shared:core-rooms",
+    ":shared:core-backup",
     ":shared:common-ui",
 
     // Features
