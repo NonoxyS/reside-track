@@ -41,8 +41,10 @@ internal class UiRoomsLabelMapperImpl(
     }
 
     private fun BackupErrorKind.toMessage(): String = when (this) {
+        BackupErrorKind.ExportNoData -> stringConverter.convert(MR.strings.backup_export_empty)
         BackupErrorKind.ExportFailed -> stringConverter.convert(MR.strings.backup_export_error)
         BackupErrorKind.ImportReadFailed -> stringConverter.convert(MR.strings.backup_import_error)
+        BackupErrorKind.ImportEmpty -> stringConverter.convert(MR.strings.backup_import_empty)
         BackupErrorKind.RestoreFailed -> stringConverter.convert(MR.strings.backup_restore_error)
     }
 }

@@ -156,7 +156,7 @@ class RoomsExecutorTest {
     @Test
     fun `OnExportClick on success asks UI to save the exported file`() = runTest {
         val backup = FakeBackupRepository(exportResult = Result.success("{\"version\":1}"))
-        val store = createStore(FakeRoomsRepository(), backup)
+        val store = createStore(FakeRoomsRepository(rooms = listOf(room(id = 1, floor = 3, number = 329))), backup)
         val labels = collectLabels(store)
 
         store.accept(Intent.OnExportClick)
@@ -174,7 +174,7 @@ class RoomsExecutorTest {
     @Test
     fun `OnExportClick on failure shows an export error`() = runTest {
         val backup = FakeBackupRepository(exportResult = Result.failure(RuntimeException("boom")))
-        val store = createStore(FakeRoomsRepository(), backup)
+        val store = createStore(FakeRoomsRepository(rooms = listOf(room(id = 1, floor = 3, number = 329))), backup)
         val labels = collectLabels(store)
 
         store.accept(Intent.OnExportClick)
@@ -276,6 +276,35 @@ class RoomsExecutorTest {
 
         assertNull(store.state.importConfirmation)
         assertNull(backup.restoreCalledWith)
+
+        store.dispose()
+    }
+
+    @Test
+    fun `OnExportClick with an empty database refuses without exporting`() = runTest {
+        val backup = FakeBackupRepository(exportResult = Result.success("{\"version\":1}"))
+        val store = createStore(FakeRoomsRepository(rooms = emptyList()), backup)
+        val labels = collectLabels(store)
+
+        store.accept(Intent.OnExportClick)
+        advanceUntilIdle()
+
+        assertEquals(listOf<Label>(Label.ShowBackupError(BackupErrorKind.ExportNoData)), labels)
+
+        store.dispose()
+    }
+
+    @Test
+    fun `OnBackupFileLoaded with an empty backup is refused and shows no confirmation`() = runTest {
+        val backup = FakeBackupRepository(parseResult = Result.success(Backup(rooms = emptyList())))
+        val store = createStore(FakeRoomsRepository(), backup)
+        val labels = collectLabels(store)
+
+        store.accept(Intent.OnBackupFileLoaded(json = "{}"))
+        advanceUntilIdle()
+
+        assertEquals(listOf<Label>(Label.ShowBackupError(BackupErrorKind.ImportEmpty)), labels)
+        assertNull(store.state.importConfirmation)
 
         store.dispose()
     }

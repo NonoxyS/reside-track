@@ -132,7 +132,9 @@
     <string name="backup_import_confirm">Восстановить</string>
     <string name="backup_cancel">Отменить</string>
     <string name="backup_export_success">Резервная копия создана</string>
+    <string name="backup_export_empty">Нет данных для резервной копии</string>
     <string name="backup_export_error">Не удалось создать резервную копию</string>
+    <string name="backup_import_empty">Файл не содержит данных для восстановления</string>
     <string name="backup_import_success">Данные восстановлены</string>
     <string name="backup_import_error">Не удалось прочитать файл</string>
     <string name="backup_restore_error">Не удалось восстановить данные</string>

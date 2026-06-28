@@ -47,7 +47,3 @@ interface RoomsStore : Store<Intent, State, Label> {
         data class ShowBackupError(val kind: BackupErrorKind) : Label
     }
 }
-
-enum class BackupSuccessKind { Exported, Restored }
-
-enum class BackupErrorKind { ExportFailed, ImportReadFailed, RestoreFailed }

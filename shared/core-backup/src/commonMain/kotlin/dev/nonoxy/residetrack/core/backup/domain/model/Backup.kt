@@ -11,6 +11,7 @@ data class Backup(
 ) {
     val roomCount: Int get() = rooms.size
     val studentCount: Int get() = rooms.sumOf { room -> room.students.size }
+    val isEmpty: Boolean get() = rooms.isEmpty()
 }
 
 data class BackupRoom(

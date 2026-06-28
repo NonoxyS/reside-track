@@ -1,9 +1,10 @@
 package dev.nonoxy.residetrack.feature.rooms.impl.domain
 
+import dev.nonoxy.residetrack.common.utils.currentLocalDate
 import dev.nonoxy.residetrack.core.backup.domain.repository.BackupRepository
+import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
-import dev.nonoxy.residetrack.common.utils.currentLocalDate
 import dev.nonoxy.residetrack.feature.rooms.api.store.BackupErrorKind
 import dev.nonoxy.residetrack.feature.rooms.api.store.BackupSuccessKind
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Intent
@@ -11,7 +12,6 @@ import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Label
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.State
 import dev.nonoxy.residetrack.feature.rooms.impl.domain.RoomsStoreFactory.Action
 import dev.nonoxy.residetrack.feature.rooms.impl.domain.RoomsStoreFactory.Message
-import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 
@@ -32,6 +32,7 @@ internal class RoomsExecutor(
             is Intent.OnRoomClick -> publish(
                 Label.NavigateToRoomEditorExistingRoom(roomId = intent.roomId.toString())
             )
+
             Intent.OnAddRoomClick -> publish(Label.NavigateToAddRoomScreen)
             Intent.OnRetry -> loadRoomsData()
 
@@ -43,6 +44,7 @@ internal class RoomsExecutor(
                     Label.ShowBackupError(BackupErrorKind.ExportFailed)
                 }
             )
+
             Intent.OnImportClick -> publish(Label.OpenBackupFile)
             is Intent.OnBackupFileLoaded -> parseBackup(intent.json)
             Intent.OnRestoreConfirm -> restoreBackup()
@@ -51,6 +53,12 @@ internal class RoomsExecutor(
     }
 
     private suspend fun exportBackup() {
+        // Nothing to back up yet — refuse instead of writing a misleading "empty backup" file
+        // and reporting success. roomsOnFloor mirrors the DB contents already loaded into state.
+        if (state().roomsOnFloor.isEmpty()) {
+            publish(Label.ShowBackupError(BackupErrorKind.ExportNoData))
+            return
+        }
         backupRepository.export()
             .onSuccess { json ->
                 publish(
@@ -65,7 +73,15 @@ internal class RoomsExecutor(
 
     private suspend fun parseBackup(json: String) {
         backupRepository.parse(json)
-            .onSuccess { backup -> dispatch(Message.SetImportConfirmation(backup = backup)) }
+            .onSuccess { backup ->
+                // A backup with no rooms would only wipe existing data on restore — block it
+                // rather than letting the user confirm a destructive no-op.
+                if (backup.isEmpty) {
+                    publish(Label.ShowBackupError(BackupErrorKind.ImportEmpty))
+                } else {
+                    dispatch(Message.SetImportConfirmation(backup = backup))
+                }
+            }
             .onFailure { publish(Label.ShowBackupError(BackupErrorKind.ImportReadFailed)) }
     }
 
