@@ -2,17 +2,26 @@ package dev.nonoxy.residetrack.feature.rooms.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.usePinned
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import platform.Foundation.NSData
+import platform.Foundation.NSFileManager
 import platform.Foundation.NSString
 import platform.Foundation.NSTemporaryDirectory
 import platform.Foundation.NSURL
 import platform.Foundation.NSUTF8StringEncoding
-import platform.Foundation.stringByAppendingPathComponent
+import platform.Foundation.create
 import platform.Foundation.stringWithContentsOfURL
 import platform.Foundation.writeToURL
 import platform.UIKit.UIApplication
-import platform.UIKit.UIDocumentPickerViewController
 import platform.UIKit.UIDocumentPickerDelegateProtocol
+import platform.UIKit.UIDocumentPickerViewController
 import platform.UniformTypeIdentifiers.UTTypeJSON
 import platform.darwin.NSObject
 
@@ -20,10 +29,14 @@ import platform.darwin.NSObject
 internal actual fun rememberBackupFilePicker(
     onImported: (String) -> Unit,
     onExportCompleted: (Boolean) -> Unit,
-): BackupFilePicker = remember { IosBackupFilePicker(onImported, onExportCompleted) }
+): BackupFilePicker {
+    val scope = rememberCoroutineScope()
+    return remember { IosBackupFilePicker(scope, onImported, onExportCompleted) }
+}
 
 @OptIn(ExperimentalForeignApi::class)
 private class IosBackupFilePicker(
+    private val scope: CoroutineScope,
     private val onImported: (String) -> Unit,
     private val onExportCompleted: (Boolean) -> Unit,
 ) : BackupFilePicker {
@@ -32,20 +45,31 @@ private class IosBackupFilePicker(
     private var delegate: PickerDelegate? = null
 
     override fun launchSave(json: String, suggestedName: String) {
-        val path = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(suggestedName)
-        val url = NSURL.fileURLWithPath(path)
-        val written = (json as NSString).writeToURL(
-            url,
-            atomically = true,
-            encoding = NSUTF8StringEncoding,
-            error = null
-        )
-        if (!written) {
-            onExportCompleted(false)
-            return
+        scope.launch {
+            val tempUrl = withContext(Dispatchers.Default) { writeTempFile(json, suggestedName) }
+            if (tempUrl == null) {
+                onExportCompleted(false)
+                return@launch
+            }
+            // Resumed on the main dispatcher — UIKit presentation must stay on the main thread.
+            val picker = UIDocumentPickerViewController(forExportingURLs = listOf(tempUrl))
+            present(
+                picker,
+                onPicked = { urls ->
+                    scope.launch {
+                        val saved = withContext(Dispatchers.Default) {
+                            val exists = (urls.firstOrNull() as? NSURL)?.let(::destinationExists) ?: false
+                            removeTempFile(tempUrl)
+                            exists
+                        }
+                        onExportCompleted(saved)
+                    }
+                },
+                onCancelled = {
+                    scope.launch { withContext(Dispatchers.Default) { removeTempFile(tempUrl) } }
+                },
+            )
         }
-        val picker = UIDocumentPickerViewController(forExportingURLs = listOf(url))
-        present(picker, onPicked = { onExportCompleted(true) }, onCancelled = {})
     }
 
     override fun launchOpen() {
@@ -54,13 +78,54 @@ private class IosBackupFilePicker(
             picker,
             onPicked = { urls ->
                 val url = urls.firstOrNull() as? NSURL ?: return@present
-                val accessed = url.startAccessingSecurityScopedResource()
-                val content = NSString.stringWithContentsOfURL(url, NSUTF8StringEncoding, null)
-                if (accessed) url.stopAccessingSecurityScopedResource()
-                if (content != null) onImported(content)
+                scope.launch {
+                    val content = withContext(Dispatchers.Default) { readSecurityScoped(url) }
+                    if (content != null) onImported(content)
+                }
             },
             onCancelled = {},
         )
+    }
+
+    /** Writes [json] to a temp file and returns its URL, or null if the write failed. */
+    private fun writeTempFile(json: String, name: String): NSURL? {
+        val dir = NSURL.fileURLWithPath(NSTemporaryDirectory(), isDirectory = true)
+        val url = dir.URLByAppendingPathComponent(name) ?: return null
+        val bytes = json.encodeToByteArray()
+        if (bytes.isEmpty()) return null
+        val written = bytes.usePinned { pinned ->
+            NSData.create(bytes = pinned.addressOf(0), length = bytes.size.toULong())
+                .writeToURL(url, atomically = true)
+        }
+        return if (written) url else null
+    }
+
+    private fun removeTempFile(url: NSURL) {
+        NSFileManager.defaultManager.removeItemAtURL(url, error = null)
+    }
+
+    /**
+     * Best-effort confirmation that the export actually landed: `forExportingURLs` reports the
+     * destination URL after the system copies the file, so we verify the file exists there rather
+     * than trusting "the user tapped a folder".
+     */
+    private fun destinationExists(url: NSURL): Boolean {
+        val accessed = url.startAccessingSecurityScopedResource()
+        return try {
+            val path = url.path
+            path != null && NSFileManager.defaultManager.fileExistsAtPath(path)
+        } finally {
+            if (accessed) url.stopAccessingSecurityScopedResource()
+        }
+    }
+
+    private fun readSecurityScoped(url: NSURL): String? {
+        val accessed = url.startAccessingSecurityScopedResource()
+        return try {
+            NSString.stringWithContentsOfURL(url, NSUTF8StringEncoding, error = null)
+        } finally {
+            if (accessed) url.stopAccessingSecurityScopedResource()
+        }
     }
 
     private fun present(
