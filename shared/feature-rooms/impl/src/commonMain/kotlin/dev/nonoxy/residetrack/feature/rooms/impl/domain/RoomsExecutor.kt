@@ -1,7 +1,11 @@
 package dev.nonoxy.residetrack.feature.rooms.impl.domain
 
+import dev.nonoxy.residetrack.core.backup.domain.repository.BackupRepository
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
+import dev.nonoxy.residetrack.common.utils.currentLocalDate
+import dev.nonoxy.residetrack.feature.rooms.api.store.BackupErrorKind
+import dev.nonoxy.residetrack.feature.rooms.api.store.BackupSuccessKind
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Intent
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Label
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.State
@@ -14,6 +18,7 @@ import kotlinx.coroutines.flow.catch
 internal class RoomsExecutor(
     mainDispatcher: CoroutineDispatcher,
     private val roomsRepository: RoomsRepository,
+    private val backupRepository: BackupRepository,
 ) : BaseExecutor<Intent, Action, State, Message, Label>(mainContext = mainDispatcher) {
 
     override suspend fun suspendExecuteAction(action: Action) {
@@ -29,7 +34,47 @@ internal class RoomsExecutor(
             )
             Intent.OnAddRoomClick -> publish(Label.NavigateToAddRoomScreen)
             Intent.OnRetry -> loadRoomsData()
+
+            Intent.OnExportClick -> exportBackup()
+            is Intent.OnExportCompleted -> publish(
+                if (intent.success) {
+                    Label.ShowBackupSuccess(BackupSuccessKind.Exported)
+                } else {
+                    Label.ShowBackupError(BackupErrorKind.ExportFailed)
+                }
+            )
+            Intent.OnImportClick -> publish(Label.OpenBackupFile)
+            is Intent.OnBackupFileLoaded -> parseBackup(intent.json)
+            Intent.OnRestoreConfirm -> restoreBackup()
+            Intent.OnRestoreCancel -> dispatch(Message.SetImportConfirmation(backup = null))
         }
+    }
+
+    private suspend fun exportBackup() {
+        backupRepository.export()
+            .onSuccess { json ->
+                publish(
+                    Label.SaveBackupFile(
+                        json = json,
+                        suggestedName = "reside-track-backup-$currentLocalDate.json",
+                    )
+                )
+            }
+            .onFailure { publish(Label.ShowBackupError(BackupErrorKind.ExportFailed)) }
+    }
+
+    private suspend fun parseBackup(json: String) {
+        backupRepository.parse(json)
+            .onSuccess { backup -> dispatch(Message.SetImportConfirmation(backup = backup)) }
+            .onFailure { publish(Label.ShowBackupError(BackupErrorKind.ImportReadFailed)) }
+    }
+
+    private suspend fun restoreBackup() {
+        val backup = state().importConfirmation ?: return
+        dispatch(Message.SetImportConfirmation(backup = null))
+        backupRepository.restore(backup)
+            .onSuccess { publish(Label.ShowBackupSuccess(BackupSuccessKind.Restored)) }
+            .onFailure { publish(Label.ShowBackupError(BackupErrorKind.RestoreFailed)) }
     }
 
     private suspend fun loadRoomsData() {

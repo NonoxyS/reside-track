@@ -13,5 +13,6 @@ androidLibraryConfig {
 commonMainDependencies {
     apis(
         projects.shared.coreRooms,
+        projects.shared.coreBackup,
     )
 }

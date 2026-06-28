@@ -14,9 +14,11 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
+        projects.shared.common,
         projects.shared.coreDatabase,
         projects.shared.coreInitializer,
         projects.shared.coreRooms,
+        projects.shared.coreBackup,
         projects.shared.commonResources,
     )
 }
