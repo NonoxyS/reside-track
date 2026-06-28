@@ -10,4 +10,5 @@ data class UiRoomsState(
     val totalPlaces: Int = 0,
     val availablePlaces: Int = 0,
     val roomsOnFloor: ImmutableMap<Int, ImmutableList<UiRoom>> = persistentMapOf(),
+    val importConfirmation: UiImportConfirmation? = null,
 )

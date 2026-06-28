@@ -22,7 +22,7 @@ val featureRoomsPresentationModule = module {
     factoryOf<UiStudentMapper>(::UiStudentMapperImpl)
     factoryOf(::UiRoomMapperImpl) bind UiRoomMapper::class
     factoryOf(::UiRoomsStateMapperImpl) bind UiRoomsStateMapper::class
-    factoryOf<UiRoomsLabelMapper>(::UiRoomsLabelMapperImpl)
+    factoryOf(::UiRoomsLabelMapperImpl) bind UiRoomsLabelMapper::class
 
     viewModelOf(::RoomsViewModel)
 }

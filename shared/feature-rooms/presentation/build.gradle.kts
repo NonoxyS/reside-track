@@ -13,6 +13,7 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
+        projects.shared.commonResources,
         libs.kotlin.immutableCollections,
     )
 }
