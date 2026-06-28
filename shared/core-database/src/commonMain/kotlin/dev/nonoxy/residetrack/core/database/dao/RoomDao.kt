@@ -52,6 +52,9 @@ abstract class RoomDao {
     @Query("DELETE FROM rooms WHERE id = :roomId")
     protected abstract suspend fun deleteRoomById(roomId: Long)
 
+    @Query("DELETE FROM rooms")
+    protected abstract suspend fun deleteAllRooms()
+
     @Query(
         "UPDATE rooms SET floorNumber = :floorNumber, roomNumber = :roomNumber, " +
             "bedsCount = :bedsCount WHERE id = :roomId"
@@ -96,5 +99,26 @@ abstract class RoomDao {
             insertStudents(students.map { it.copy(roomId = roomId) })
         }
         return roomId
+    }
+
+    /**
+     * Wipes every room (and, via CASCADE, every student) and re-inserts [rooms] with their students
+     * atomically — the restore half of backup import. Each entry in [studentsByRoom] holds the
+     * students for the room at the same index in [rooms]; ids are regenerated and each student's
+     * roomId is rewritten to its freshly inserted room, so the backup file never needs stable ids.
+     */
+    @Transaction
+    open suspend fun replaceAllRoomsWithStudents(
+        rooms: List<RoomEntity>,
+        studentsByRoom: List<List<StudentEntity>>,
+    ) {
+        deleteAllRooms()
+        rooms.forEachIndexed { index, room ->
+            val roomId = insertRoom(room.copy(id = 0))
+            val students = studentsByRoom[index]
+            if (students.isNotEmpty()) {
+                insertStudents(students.map { it.copy(id = 0, roomId = roomId) })
+            }
+        }
     }
 }
