@@ -30,6 +30,8 @@ internal fun RoomsScreenDetails(
     onRoomClick: (Long) -> Unit,
     onAddRoomClick: () -> Unit,
     onRetryClick: () -> Unit,
+    onBackupExportClick: () -> Unit,
+    onBackupImportClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     ShowStateData(
@@ -47,7 +49,9 @@ internal fun RoomsScreenDetails(
                 modifier = Modifier.padding(horizontal = padding_size_16),
                 totalPlaces = currentState.totalPlaces,
                 availablePlaces = currentState.availablePlaces,
-                onAddRoomClick = onAddRoomClick
+                onAddRoomClick = onAddRoomClick,
+                onBackupExportClick = onBackupExportClick,
+                onBackupImportClick = onBackupImportClick,
             )
 
             if (currentState.roomsOnFloor.isEmpty()) {
@@ -127,6 +131,8 @@ private fun Preview() {
             onRoomClick = {},
             onAddRoomClick = {},
             onRetryClick = {},
+            onBackupExportClick = {},
+            onBackupImportClick = {},
             modifier = Modifier.fillMaxSize()
         )
     }

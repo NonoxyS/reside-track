@@ -1,4 +1,5 @@
 import extensions.androidLibraryConfig
+import extensions.androidMainDependencies
 import extensions.commonMainDependencies
 import extensions.implementations
 
@@ -15,5 +16,11 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         libs.kotlin.immutableCollections,
+    )
+}
+
+androidMainDependencies {
+    implementations(
+        libs.androidx.activity.compose,
     )
 }
