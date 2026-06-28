@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack.feature.rooms.impl.domain.seed
+package dev.nonoxy.residetrack.feature.rooms.impl.seed
 
 import dev.nonoxy.residetrack.common.resources.FileResourceReader
 import dev.nonoxy.residetrack.core.database.dao.RoomDao
