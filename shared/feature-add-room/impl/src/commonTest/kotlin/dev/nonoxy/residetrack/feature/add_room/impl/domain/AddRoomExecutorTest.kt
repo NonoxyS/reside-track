@@ -2,7 +2,7 @@ package dev.nonoxy.residetrack.feature.add_room.impl.domain
 
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomErrorKind
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Intent

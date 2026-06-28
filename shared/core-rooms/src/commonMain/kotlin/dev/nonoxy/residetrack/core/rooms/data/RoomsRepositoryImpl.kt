@@ -9,8 +9,8 @@ import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
 import dev.nonoxy.residetrack.core.rooms.data.mappers.RoomMapper
 import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapper
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -22,7 +22,7 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_10
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_2
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview

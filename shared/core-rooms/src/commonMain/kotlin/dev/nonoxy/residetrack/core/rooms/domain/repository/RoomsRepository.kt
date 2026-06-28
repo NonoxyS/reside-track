@@ -1,6 +1,6 @@
-package dev.nonoxy.residetrack.core.rooms.repository
+package dev.nonoxy.residetrack.core.rooms.domain.repository
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import kotlinx.coroutines.flow.Flow
 
 interface RoomsRepository {

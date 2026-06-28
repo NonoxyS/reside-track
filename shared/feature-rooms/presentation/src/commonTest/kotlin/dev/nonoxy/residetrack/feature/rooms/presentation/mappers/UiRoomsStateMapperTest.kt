@@ -1,7 +1,7 @@
 package dev.nonoxy.residetrack.feature.rooms.presentation.mappers
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.models.Student
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Student
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test

@@ -2,8 +2,8 @@ package dev.nonoxy.residetrack.feature.room_editor.impl.domain
 
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.models.Student
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Student
 import dev.nonoxy.residetrack.feature.room_editor.api.models.RoomEditorMode
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorErrorKind
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore

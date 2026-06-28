@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
-import dev.nonoxy.residetrack.core.rooms.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingState
 import kotlinx.collections.immutable.persistentListOf

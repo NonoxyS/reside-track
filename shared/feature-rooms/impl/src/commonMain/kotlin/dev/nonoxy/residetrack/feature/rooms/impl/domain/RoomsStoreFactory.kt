@@ -3,8 +3,8 @@ package dev.nonoxy.residetrack.feature.rooms.impl.domain
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Intent
 import dev.nonoxy.residetrack.feature.rooms.api.store.RoomsStore.Label

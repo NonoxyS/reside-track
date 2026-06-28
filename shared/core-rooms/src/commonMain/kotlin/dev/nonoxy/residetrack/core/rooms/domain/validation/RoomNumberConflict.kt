@@ -1,6 +1,6 @@
-package dev.nonoxy.residetrack.core.rooms.validation
+package dev.nonoxy.residetrack.core.rooms.domain.validation
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 
 /** Single source of truth for "is this floor+room number already taken by another room". */
 object RoomNumberConflict {

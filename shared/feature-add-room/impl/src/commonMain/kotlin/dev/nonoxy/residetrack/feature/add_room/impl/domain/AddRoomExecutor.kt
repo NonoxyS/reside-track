@@ -9,9 +9,9 @@ import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomSuccessKind
 import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.Action
 import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.AddRoomErrorKindOrNull
 import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.Message
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
-import dev.nonoxy.residetrack.core.rooms.validation.RoomNumberConflict
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher

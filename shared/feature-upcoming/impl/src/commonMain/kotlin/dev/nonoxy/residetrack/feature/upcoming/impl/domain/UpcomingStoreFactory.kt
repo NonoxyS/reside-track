@@ -3,7 +3,7 @@ package dev.nonoxy.residetrack.feature.upcoming.impl.domain
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import dev.nonoxy.residetrack.feature.upcoming.api.models.UpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore.Intent

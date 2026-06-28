@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack.core.rooms.models
+package dev.nonoxy.residetrack.core.rooms.domain.model
 
 import kotlinx.datetime.LocalDate
 

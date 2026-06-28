@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack.core.rooms.upcoming
+package dev.nonoxy.residetrack.core.rooms.domain.upcoming
 
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.daysUntil

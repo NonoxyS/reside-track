@@ -1,6 +1,6 @@
-package dev.nonoxy.residetrack.core.rooms.validation
+package dev.nonoxy.residetrack.core.rooms.domain.validation
 
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

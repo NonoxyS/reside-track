@@ -9,10 +9,10 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Stat
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorSuccessKind
 import dev.nonoxy.residetrack.feature.room_editor.impl.domain.RoomEditorStoreFactory.Action
 import dev.nonoxy.residetrack.feature.room_editor.impl.domain.RoomEditorStoreFactory.Message
-import dev.nonoxy.residetrack.core.rooms.models.Room
-import dev.nonoxy.residetrack.core.rooms.models.Student
-import dev.nonoxy.residetrack.core.rooms.repository.RoomsRepository
-import dev.nonoxy.residetrack.core.rooms.validation.RoomNumberConflict
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Student
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher

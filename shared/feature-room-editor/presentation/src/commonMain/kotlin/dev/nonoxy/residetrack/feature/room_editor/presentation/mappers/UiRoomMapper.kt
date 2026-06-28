@@ -2,7 +2,7 @@ package dev.nonoxy.residetrack.feature.room_editor.presentation.mappers
 
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiRoom
-import dev.nonoxy.residetrack.core.rooms.models.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 
 interface UiRoomMapper : Mapper<Room, UiRoom>
 
