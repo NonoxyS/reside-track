@@ -1,9 +1,13 @@
 package dev.nonoxy.residetrack.core.backup.data
 
+import dev.nonoxy.residetrack.core.backup.data.mapper.toBackup
 import dev.nonoxy.residetrack.core.backup.domain.model.Backup
 import dev.nonoxy.residetrack.core.backup.domain.model.BackupRoom
 import dev.nonoxy.residetrack.core.backup.domain.model.BackupStudent
 import dev.nonoxy.residetrack.core.backup.domain.model.UnsupportedBackupVersionException
+import dev.nonoxy.residetrack.core.database.entities.RoomEntity
+import dev.nonoxy.residetrack.core.database.entities.StudentEntity
+import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
@@ -30,12 +34,30 @@ class BackupRepositoryImplTest {
         ),
     )
 
-    private fun repository(gateway: FakeBackupGateway) = BackupRepositoryImpl(gateway = gateway, json = json)
+    private fun storedRows(): List<RoomWithStudents> = backup().rooms.map { room ->
+        RoomWithStudents(
+            room = RoomEntity(
+                floorNumber = room.floorNumber,
+                roomNumber = room.roomNumber,
+                bedsCount = room.bedsCount,
+            ),
+            students = room.students.map { student ->
+                StudentEntity(
+                    roomId = 0,
+                    streamNumber = student.streamNumber,
+                    checkInDateEpochMillis = student.checkInEpochMillis,
+                    checkOutDateEpochMillis = student.checkOutEpochMillis,
+                )
+            },
+        )
+    }
+
+    private fun repository(storage: FakeRoomStorage) = BackupRepositoryImpl(roomStorage = storage, json = json)
 
     @Test
     fun `export then parse round-trips the backup`() = runTest {
         val source = backup()
-        val repository = repository(FakeBackupGateway(stored = source))
+        val repository = repository(FakeRoomStorage(stored = storedRows()))
 
         val exported = repository.export()
         assertTrue(exported.isSuccess)
@@ -46,7 +68,7 @@ class BackupRepositoryImplTest {
 
     @Test
     fun `exported json carries the current format version`() = runTest {
-        val repository = repository(FakeBackupGateway(stored = backup()))
+        val repository = repository(FakeRoomStorage(stored = storedRows()))
 
         val raw = repository.export().getOrThrow()
 
@@ -55,7 +77,7 @@ class BackupRepositoryImplTest {
 
     @Test
     fun `parse computes room and student counts`() = runTest {
-        val repository = repository(FakeBackupGateway(stored = backup()))
+        val repository = repository(FakeRoomStorage(stored = storedRows()))
         val raw = repository.export().getOrThrow()
 
         val parsed = repository.parse(raw).getOrThrow()
@@ -66,7 +88,7 @@ class BackupRepositoryImplTest {
 
     @Test
     fun `parse malformed json fails without throwing`() = runTest {
-        val repository = repository(FakeBackupGateway())
+        val repository = repository(FakeRoomStorage())
 
         val result = repository.parse("{ not valid json")
 
@@ -75,7 +97,7 @@ class BackupRepositoryImplTest {
 
     @Test
     fun `parse rejects an incompatible format version`() = runTest {
-        val repository = repository(FakeBackupGateway())
+        val repository = repository(FakeRoomStorage())
         val futureFile = """{"version":999,"exportedAtEpochMillis":0,"rooms":[]}"""
 
         val result = repository.parse(futureFile)
@@ -86,25 +108,28 @@ class BackupRepositoryImplTest {
     }
 
     @Test
-    fun `restore hands the backup to the gateway`() = runTest {
-        val gateway = FakeBackupGateway()
-        val repository = repository(gateway)
+    fun `restore writes the backup rows to storage`() = runTest {
+        val storage = FakeRoomStorage()
+        val repository = repository(storage)
         val source = backup()
 
         val result = repository.restore(source)
 
         assertTrue(result.isSuccess)
-        assertEquals(source, gateway.restoredWith)
+        val rebuilt = storage.replacedRooms!!.mapIndexed { index, room ->
+            RoomWithStudents(room = room, students = storage.replacedStudentsByRoom!![index])
+        }.toBackup()
+        assertEquals(source, rebuilt)
     }
 
     @Test
     fun `restore is not triggered by parse`() = runTest {
-        val gateway = FakeBackupGateway()
-        val repository = repository(gateway)
-        val raw = repository(FakeBackupGateway(stored = backup())).export().getOrThrow()
+        val storage = FakeRoomStorage()
+        val repository = repository(storage)
+        val raw = repository(FakeRoomStorage(stored = storedRows())).export().getOrThrow()
 
         repository.parse(raw)
 
-        assertNull(gateway.restoredWith)
+        assertNull(storage.replacedRooms)
     }
 }

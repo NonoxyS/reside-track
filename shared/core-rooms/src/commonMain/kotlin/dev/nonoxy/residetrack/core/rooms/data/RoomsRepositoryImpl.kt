@@ -4,9 +4,9 @@ import dev.nonoxy.residetrack.common.coroutines.CoroutineDispatchers
 import dev.nonoxy.residetrack.common.utils.coRunCatching
 import dev.nonoxy.residetrack.common.utils.wrapFailure
 import dev.nonoxy.residetrack.common.utils.wrapSuccess
-import dev.nonoxy.residetrack.core.database.dao.RoomDao
 import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
+import dev.nonoxy.residetrack.core.database.storage.RoomStorage
 import dev.nonoxy.residetrack.core.rooms.data.mappers.RoomMapper
 import dev.nonoxy.residetrack.core.rooms.data.mappers.StudentMapper
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 internal class RoomsRepositoryImpl(
-    private val roomDao: RoomDao,
+    private val roomStorage: RoomStorage,
     private val roomMapper: RoomMapper,
     private val studentMapper: StudentMapper,
     private val dispatchers: CoroutineDispatchers,
@@ -29,14 +29,14 @@ internal class RoomsRepositoryImpl(
     private val _draftRoom = MutableStateFlow<Room?>(null)
 
     override fun observeRooms(): Flow<List<Room>> =
-        roomDao.observeAllRoomsWithStudents()
+        roomStorage.observeAllRoomsWithStudents()
             .map { rows -> rows.mapToDomain() }
             .flowOn(dispatchers.io)
 
     override suspend fun getAllRooms(): Result<List<Room>> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
-                roomDao.getAllRoomsWithStudents()
+                roomStorage.getAllRoomsWithStudents()
                     .mapToDomain()
                     .wrapSuccess()
             },
@@ -52,7 +52,7 @@ internal class RoomsRepositoryImpl(
     ): Result<Room?> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
-                roomDao.getRoomWithStudentsByRoomNumber(roomNumber = roomNumber)
+                roomStorage.getRoomWithStudentsByRoomNumber(roomNumber = roomNumber)
                     ?.mapToDomain()
                     .wrapSuccess()
             },
@@ -68,7 +68,7 @@ internal class RoomsRepositoryImpl(
     ): Result<Room?> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
-                roomDao.getRoomWithStudentsById(roomId = roomId)
+                roomStorage.getRoomWithStudentsById(roomId = roomId)
                     ?.mapToDomain()
                     .wrapSuccess()
             },
@@ -84,7 +84,7 @@ internal class RoomsRepositoryImpl(
             tryBlock = {
                 val roomEntity = room.mapToEntity()
                 val studentEntities = studentMapper.map(items = room.students, roomId = room.id)
-                val persistedId = roomDao.saveRoomWithStudents(
+                val persistedId = roomStorage.saveRoomWithStudents(
                     room = roomEntity,
                     students = studentEntities,
                 )
@@ -105,7 +105,7 @@ internal class RoomsRepositoryImpl(
     ): Result<Unit> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
-                roomDao.updateRoomMetadata(
+                roomStorage.updateRoomMetadata(
                     roomId = roomId,
                     floorNumber = floorNumber,
                     roomNumber = roomNumber,
@@ -123,7 +123,7 @@ internal class RoomsRepositoryImpl(
     override suspend fun deleteRoom(roomId: Long): Result<Unit> = withContext(dispatchers.io) {
         coRunCatching(
             tryBlock = {
-                roomDao.deleteRoomWithStudents(roomId = roomId)
+                roomStorage.deleteRoomWithStudents(roomId = roomId)
                 Unit.wrapSuccess()
             },
             catchBlock = { throwable ->

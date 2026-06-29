@@ -13,7 +13,7 @@ import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class RoomDao {
+internal abstract class RoomDao {
 
     @Query("SELECT COUNT(*) FROM rooms")
     abstract suspend fun getRoomsCount(): Int
@@ -66,8 +66,7 @@ abstract class RoomDao {
         bedsCount: Int,
     )
 
-    /** Deletes the room and its students atomically. Explicit student delete keeps it
-     *  correct even if SQLite foreign-key enforcement is off. */
+    /** Explicit student delete keeps this correct even if SQLite FK enforcement is off. */
     @Transaction
     open suspend fun deleteRoomWithStudents(roomId: Long) {
         deleteStudentsByRoomId(roomId)
@@ -78,10 +77,8 @@ abstract class RoomDao {
     protected abstract suspend fun insertStudents(students: List<StudentEntity>)
 
     /**
-     * Replaces the room's student set atomically. If [room].id == 0, a new row is inserted and the
-     * generated id is returned; otherwise the existing row is updated in place (no CASCADE).
-     * All existing students in this room are deleted, then [students] (with their roomId rewritten
-     * to the persisted room id) are inserted.
+     * [room].id == 0 inserts and returns the new id; otherwise updates in place. Students are
+     * replaced, each one's roomId rewritten to the persisted room.
      */
     @Transaction
     open suspend fun saveRoomWithStudents(
@@ -101,12 +98,7 @@ abstract class RoomDao {
         return roomId
     }
 
-    /**
-     * Wipes every room (and, via CASCADE, every student) and re-inserts [rooms] with their students
-     * atomically — the restore half of backup import. Each entry in [studentsByRoom] holds the
-     * students for the room at the same index in [rooms]; ids are regenerated and each student's
-     * roomId is rewritten to its freshly inserted room, so the backup file never needs stable ids.
-     */
+    /** [studentsByRoom] is parallel to [rooms]. Ids are regenerated, so a backup never needs stable ids. */
     @Transaction
     open suspend fun replaceAllRoomsWithStudents(
         rooms: List<RoomEntity>,
