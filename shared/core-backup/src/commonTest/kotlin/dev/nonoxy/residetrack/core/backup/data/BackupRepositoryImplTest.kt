@@ -1,5 +1,6 @@
 package dev.nonoxy.residetrack.core.backup.data
 
+import dev.nonoxy.residetrack.common.coroutines.CoroutineDispatchers
 import dev.nonoxy.residetrack.core.backup.data.mapper.toBackup
 import dev.nonoxy.residetrack.core.backup.domain.model.Backup
 import dev.nonoxy.residetrack.core.backup.domain.model.BackupRoom
@@ -8,6 +9,9 @@ import dev.nonoxy.residetrack.core.backup.domain.model.UnsupportedBackupVersionE
 import dev.nonoxy.residetrack.core.database.entities.RoomEntity
 import dev.nonoxy.residetrack.core.database.entities.StudentEntity
 import dev.nonoxy.residetrack.core.database.relations.RoomWithStudents
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
@@ -52,7 +56,16 @@ class BackupRepositoryImplTest {
         )
     }
 
-    private fun repository(storage: FakeRoomStorage) = BackupRepositoryImpl(roomStorage = storage, json = json)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val testDispatchers = object : CoroutineDispatchers {
+        private val dispatcher: CoroutineDispatcher = UnconfinedTestDispatcher()
+        override val io: CoroutineDispatcher = dispatcher
+        override val main: CoroutineDispatcher = dispatcher
+        override val default: CoroutineDispatcher = dispatcher
+    }
+
+    private fun repository(storage: FakeRoomStorage) =
+        BackupRepositoryImpl(roomStorage = storage, json = json, dispatchers = testDispatchers)
 
     @Test
     fun `export then parse round-trips the backup`() = runTest {
