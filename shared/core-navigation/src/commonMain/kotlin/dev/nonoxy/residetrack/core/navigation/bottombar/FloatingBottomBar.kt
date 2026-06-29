@@ -100,7 +100,7 @@ private fun BottomBarTab(
         }
         Text(
             text = item.label,
-            style = ResideTrackTheme.typography.head5,
+            style = ResideTrackTheme.typography.head4,
             color = contentColor,
         )
     }
