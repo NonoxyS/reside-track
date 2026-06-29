@@ -103,11 +103,7 @@ private class IosBackupFilePicker(
         NSFileManager.defaultManager.removeItemAtURL(url, error = null)
     }
 
-    /**
-     * Best-effort confirmation that the export actually landed: `forExportingURLs` reports the
-     * destination URL after the system copies the file, so we verify the file exists there rather
-     * than trusting "the user tapped a folder".
-     */
+    /** Confirms the export landed: `forExportingURLs` reports the destination URL after the copy. */
     private fun destinationExists(url: NSURL): Boolean {
         val accessed = url.startAccessingSecurityScopedResource()
         return try {

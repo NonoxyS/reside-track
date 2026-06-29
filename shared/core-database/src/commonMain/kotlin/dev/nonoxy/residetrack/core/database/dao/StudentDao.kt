@@ -10,7 +10,7 @@ import dev.nonoxy.residetrack.core.database.entities.StudentEntity
 import dev.nonoxy.residetrack.core.database.relations.StudentWithRoom
 
 @Dao
-interface StudentDao {
+internal interface StudentDao {
 
     @Query("SELECT * FROM students")
     suspend fun getAllStudents(): List<StudentEntity>

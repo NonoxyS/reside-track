@@ -1,11 +1,5 @@
 package dev.nonoxy.residetrack.core.backup.domain.model
 
-/**
- * A backup snapshot of the whole database. This is its own bounded context — deliberately separate
- * from the live `Room`/`Student` domain — so the backup format can evolve without dragging the
- * rooms domain along. Dates stay as epoch millis (the persistence representation) because a backup
- * is a raw dump, not a domain view.
- */
 data class Backup(
     val rooms: List<BackupRoom>,
 ) {
