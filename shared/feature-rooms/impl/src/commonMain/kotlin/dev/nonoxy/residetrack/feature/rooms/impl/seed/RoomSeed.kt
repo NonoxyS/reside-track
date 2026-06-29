@@ -1,4 +1,4 @@
-package dev.nonoxy.residetrack.feature.rooms.impl.domain.seed
+package dev.nonoxy.residetrack.feature.rooms.impl.seed
 
 import kotlinx.serialization.Serializable
 

@@ -84,23 +84,3 @@ interface RoomEditorStore : Store<Intent, State, Label> {
         data class ShowSuccess(val kind: RoomEditorSuccessKind) : Label
     }
 }
-
-sealed interface RoomEditorErrorKind {
-    data object FailedToLoadStudents : RoomEditorErrorKind
-    data object FailedToSaveStudents : RoomEditorErrorKind
-    data object RoomNotFound : RoomEditorErrorKind
-    data object DraftRoomNotFound : RoomEditorErrorKind
-    data object StreamNumberInvalid : RoomEditorErrorKind
-    data object InvalidDateRange : RoomEditorErrorKind
-    data object InvalidDateFormat : RoomEditorErrorKind
-    data object DuplicateStreamNumbers : RoomEditorErrorKind
-    data object RoomNumberTaken : RoomEditorErrorKind
-    data object FailedToUpdateRoom : RoomEditorErrorKind
-    data object FailedToDeleteRoom : RoomEditorErrorKind
-}
-
-sealed interface RoomEditorSuccessKind {
-    data object StudentsSaved : RoomEditorSuccessKind
-    data object RoomUpdated : RoomEditorSuccessKind
-    data object RoomDeleted : RoomEditorSuccessKind
-}
