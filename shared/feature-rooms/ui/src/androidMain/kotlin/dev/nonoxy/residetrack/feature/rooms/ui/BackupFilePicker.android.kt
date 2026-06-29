@@ -64,7 +64,7 @@ internal actual fun rememberBackupFilePicker(
                 pendingJson = json
                 createLauncher.launch(name)
             },
-            launchOpen = { openLauncher.launch(arrayOf("application/json")) },
+            launchOpenPicker = { openLauncher.launch(arrayOf("application/json")) },
             onExportCompleted = onExportCompleted,
             clearPending = { pendingJson = null },
         )
@@ -73,7 +73,7 @@ internal actual fun rememberBackupFilePicker(
 
 private class AndroidBackupFilePicker(
     private val launchCreate: (name: String, json: String) -> Unit,
-    private val launchOpen: () -> Unit,
+    private val launchOpenPicker: () -> Unit,
     private val onExportCompleted: (Boolean) -> Unit,
     private val clearPending: () -> Unit,
 ) : BackupFilePicker {
@@ -90,6 +90,6 @@ private class AndroidBackupFilePicker(
 
     override fun launchOpen() {
         // No completion signal on the open path — a missing provider just means no picker appears.
-        runCatching { launchOpen() }
+        runCatching { launchOpenPicker() }
     }
 }
