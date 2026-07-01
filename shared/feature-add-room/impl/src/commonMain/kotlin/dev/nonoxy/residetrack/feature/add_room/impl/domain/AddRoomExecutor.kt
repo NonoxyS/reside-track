@@ -13,7 +13,6 @@ import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class AddRoomExecutor(
@@ -57,13 +56,11 @@ internal class AddRoomExecutor(
             .map { it.floorNumber }
             .distinct()
             .sorted()
-            .toPersistentList()
 
         val existingBedsCounts = existingRooms
             .map { it.bedsCount }
             .distinct()
             .sorted()
-            .toPersistentList()
 
         dispatch(
             Message.SetExistingRoomsData(

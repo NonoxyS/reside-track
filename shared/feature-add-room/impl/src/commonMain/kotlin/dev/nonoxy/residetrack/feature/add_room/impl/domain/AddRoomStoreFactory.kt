@@ -8,7 +8,6 @@ import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Intent
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Label
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.State
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class AddRoomStoreFactory(
@@ -39,8 +38,8 @@ internal class AddRoomStoreFactory(
 
     internal sealed interface Message {
         data class SetExistingRoomsData(
-            val existingFloors: ImmutableList<Int>,
-            val existingBedsCounts: ImmutableList<Int>,
+            val existingFloors: List<Int>,
+            val existingBedsCounts: List<Int>,
         ) : Message
 
         data class SetFloorNumberInput(val value: String) : Message

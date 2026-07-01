@@ -2,6 +2,7 @@ package dev.nonoxy.residetrack.feature.add_room.presentation.mappers
 
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore
 import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
+import kotlinx.collections.immutable.toImmutableList
 
 internal interface UiAddRoomStateMapper {
     fun map(item: AddRoomStore.State): UiAddRoomState
@@ -15,7 +16,7 @@ internal class UiAddRoomStateMapperImpl : UiAddRoomStateMapper {
                 value = item.floorSelection.textField.value,
                 errorKind = item.floorSelection.textField.errorKind,
             ),
-            existingFloors = item.floorSelection.existingFloors,
+            existingFloors = item.floorSelection.existingFloors.toImmutableList(),
             showInput = item.floorSelection.showInput,
         ),
         roomNumber = UiAddRoomState.TextField(
@@ -27,7 +28,7 @@ internal class UiAddRoomStateMapperImpl : UiAddRoomStateMapper {
                 value = item.bedsSelection.textField.value,
                 errorKind = item.bedsSelection.textField.errorKind,
             ),
-            existingBedsCounts = item.bedsSelection.existingBedsCounts,
+            existingBedsCounts = item.bedsSelection.existingBedsCounts.toImmutableList(),
             showInput = item.bedsSelection.showInput,
         ),
         isLoading = item.isLoading,
