@@ -1,6 +1,11 @@
 package dev.nonoxy.residetrack.feature.room_editor.impl.domain
 
 import dev.nonoxy.residetrack.common.utils.currentLocalDate
+import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
+import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.model.Student
+import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
+import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.feature.room_editor.api.models.RoomEditorMode
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorErrorKind
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Intent
@@ -9,12 +14,6 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Stat
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorSuccessKind
 import dev.nonoxy.residetrack.feature.room_editor.impl.domain.RoomEditorStoreFactory.Action
 import dev.nonoxy.residetrack.feature.room_editor.impl.domain.RoomEditorStoreFactory.Message
-import dev.nonoxy.residetrack.core.rooms.domain.model.Room
-import dev.nonoxy.residetrack.core.rooms.domain.model.Student
-import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
-import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
-import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -50,6 +49,7 @@ internal class RoomEditorExecutor(
             Intent.OnAddStudent -> handleAddStudent()
             is Intent.OnRemoveStudentRequested ->
                 dispatch(Message.SetRemovingStudentId(intent.studentId))
+
             Intent.OnRemoveStudentConfirmed -> handleRemoveStudentConfirmed()
             Intent.OnRemoveStudentDismissed -> dispatch(Message.SetRemovingStudentId(null))
             is Intent.OnStreamNumberChange -> handleStreamNumberChange(intent.studentId, intent.value)
@@ -59,6 +59,7 @@ internal class RoomEditorExecutor(
             is Intent.OnCheckOutDateMillisChange -> handleCheckOutDateMillisChange(intent.studentId, intent.millis)
             is Intent.OnDatePickerOpen ->
                 dispatch(Message.SetOpenDatePicker(State.OpenPicker(intent.studentId, intent.field)))
+
             Intent.OnDatePickerDismiss -> dispatch(Message.SetOpenDatePicker(null))
             Intent.OnSaveAndClose -> handleSaveAndClose()
             Intent.OnClose -> publish(Label.NavigateBack)
@@ -68,6 +69,7 @@ internal class RoomEditorExecutor(
                 } else {
                     publish(Label.NavigateBack)
                 }
+
             Intent.OnDiscardConfirmed -> publish(Label.NavigateBack)
             Intent.OnKeepEditing -> dispatch(Message.SetShowDiscardConfirm(show = false))
             Intent.OnEditRoomParamsClick -> handleEditRoomParamsClick()
@@ -75,6 +77,7 @@ internal class RoomEditorExecutor(
             is Intent.OnRoomParamsFloorChange -> updateRoomParam { it.copy(floorNumber = digits(intent.value)) }
             is Intent.OnRoomParamsRoomNumberChange ->
                 updateRoomParam { it.copy(roomNumber = digits(intent.value), roomNumberError = false) }
+
             is Intent.OnRoomParamsBedsChange -> updateRoomParam { it.copy(bedsCount = digits(intent.value)) }
             Intent.OnSaveRoomParams -> handleSaveRoomParams()
             Intent.OnDeleteRoomClick -> dispatch(Message.SetShowDeleteConfirm(show = true))
@@ -89,6 +92,7 @@ internal class RoomEditorExecutor(
             when (mode) {
                 is RoomEditorMode.ExistingRoom ->
                     loadFromResult { roomsRepository.getRoomById(mode.roomId.toLong()) }
+
                 RoomEditorMode.DraftRoom ->
                     loadFromResult { roomsRepository.getDraftRoom() }
             }
@@ -120,7 +124,7 @@ internal class RoomEditorExecutor(
                     checkOutDateMillis = student.checkOutDate.toUtcMillis(),
                     isNew = false,
                 )
-            }.toImmutableList()
+            }
 
             dispatch(
                 Message.SetRoomAndStudents(
@@ -145,7 +149,7 @@ internal class RoomEditorExecutor(
             checkOutDateMillis = null,
             isNew = true,
         )
-        val updated = (state().editableStudents + newStudent).toImmutableList()
+        val updated = state().editableStudents + newStudent
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 
@@ -153,7 +157,6 @@ internal class RoomEditorExecutor(
         val studentId = state().removingStudentId ?: return
         val updated = state().editableStudents
             .filterNot { it.id == studentId }
-            .toImmutableList()
         dispatch(Message.SetEditableStudents(editableStudents = updated))
         dispatch(Message.SetRemovingStudentId(null))
     }
@@ -162,21 +165,21 @@ internal class RoomEditorExecutor(
         val filtered = value.filter { it.isDigit() }
         val updated = state().editableStudents.map { st ->
             if (st.id == studentId) st.copy(streamNumber = filtered) else st
-        }.toImmutableList()
+        }
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 
     private fun handleCheckInDateChange(studentId: String, value: String) {
         val updated = state().editableStudents.map { st ->
             if (st.id == studentId) st.copy(checkInDate = value, checkInDateMillis = parseDateToMillis(value)) else st
-        }.toImmutableList()
+        }
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 
     private fun handleCheckOutDateChange(studentId: String, value: String) {
         val updated = state().editableStudents.map { st ->
             if (st.id == studentId) st.copy(checkOutDate = value, checkOutDateMillis = parseDateToMillis(value)) else st
-        }.toImmutableList()
+        }
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 
@@ -184,7 +187,7 @@ internal class RoomEditorExecutor(
         val dateString = formatDateFromMillis(millis)
         val updated = state().editableStudents.map { st ->
             if (st.id == studentId) st.copy(checkInDate = dateString, checkInDateMillis = millis) else st
-        }.toImmutableList()
+        }
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 
@@ -192,7 +195,7 @@ internal class RoomEditorExecutor(
         val dateString = formatDateFromMillis(millis)
         val updated = state().editableStudents.map { st ->
             if (st.id == studentId) st.copy(checkOutDate = dateString, checkOutDateMillis = millis) else st
-        }.toImmutableList()
+        }
         dispatch(Message.SetEditableStudents(editableStudents = updated))
     }
 

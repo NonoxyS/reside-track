@@ -5,8 +5,6 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Inte
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Label
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.State
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 interface RoomEditorStore : Store<Intent, State, Label> {
 
@@ -15,7 +13,7 @@ interface RoomEditorStore : Store<Intent, State, Label> {
         val isError: Boolean = false,
         val errorKind: RoomEditorErrorKind? = null,
         val room: Room? = null,
-        val editableStudents: ImmutableList<EditableStudent> = persistentListOf(),
+        val editableStudents: List<EditableStudent> = emptyList(),
         val isDirty: Boolean = false,
         val showDiscardConfirm: Boolean = false,
         val openDatePicker: OpenPicker? = null,
