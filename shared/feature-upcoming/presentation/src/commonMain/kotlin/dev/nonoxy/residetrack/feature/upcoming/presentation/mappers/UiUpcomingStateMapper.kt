@@ -1,6 +1,8 @@
 package dev.nonoxy.residetrack.feature.upcoming.presentation.mappers
 
+import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingState
 import kotlinx.collections.immutable.toImmutableList
@@ -22,8 +24,14 @@ internal class UiUpcomingStateMapperImpl : UiUpcomingStateMapper {
                 streamNumber = domain.streamNumber.toString(),
                 checkOutDate = domain.checkOutDate.toString(),
                 daysLeft = domain.daysLeft,
-                bucket = domain.bucket,
+                bucket = domain.bucket.toUi(),
             )
         }.toImmutableList(),
     )
+
+    private fun UpcomingBucket.toUi(): UiUpcomingBucket = when (this) {
+        UpcomingBucket.OVERDUE -> UiUpcomingBucket.OVERDUE
+        UpcomingBucket.TODAY_TOMORROW -> UiUpcomingBucket.TODAY_TOMORROW
+        UpcomingBucket.THIS_WEEK -> UiUpcomingBucket.THIS_WEEK
+    }
 }

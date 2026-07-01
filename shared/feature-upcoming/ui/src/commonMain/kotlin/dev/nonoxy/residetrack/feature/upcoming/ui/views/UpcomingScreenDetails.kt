@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
-import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingState
 import kotlinx.collections.immutable.persistentListOf
@@ -52,7 +52,7 @@ private fun Preview() {
                         streamNumber = "1234",
                         checkOutDate = "2024-03-31",
                         daysLeft = -2,
-                        bucket = UpcomingBucket.OVERDUE,
+                        bucket = UiUpcomingBucket.OVERDUE,
                     ),
                     UiUpcomingItem(
                         roomId = 2,
@@ -61,7 +61,7 @@ private fun Preview() {
                         streamNumber = "5646",
                         checkOutDate = "2024-04-02",
                         daysLeft = 1,
-                        bucket = UpcomingBucket.TODAY_TOMORROW,
+                        bucket = UiUpcomingBucket.TODAY_TOMORROW,
                     ),
                 )
             ),

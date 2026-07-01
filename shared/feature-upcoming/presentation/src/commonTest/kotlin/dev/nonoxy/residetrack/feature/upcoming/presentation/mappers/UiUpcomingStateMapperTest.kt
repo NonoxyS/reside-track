@@ -3,6 +3,7 @@ package dev.nonoxy.residetrack.feature.upcoming.presentation.mappers
 import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.api.models.UpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.api.store.UpcomingStore
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -39,6 +40,6 @@ class UiUpcomingStateMapperTest {
         assertEquals("305", item.streamNumber)
         assertEquals("2026-06-01", item.checkOutDate)
         assertEquals(-3, item.daysLeft)
-        assertEquals(UpcomingBucket.OVERDUE, item.bucket)
+        assertEquals(UiUpcomingBucket.OVERDUE, item.bucket)
     }
 }
