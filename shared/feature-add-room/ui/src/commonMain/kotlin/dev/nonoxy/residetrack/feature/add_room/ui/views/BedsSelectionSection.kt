@@ -12,7 +12,6 @@ import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
-import dev.nonoxy.residetrack.feature.add_room.ui.localized
 import dev.nonoxy.residetrack.res.MR
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -64,8 +63,8 @@ internal fun BedsSelectionSection(
                     label = stringResource(MR.strings.add_room_beds_count_label),
                     placeholder = stringResource(MR.strings.add_room_beds_count_placeholder),
                     keyboardType = KeyboardType.Number,
-                    isError = textFieldState.errorKind != null,
-                    errorMessage = textFieldState.errorKind?.localized(),
+                    isError = textFieldState.error != null,
+                    errorMessage = textFieldState.error?.let { stringResource(it.message) },
                     enabled = !isLoading,
                 )
             }

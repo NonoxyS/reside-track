@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
-import dev.nonoxy.residetrack.feature.add_room.ui.localized
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.icerock.moko.resources.compose.stringResource
@@ -24,8 +23,8 @@ internal fun RoomNumberSection(
         label = stringResource(MR.strings.add_room_room_number_label),
         placeholder = stringResource(MR.strings.add_room_room_number_placeholder),
         keyboardType = KeyboardType.Number,
-        isError = textFieldState.errorKind != null,
-        errorMessage = textFieldState.errorKind?.localized(),
+        isError = textFieldState.error != null,
+        errorMessage = textFieldState.error?.let { stringResource(it.message) },
         enabled = !isLoading,
         modifier = modifier,
     )
