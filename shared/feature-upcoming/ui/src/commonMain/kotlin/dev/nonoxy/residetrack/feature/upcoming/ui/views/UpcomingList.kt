@@ -18,9 +18,8 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
-import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
-import dev.nonoxy.residetrack.res.MR
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -39,7 +38,7 @@ internal fun UpcomingList(
         ),
         verticalArrangement = Arrangement.spacedBy(padding_size_8),
     ) {
-        for (bucket in UpcomingBucket.entries) {
+        for (bucket in UiUpcomingBucket.entries) {
             val bucketItems = items.filter { it.bucket == bucket }
             if (bucketItems.isEmpty()) continue
 
@@ -64,17 +63,12 @@ internal fun UpcomingList(
 }
 
 @Composable
-private fun BucketHeader(bucket: UpcomingBucket) {
-    val title = when (bucket) {
-        UpcomingBucket.OVERDUE -> MR.strings.upcoming_bucket_overdue
-        UpcomingBucket.TODAY_TOMORROW -> MR.strings.upcoming_bucket_today_tomorrow
-        UpcomingBucket.THIS_WEEK -> MR.strings.upcoming_bucket_this_week
-    }
+private fun BucketHeader(bucket: UiUpcomingBucket) {
     Text(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = padding_size_20, bottom = padding_size_4),
-        text = stringResource(title),
+        text = stringResource(bucket.title),
         style = ResideTrackTheme.typography.head5,
         color = ResideTrackTheme.colors.textCaption,
     )

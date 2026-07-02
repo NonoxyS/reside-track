@@ -22,7 +22,7 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_10
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_2
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
-import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingBucket
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.res.MR
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -72,7 +72,7 @@ internal fun UpcomingListItem(
 @Composable
 private fun DaysLeftBadge(
     daysLeft: Int,
-    bucket: UpcomingBucket,
+    bucket: UiUpcomingBucket,
     modifier: Modifier = Modifier,
 ) {
     val text = if (daysLeft < 0) {
@@ -81,14 +81,14 @@ private fun DaysLeftBadge(
         stringResource(MR.strings.upcoming_days_left, daysLeft.toString())
     }
     val backgroundColor = when (bucket) {
-        UpcomingBucket.OVERDUE -> ResideTrackTheme.colors.fillErrorBGSecondary
-        UpcomingBucket.TODAY_TOMORROW -> ResideTrackTheme.colors.fillWarningBGSecondary
-        UpcomingBucket.THIS_WEEK -> ResideTrackTheme.colors.fillSuccessBGSecondary
+        UiUpcomingBucket.OVERDUE -> ResideTrackTheme.colors.fillErrorBGSecondary
+        UiUpcomingBucket.TODAY_TOMORROW -> ResideTrackTheme.colors.fillWarningBGSecondary
+        UiUpcomingBucket.THIS_WEEK -> ResideTrackTheme.colors.fillSuccessBGSecondary
     }
     val textColor = when (bucket) {
-        UpcomingBucket.OVERDUE -> ResideTrackTheme.colors.textError
-        UpcomingBucket.TODAY_TOMORROW -> ResideTrackTheme.colors.textWarning
-        UpcomingBucket.THIS_WEEK -> ResideTrackTheme.colors.textSuccess
+        UiUpcomingBucket.OVERDUE -> ResideTrackTheme.colors.textError
+        UiUpcomingBucket.TODAY_TOMORROW -> ResideTrackTheme.colors.textWarning
+        UiUpcomingBucket.THIS_WEEK -> ResideTrackTheme.colors.textSuccess
     }
     Text(
         modifier = modifier
@@ -120,7 +120,7 @@ private fun Preview() {
                     streamNumber = "1234",
                     checkOutDate = "2024-03-31",
                     daysLeft = -2,
-                    bucket = UpcomingBucket.OVERDUE,
+                    bucket = UiUpcomingBucket.OVERDUE,
                 ),
                 onClick = {}
             )
@@ -133,7 +133,7 @@ private fun Preview() {
                     streamNumber = "5646",
                     checkOutDate = "2024-04-02",
                     daysLeft = 1,
-                    bucket = UpcomingBucket.TODAY_TOMORROW,
+                    bucket = UiUpcomingBucket.TODAY_TOMORROW,
                 ),
                 onClick = {}
             )
@@ -146,7 +146,7 @@ private fun Preview() {
                     streamNumber = "7777",
                     checkOutDate = "2024-04-06",
                     daysLeft = 5,
-                    bucket = UpcomingBucket.THIS_WEEK,
+                    bucket = UiUpcomingBucket.THIS_WEEK,
                 ),
                 onClick = {}
             )
