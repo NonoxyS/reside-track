@@ -140,4 +140,10 @@
     <string name="backup_import_error">Не похоже на файл резервной копии</string>
     <string name="backup_import_error_version">Версия резервной копии не поддерживается</string>
     <string name="backup_restore_error">Не удалось восстановить данные</string>
+
+    <!-- Notifications: checkout reminders -->
+    <string name="notification_channel_checkout_name">Напоминания о выезде</string>
+    <string name="notification_channel_checkout_description">Уведомления о предстоящих выездах жильцов</string>
+    <string name="notification_checkout_title">Через 3 дня выезд</string>
+    <string name="notification_checkout_rooms">Комнаты %1$s</string>
 </resources>

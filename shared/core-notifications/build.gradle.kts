@@ -1,4 +1,5 @@
 import extensions.androidLibraryConfig
+import extensions.androidMainDependencies
 import extensions.commonMainDependencies
 import extensions.commonTestDependencies
 import extensions.implementations
@@ -14,8 +15,16 @@ androidLibraryConfig {
 commonMainDependencies {
     implementations(
         projects.shared.common,
+        projects.shared.commonResources,
         projects.shared.coreDatabase,
         libs.kotlin.coroutines.core,
+    )
+}
+
+androidMainDependencies {
+    implementations(
+        libs.androidx.core.ktx,
+        libs.androidx.work.runtime,
     )
 }
 
