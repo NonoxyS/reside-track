@@ -11,7 +11,6 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Labe
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.State
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 
 internal class RoomEditorStoreFactory(
@@ -47,11 +46,11 @@ internal class RoomEditorStoreFactory(
         data object ClearError : Message
         data class SetRoomAndStudents(
             val room: Room,
-            val editableStudents: ImmutableList<State.EditableStudent>,
+            val editableStudents: List<State.EditableStudent>,
         ) : Message
 
         data class SetEditableStudents(
-            val editableStudents: ImmutableList<State.EditableStudent>,
+            val editableStudents: List<State.EditableStudent>,
         ) : Message
 
         data class SetShowDiscardConfirm(val show: Boolean) : Message
