@@ -64,7 +64,7 @@ internal class AddRoomStoreFactory(
     }
 
     /** Wrapper used because `Reducer.reduce` can't carry a triple of nullable values nicely
-     *  without losing type-safety; also lets us swap to a Map<Field, ErrorKind?> later. */
+     *  without losing type-safety. */
     internal data class AddRoomErrorKindOrNull(
         val value: dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomErrorKind?
     )
