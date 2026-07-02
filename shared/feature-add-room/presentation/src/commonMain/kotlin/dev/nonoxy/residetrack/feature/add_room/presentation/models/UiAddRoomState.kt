@@ -1,6 +1,5 @@
 package dev.nonoxy.residetrack.feature.add_room.presentation.models
 
-import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomErrorKind
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -16,7 +15,7 @@ data class UiAddRoomState(
 ) {
     data class TextField(
         val value: String = "",
-        val errorKind: AddRoomErrorKind? = null,
+        val error: UiAddRoomFieldError? = null,
     )
 
     data class FloorSelection(

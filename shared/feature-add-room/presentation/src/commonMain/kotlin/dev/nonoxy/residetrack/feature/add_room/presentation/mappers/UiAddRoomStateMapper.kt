@@ -1,7 +1,10 @@
 package dev.nonoxy.residetrack.feature.add_room.presentation.mappers
 
+import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomErrorKind
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore
+import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomFieldError
 import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomState
+import kotlinx.collections.immutable.toImmutableList
 
 internal interface UiAddRoomStateMapper {
     fun map(item: AddRoomStore.State): UiAddRoomState
@@ -13,21 +16,21 @@ internal class UiAddRoomStateMapperImpl : UiAddRoomStateMapper {
         floorSelection = UiAddRoomState.FloorSelection(
             textField = UiAddRoomState.TextField(
                 value = item.floorSelection.textField.value,
-                errorKind = item.floorSelection.textField.errorKind,
+                error = item.floorSelection.textField.errorKind.toFieldError(),
             ),
-            existingFloors = item.floorSelection.existingFloors,
+            existingFloors = item.floorSelection.existingFloors.toImmutableList(),
             showInput = item.floorSelection.showInput,
         ),
         roomNumber = UiAddRoomState.TextField(
             value = item.roomNumber.value,
-            errorKind = item.roomNumber.errorKind,
+            error = item.roomNumber.errorKind.toFieldError(),
         ),
         bedsSelection = UiAddRoomState.BedsSelection(
             textField = UiAddRoomState.TextField(
                 value = item.bedsSelection.textField.value,
-                errorKind = item.bedsSelection.textField.errorKind,
+                error = item.bedsSelection.textField.errorKind.toFieldError(),
             ),
-            existingBedsCounts = item.bedsSelection.existingBedsCounts,
+            existingBedsCounts = item.bedsSelection.existingBedsCounts.toImmutableList(),
             showInput = item.bedsSelection.showInput,
         ),
         isLoading = item.isLoading,
@@ -36,4 +39,13 @@ internal class UiAddRoomStateMapperImpl : UiAddRoomStateMapper {
         isDirty = item.isDirty,
         showDiscardConfirm = item.showDiscardConfirm,
     )
+
+    // Only the argument-free "required" kinds ever surface on a field; the rest
+    // (save failed, duplicate room, unknown) are delivered as a snackbar label.
+    private fun AddRoomErrorKind?.toFieldError(): UiAddRoomFieldError? = when (this) {
+        AddRoomErrorKind.FloorNumberRequired -> UiAddRoomFieldError.FLOOR_REQUIRED
+        AddRoomErrorKind.RoomNumberRequired -> UiAddRoomFieldError.ROOM_NUMBER_REQUIRED
+        AddRoomErrorKind.BedsCountRequired -> UiAddRoomFieldError.BEDS_REQUIRED
+        else -> null
+    }
 }

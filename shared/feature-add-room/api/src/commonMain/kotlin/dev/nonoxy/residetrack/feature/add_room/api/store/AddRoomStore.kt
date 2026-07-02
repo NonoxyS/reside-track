@@ -4,8 +4,6 @@ import com.arkivanov.mvikotlin.core.store.Store
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Intent
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Label
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.State
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 interface AddRoomStore : Store<Intent, State, Label> {
 
@@ -33,13 +31,13 @@ interface AddRoomStore : Store<Intent, State, Label> {
 
         data class FloorSelectionState(
             val textField: TextFieldState = TextFieldState(),
-            val existingFloors: ImmutableList<Int> = persistentListOf(),
+            val existingFloors: List<Int> = emptyList(),
             val showInput: Boolean = false,
         )
 
         data class BedsSelectionState(
             val textField: TextFieldState = TextFieldState(),
-            val existingBedsCounts: ImmutableList<Int> = persistentListOf(),
+            val existingBedsCounts: List<Int> = emptyList(),
             val showInput: Boolean = false,
         )
     }

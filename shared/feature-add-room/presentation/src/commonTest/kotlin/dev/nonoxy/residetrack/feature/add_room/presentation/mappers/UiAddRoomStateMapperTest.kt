@@ -2,6 +2,7 @@ package dev.nonoxy.residetrack.feature.add_room.presentation.mappers
 
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomErrorKind
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore
+import dev.nonoxy.residetrack.feature.add_room.presentation.models.UiAddRoomFieldError
 import kotlinx.collections.immutable.persistentListOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -40,7 +41,7 @@ class UiAddRoomStateMapperTest {
         assertEquals(persistentListOf(1, 2, 3), ui.floorSelection.existingFloors)
         assertTrue(ui.floorSelection.showInput)
         assertEquals("21", ui.roomNumber.value)
-        assertEquals(AddRoomErrorKind.RoomNumberRequired, ui.roomNumber.errorKind)
+        assertEquals(UiAddRoomFieldError.ROOM_NUMBER_REQUIRED, ui.roomNumber.error)
         assertEquals(persistentListOf(2, 4), ui.bedsSelection.existingBedsCounts)
         assertTrue(ui.isLoading)
         assertTrue(ui.isFormValid)
