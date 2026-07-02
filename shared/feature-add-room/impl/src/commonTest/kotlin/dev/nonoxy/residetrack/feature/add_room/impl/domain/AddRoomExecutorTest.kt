@@ -7,6 +7,7 @@ import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomErrorKind
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Intent
 import dev.nonoxy.residetrack.feature.add_room.api.store.AddRoomStore.Label
+import dev.nonoxy.residetrack.feature.add_room.impl.data.FakeDraftRoomRepository
 import dev.nonoxy.residetrack.feature.add_room.impl.data.FakeRoomsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -26,11 +27,15 @@ class AddRoomExecutorTest {
     private fun room(id: Long, floor: Int, number: Int, beds: Int) =
         Room(id = id, floorNumber = floor, roomNumber = number, bedsCount = beds, students = emptyList())
 
-    private fun TestScope.createStore(repository: FakeRoomsRepository): AddRoomStore =
+    private fun TestScope.createStore(
+        repository: FakeRoomsRepository,
+        draftRepository: FakeDraftRoomRepository = FakeDraftRoomRepository(),
+    ): AddRoomStore =
         AddRoomStoreFactory(
             storeFactory = DefaultStoreFactory(),
             mainDispatcher = UnconfinedTestDispatcher(testScheduler),
             roomsRepository = repository,
+            draftRoomRepository = draftRepository,
         ).create()
 
     private fun TestScope.labelsOf(store: AddRoomStore): List<Label> {
@@ -144,7 +149,8 @@ class AddRoomExecutorTest {
     @Test
     fun `create success saves room and draft then navigates to draft editor`() = runTest {
         val repository = FakeRoomsRepository(saveRoomResult = Result.success(7L))
-        val store = createStore(repository)
+        val draftRepository = FakeDraftRoomRepository()
+        val store = createStore(repository, draftRepository)
         val labels = labelsOf(store)
 
         store.fillForm(floor = "1", roomNumber = "101", beds = "4")
@@ -155,7 +161,7 @@ class AddRoomExecutorTest {
         assertEquals(1, repository.savedRoom?.floorNumber)
         assertEquals(101, repository.savedRoom?.roomNumber)
         assertEquals(4, repository.savedRoom?.bedsCount)
-        assertEquals(7L, repository.savedDraftRoom?.id) // persisted id propagated into the draft
+        assertEquals(7L, draftRepository.savedDraftRoom?.id) // persisted id propagated into the draft
         assertTrue(labels.contains(Label.NavigateToRoomEditorDraftRoom))
         assertFalse(store.state.isLoading)
 

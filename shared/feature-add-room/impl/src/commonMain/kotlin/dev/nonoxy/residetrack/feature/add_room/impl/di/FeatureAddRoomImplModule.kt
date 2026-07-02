@@ -12,6 +12,7 @@ val featureAddRoomImplModule = module {
             storeFactory = get(),
             mainDispatcher = get<CoroutineDispatchers>().main,
             roomsRepository = get(),
+            draftRoomRepository = get(),
         ).create()
     }
 }

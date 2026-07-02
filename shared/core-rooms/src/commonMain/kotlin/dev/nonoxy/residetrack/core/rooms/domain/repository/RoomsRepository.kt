@@ -9,7 +9,6 @@ interface RoomsRepository {
     fun observeRooms(): Flow<List<Room>>
 
     suspend fun getAllRooms(): Result<List<Room>>
-    suspend fun getRoomByNumber(roomNumber: Int): Result<Room?>
     suspend fun getRoomById(roomId: Long): Result<Room?>
 
     suspend fun saveRoom(room: Room): Result<Long>
@@ -24,9 +23,4 @@ interface RoomsRepository {
 
     /** Deletes the room and its students. */
     suspend fun deleteRoom(roomId: Long): Result<Unit>
-
-    suspend fun saveDraftRoom(room: Room): Result<Unit>
-    suspend fun getDraftRoom(): Result<Room?>
-    suspend fun clearDraftRoom(): Result<Unit>
-    fun observeDraftRoom(): Flow<Room?>
 }
