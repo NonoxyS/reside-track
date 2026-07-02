@@ -14,6 +14,7 @@ val featureRoomEditorImplModule = module {
             storeFactory = get(),
             mainDispatcher = get<CoroutineDispatchers>().main,
             roomsRepository = get(),
+            draftRoomRepository = get(),
         ).create(mode = mode)
     } bind RoomEditorStore::class
 }

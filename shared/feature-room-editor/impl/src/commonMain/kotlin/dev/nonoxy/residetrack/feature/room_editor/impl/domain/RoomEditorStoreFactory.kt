@@ -10,6 +10,7 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Inte
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Label
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.State
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.repository.DraftRoomRepository
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 
@@ -17,6 +18,7 @@ internal class RoomEditorStoreFactory(
     private val storeFactory: StoreFactory,
     private val mainDispatcher: CoroutineDispatcher,
     private val roomsRepository: RoomsRepository,
+    private val draftRoomRepository: DraftRoomRepository,
 ) {
 
     fun create(mode: RoomEditorMode): RoomEditorStore =
@@ -30,6 +32,7 @@ internal class RoomEditorStoreFactory(
                     RoomEditorExecutor(
                         mainDispatcher = mainDispatcher,
                         roomsRepository = roomsRepository,
+                        draftRoomRepository = draftRoomRepository,
                         mode = mode,
                     )
                 },

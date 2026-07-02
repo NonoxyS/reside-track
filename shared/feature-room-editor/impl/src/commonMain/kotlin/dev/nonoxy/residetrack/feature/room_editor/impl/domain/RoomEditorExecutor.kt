@@ -4,6 +4,7 @@ import dev.nonoxy.residetrack.common.utils.currentLocalDate
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.model.Student
+import dev.nonoxy.residetrack.core.rooms.domain.repository.DraftRoomRepository
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.feature.room_editor.api.models.RoomEditorMode
@@ -30,6 +31,7 @@ import kotlin.uuid.Uuid
 internal class RoomEditorExecutor(
     mainDispatcher: CoroutineDispatcher,
     private val roomsRepository: RoomsRepository,
+    private val draftRoomRepository: DraftRoomRepository,
     private val mode: RoomEditorMode,
 ) : BaseExecutor<Intent, Action, State, Message, Label>(mainContext = mainDispatcher) {
 
@@ -94,7 +96,7 @@ internal class RoomEditorExecutor(
                     loadFromResult { roomsRepository.getRoomById(mode.roomId.toLong()) }
 
                 RoomEditorMode.DraftRoom ->
-                    loadFromResult { roomsRepository.getDraftRoom() }
+                    loadFromResult { draftRoomRepository.get() }
             }
         } catch (_: Exception) {
             dispatch(Message.SetError(kind = RoomEditorErrorKind.FailedToLoadStudents))
@@ -299,7 +301,7 @@ internal class RoomEditorExecutor(
     }
 
     private suspend fun saveDraft(currentRoom: Room, students: List<Student>) {
-        roomsRepository.getDraftRoom()
+        draftRoomRepository.get()
             .onSuccess { draftRoom ->
                 if (draftRoom == null) {
                     dispatch(Message.SetIsLoading(isLoading = false))
@@ -309,7 +311,7 @@ internal class RoomEditorExecutor(
                 val updated = draftRoom.copy(students = students)
                 roomsRepository.saveRoom(updated)
                     .onSuccess {
-                        roomsRepository.clearDraftRoom()
+                        draftRoomRepository.clear()
                         dispatch(Message.SetIsLoading(isLoading = false))
                         publish(Label.ShowSuccess(kind = RoomEditorSuccessKind.StudentsSaved))
                         publish(Label.NavigateBack)

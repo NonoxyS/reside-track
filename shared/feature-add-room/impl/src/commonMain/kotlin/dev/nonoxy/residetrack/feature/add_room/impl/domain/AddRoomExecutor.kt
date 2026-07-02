@@ -10,6 +10,7 @@ import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.A
 import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.AddRoomErrorKindOrNull
 import dev.nonoxy.residetrack.feature.add_room.impl.domain.AddRoomStoreFactory.Message
 import dev.nonoxy.residetrack.core.rooms.domain.model.Room
+import dev.nonoxy.residetrack.core.rooms.domain.repository.DraftRoomRepository
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import dev.nonoxy.residetrack.core.rooms.domain.validation.RoomNumberConflict
 import dev.nonoxy.residetrack.core.mvikotlin.BaseExecutor
@@ -18,6 +19,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 internal class AddRoomExecutor(
     mainDispatcher: CoroutineDispatcher,
     private val roomsRepository: RoomsRepository,
+    private val draftRoomRepository: DraftRoomRepository,
 ) : BaseExecutor<Intent, Action, State, Message, Label>(mainContext = mainDispatcher) {
 
     override suspend fun suspendExecuteAction(action: Action) {
@@ -168,7 +170,7 @@ internal class AddRoomExecutor(
         roomsRepository.saveRoom(newRoom).fold(
             onSuccess = { persistedId ->
                 val persistedRoom = newRoom.copy(id = persistedId)
-                roomsRepository.saveDraftRoom(persistedRoom).fold(
+                draftRoomRepository.save(persistedRoom).fold(
                     onSuccess = {
                         dispatch(Message.SetIsLoading(isLoading = false))
                         publish(Label.NavigateToRoomEditorDraftRoom)

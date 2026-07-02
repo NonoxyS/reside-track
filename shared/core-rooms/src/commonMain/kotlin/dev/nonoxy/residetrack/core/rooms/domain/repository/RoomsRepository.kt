@@ -23,8 +23,4 @@ interface RoomsRepository {
 
     /** Deletes the room and its students. */
     suspend fun deleteRoom(roomId: Long): Result<Unit>
-
-    suspend fun saveDraftRoom(room: Room): Result<Unit>
-    suspend fun getDraftRoom(): Result<Room?>
-    suspend fun clearDraftRoom(): Result<Unit>
 }

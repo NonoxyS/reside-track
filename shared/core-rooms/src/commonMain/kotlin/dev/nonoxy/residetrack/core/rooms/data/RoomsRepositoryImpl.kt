@@ -13,7 +13,6 @@ import dev.nonoxy.residetrack.core.rooms.domain.model.Room
 import dev.nonoxy.residetrack.core.rooms.domain.repository.RoomsRepository
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -24,8 +23,6 @@ internal class RoomsRepositoryImpl(
     private val studentMapper: StudentMapper,
     private val dispatchers: CoroutineDispatchers,
 ) : RoomsRepository {
-
-    private val _draftRoom = MutableStateFlow<Room?>(null)
 
     override fun observeRooms(): Flow<List<Room>> =
         roomStorage.observeAllRoomsWithStudents()
@@ -111,42 +108,6 @@ internal class RoomsRepositoryImpl(
             },
             catchBlock = { throwable ->
                 Napier.e(throwable) { "Error deleting room: $roomId" }
-                throwable.wrapFailure()
-            }
-        )
-    }
-
-    override suspend fun saveDraftRoom(room: Room): Result<Unit> = withContext(dispatchers.io) {
-        coRunCatching(
-            tryBlock = {
-                _draftRoom.value = room
-                Unit.wrapSuccess()
-            },
-            catchBlock = { throwable ->
-                Napier.e(throwable) { "Error occur on saving draft room: $room" }
-                throwable.wrapFailure()
-            }
-        )
-    }
-
-    override suspend fun getDraftRoom(): Result<Room?> = withContext(dispatchers.io) {
-        coRunCatching(
-            tryBlock = { _draftRoom.value.wrapSuccess() },
-            catchBlock = { throwable ->
-                Napier.e(throwable) { "Error occur on getting draft room" }
-                throwable.wrapFailure()
-            }
-        )
-    }
-
-    override suspend fun clearDraftRoom(): Result<Unit> = withContext(dispatchers.io) {
-        coRunCatching(
-            tryBlock = {
-                _draftRoom.value = null
-                Unit.wrapSuccess()
-            },
-            catchBlock = { throwable ->
-                Napier.e(throwable) { "Error occur on clearing draft room" }
                 throwable.wrapFailure()
             }
         )

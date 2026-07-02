@@ -10,6 +10,7 @@ import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Intent
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Label
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorSuccessKind
+import dev.nonoxy.residetrack.feature.room_editor.impl.data.FakeDraftRoomRepository
 import dev.nonoxy.residetrack.feature.room_editor.impl.data.FakeRoomsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -52,10 +53,12 @@ class RoomEditorExecutorTest {
     private fun TestScope.createStore(
         repository: FakeRoomsRepository,
         mode: RoomEditorMode,
+        draftRepository: FakeDraftRoomRepository = FakeDraftRoomRepository(),
     ): RoomEditorStore = RoomEditorStoreFactory(
         storeFactory = DefaultStoreFactory(),
         mainDispatcher = UnconfinedTestDispatcher(testScheduler),
         roomsRepository = repository,
+        draftRoomRepository = draftRepository,
     ).create(mode = mode)
 
     private fun TestScope.labelsOf(store: RoomEditorStore): List<Label> {
@@ -231,17 +234,18 @@ class RoomEditorExecutorTest {
 
     @Test
     fun `save draft persists students clears the draft and navigates back`() = runTest {
-        val repository = FakeRoomsRepository(
+        val repository = FakeRoomsRepository()
+        val draftRepository = FakeDraftRoomRepository(
             draftRoom = room(id = 9, floor = 1, number = 101, students = listOf(student(id = 0, stream = 305))),
         )
-        val store = createStore(repository, RoomEditorMode.DraftRoom)
+        val store = createStore(repository, RoomEditorMode.DraftRoom, draftRepository)
         val labels = labelsOf(store)
 
         store.accept(Intent.OnSaveAndClose)
         advanceUntilIdle()
 
         assertEquals(1, repository.saveRoomCallCount)
-        assertEquals(1, repository.clearDraftCallCount)
+        assertEquals(1, draftRepository.clearCallCount)
         assertEquals(listOf(305), repository.savedRoom?.students?.map { it.streamNumber })
         assertTrue(labels.contains(Label.NavigateBack))
 
@@ -333,8 +337,9 @@ class RoomEditorExecutorTest {
 
     @Test
     fun `room params and delete are no-ops in draft mode`() = runTest {
-        val repository = FakeRoomsRepository(draftRoom = room(id = 9, students = emptyList()))
-        val store = createStore(repository, RoomEditorMode.DraftRoom)
+        val repository = FakeRoomsRepository()
+        val draftRepository = FakeDraftRoomRepository(draftRoom = room(id = 9, students = emptyList()))
+        val store = createStore(repository, RoomEditorMode.DraftRoom, draftRepository)
 
         store.accept(Intent.OnSaveRoomParams)
         store.accept(Intent.OnDeleteRoomConfirm)
