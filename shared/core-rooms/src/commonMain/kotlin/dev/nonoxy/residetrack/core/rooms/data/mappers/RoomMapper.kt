@@ -25,6 +25,7 @@ internal class RoomMapperImpl(
 
     override fun map(item: Room): RoomEntity = with(item) {
         RoomEntity(
+            id = id,
             floorNumber = floorNumber,
             roomNumber = roomNumber,
             bedsCount = bedsCount
