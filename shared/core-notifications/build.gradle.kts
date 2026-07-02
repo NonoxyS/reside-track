@@ -17,6 +17,7 @@ commonMainDependencies {
         projects.shared.common,
         projects.shared.commonResources,
         projects.shared.coreDatabase,
+        projects.shared.coreInitializer,
         libs.kotlin.coroutines.core,
     )
 }
