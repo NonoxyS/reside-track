@@ -82,7 +82,12 @@ internal class RoomEditorExecutor(
 
             is Intent.OnRoomParamsBedsChange -> updateRoomParam { it.copy(bedsCount = digits(intent.value)) }
             Intent.OnSaveRoomParams -> handleSaveRoomParams()
-            Intent.OnDeleteRoomClick -> dispatch(Message.SetShowDeleteConfirm(show = true))
+            Intent.OnDeleteRoomClick -> {
+                // Закрываем sheet параметров перед показом диалога: ModalBottomSheet — отдельное
+                // окно поверх, иначе диалог подтверждения оказывается за ним и недоступен для тапа.
+                dispatch(Message.SetShowRoomParams(show = false))
+                dispatch(Message.SetShowDeleteConfirm(show = true))
+            }
             Intent.OnDeleteRoomDismiss -> dispatch(Message.SetShowDeleteConfirm(show = false))
             Intent.OnDeleteRoomConfirm -> handleDeleteRoom()
         }
