@@ -5,8 +5,6 @@ import dev.icerock.moko.resources.format
 import dev.nonoxy.residetrack.core.notifications.domain.CheckoutDigest
 import dev.nonoxy.residetrack.core.notifications.domain.LocalNotifier
 import dev.nonoxy.residetrack.res.MR
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import platform.Foundation.NSCalendar
 import platform.Foundation.NSCalendarUnitDay
 import platform.Foundation.NSCalendarUnitHour
@@ -15,9 +13,6 @@ import platform.Foundation.NSCalendarUnitMonth
 import platform.Foundation.NSCalendarUnitYear
 import platform.Foundation.NSDate
 import platform.Foundation.NSTimeIntervalSince1970
-import platform.UserNotifications.UNAuthorizationOptionAlert
-import platform.UserNotifications.UNAuthorizationOptionBadge
-import platform.UserNotifications.UNAuthorizationOptionSound
 import platform.UserNotifications.UNCalendarNotificationTrigger
 import platform.UserNotifications.UNMutableNotificationContent
 import platform.UserNotifications.UNNotificationRequest
@@ -34,13 +29,6 @@ internal class IosLocalNotifier : LocalNotifier {
 
     private val center: UNUserNotificationCenter
         get() = UNUserNotificationCenter.currentNotificationCenter()
-
-    override suspend fun requestPermission(): Boolean = suspendCoroutine { continuation ->
-        val options = UNAuthorizationOptionAlert or UNAuthorizationOptionSound or UNAuthorizationOptionBadge
-        center.requestAuthorizationWithOptions(options) { granted, _ ->
-            continuation.resume(granted)
-        }
-    }
 
     override suspend fun sync(digests: List<CheckoutDigest>) {
         center.removeAllPendingNotificationRequests()

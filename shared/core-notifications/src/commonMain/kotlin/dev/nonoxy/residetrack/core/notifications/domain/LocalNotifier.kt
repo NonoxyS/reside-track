@@ -8,13 +8,6 @@ package dev.nonoxy.residetrack.core.notifications.domain
  */
 interface LocalNotifier {
 
-    /**
-     * Запрашивает/проверяет разрешение на показ уведомлений.
-     *
-     * @return `true`, если уведомления разрешены.
-     */
-    suspend fun requestPermission(): Boolean
-
     /** Переустанавливает запланированные пуши под текущий список [digests]. */
     suspend fun sync(digests: List<CheckoutDigest>)
 }
