@@ -1,13 +1,13 @@
 package dev.nonoxy.residetrack.core.rooms.data.mappers
 
+import dev.nonoxy.residetrack.common.utils.epochMillisToUtcDate
 import dev.nonoxy.residetrack.common.utils.mapper.Mapper
 import dev.nonoxy.residetrack.common.utils.toLocalDate
+import dev.nonoxy.residetrack.common.utils.toUtcStartOfDayMillis
 import dev.nonoxy.residetrack.core.database.entities.StudentEntity
 import dev.nonoxy.residetrack.core.rooms.domain.model.Student
 import dev.nonoxy.residetrack.core.rooms.domain.upcoming.UpcomingCheckouts
 import kotlin.time.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
 
 internal interface StudentMapper : Mapper<StudentEntity, Student> {
     fun map(item: Student, roomId: Long): StudentEntity
@@ -18,8 +18,8 @@ internal interface StudentMapper : Mapper<StudentEntity, Student> {
 internal class StudentMapperImpl : StudentMapper {
 
     override fun map(item: StudentEntity): Student {
-        val checkInDate = item.checkInDateEpochMillis.toLocalDate()
-        val checkOutDate = item.checkOutDateEpochMillis.toLocalDate()
+        val checkInDate = item.checkInDateEpochMillis.epochMillisToUtcDate()
+        val checkOutDate = item.checkOutDateEpochMillis.epochMillisToUtcDate()
         val currentDate = Clock.System.now().toLocalDate()
 
         return Student(
@@ -31,14 +31,12 @@ internal class StudentMapperImpl : StudentMapper {
         )
     }
 
-    override fun map(item: Student, roomId: Long): StudentEntity {
-        val tz = TimeZone.currentSystemDefault()
-        return StudentEntity(
+    override fun map(item: Student, roomId: Long): StudentEntity =
+        StudentEntity(
             id = item.id,
             roomId = roomId,
             streamNumber = item.streamNumber,
-            checkInDateEpochMillis = item.checkInDate.atStartOfDayIn(tz).toEpochMilliseconds(),
-            checkOutDateEpochMillis = item.checkOutDate.atStartOfDayIn(tz).toEpochMilliseconds(),
+            checkInDateEpochMillis = item.checkInDate.toUtcStartOfDayMillis(),
+            checkOutDateEpochMillis = item.checkOutDate.toUtcStartOfDayMillis(),
         )
-    }
 }
