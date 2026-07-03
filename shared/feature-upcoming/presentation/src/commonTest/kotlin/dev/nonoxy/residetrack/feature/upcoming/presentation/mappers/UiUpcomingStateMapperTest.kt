@@ -40,6 +40,33 @@ class UiUpcomingStateMapperTest {
         assertEquals("305", item.streamNumber)
         assertEquals("2026-06-01", item.checkOutDate)
         assertEquals(-3, item.daysLeft)
+        assertEquals("3", item.daysLeftValue)
         assertEquals(UiUpcomingBucket.OVERDUE, item.bucket)
     }
+
+    @Test
+    fun daysLeftValueDropsSignForOverdueAndKeepsItForUpcoming() {
+        val state = UpcomingStore.State(
+            items = listOf(
+                upcomingItem(daysLeft = -3, bucket = UpcomingBucket.OVERDUE),
+                upcomingItem(daysLeft = 5, bucket = UpcomingBucket.THIS_WEEK),
+            ),
+        )
+
+        val ui = mapper.map(state)
+
+        assertEquals("3", ui.items[0].daysLeftValue)
+        assertEquals("5", ui.items[1].daysLeftValue)
+    }
+
+    private fun upcomingItem(daysLeft: Int, bucket: UpcomingBucket) = UpcomingItem(
+        roomId = 7,
+        floorNumber = 2,
+        roomNumber = 14,
+        studentId = 10,
+        streamNumber = 305,
+        checkOutDate = LocalDate(2026, 6, 1),
+        daysLeft = daysLeft,
+        bucket = bucket,
+    )
 }

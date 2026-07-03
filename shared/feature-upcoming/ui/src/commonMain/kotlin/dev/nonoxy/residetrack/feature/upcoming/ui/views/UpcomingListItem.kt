@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_10
@@ -63,7 +64,8 @@ internal fun UpcomingListItem(
 
         DaysLeftBadge(
             modifier = Modifier.padding(start = padding_size_10),
-            daysLeft = item.daysLeft,
+            label = item.daysLeftLabel,
+            labelValue = item.daysLeftValue,
             bucket = item.bucket,
         )
     }
@@ -71,15 +73,11 @@ internal fun UpcomingListItem(
 
 @Composable
 private fun DaysLeftBadge(
-    daysLeft: Int,
+    label: StringResource,
+    labelValue: String,
     bucket: UiUpcomingBucket,
     modifier: Modifier = Modifier,
 ) {
-    val text = if (daysLeft < 0) {
-        stringResource(MR.strings.upcoming_days_overdue, (-daysLeft).toString())
-    } else {
-        stringResource(MR.strings.upcoming_days_left, daysLeft.toString())
-    }
     val backgroundColor = when (bucket) {
         UiUpcomingBucket.OVERDUE -> ResideTrackTheme.colors.fillErrorBGSecondary
         UiUpcomingBucket.TODAY_TOMORROW -> ResideTrackTheme.colors.fillWarningBGSecondary
@@ -95,7 +93,7 @@ private fun DaysLeftBadge(
             .clip(ResideTrackTheme.shapes.cornerRadius20)
             .background(backgroundColor)
             .padding(horizontal = padding_size_10, vertical = padding_size_4),
-        text = text,
+        text = stringResource(label, labelValue),
         style = ResideTrackTheme.typography.head5,
         color = textColor,
     )
