@@ -1,7 +1,6 @@
 *.iml
 .kotlin
 .gradle
-.claude/scheduled_tasks.lock
 **/build/
 xcuserdata
 !src/**/build/
@@ -18,6 +17,3 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 app_db.db
-
-# Visual brainstorming companion
-.superpowers/
