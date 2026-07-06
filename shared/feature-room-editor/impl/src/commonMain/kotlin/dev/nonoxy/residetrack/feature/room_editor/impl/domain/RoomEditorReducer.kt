@@ -30,7 +30,10 @@ internal class RoomEditorReducer : Reducer<State, Message> {
             errorKind = null,
             room = msg.room,
             editableStudents = msg.editableStudents,
+            initialStudentCount = msg.editableStudents.size,
             isDirty = false,
+            isSaveEnabled = false,
+            isAddStudentEnabled = msg.editableStudents.size < msg.room.bedsCount,
             showDiscardConfirm = false,
             removingStudentId = null,
         )
@@ -38,6 +41,8 @@ internal class RoomEditorReducer : Reducer<State, Message> {
         is Message.SetEditableStudents -> copy(
             editableStudents = msg.editableStudents,
             isDirty = true,
+            isSaveEnabled = msg.editableStudents.isNotEmpty() || initialStudentCount > 0,
+            isAddStudentEnabled = msg.editableStudents.size < (room?.bedsCount ?: Int.MAX_VALUE),
         )
 
         is Message.SetShowDiscardConfirm -> copy(
@@ -51,7 +56,10 @@ internal class RoomEditorReducer : Reducer<State, Message> {
         is Message.SetShowRoomParams -> copy(showRoomParams = msg.show)
         is Message.SetRoomParams -> copy(roomParams = msg.params)
         is Message.SetShowDeleteConfirm -> copy(showDeleteConfirm = msg.show)
-        is Message.SetRoom -> copy(room = msg.room)
+        is Message.SetRoom -> copy(
+            room = msg.room,
+            isAddStudentEnabled = editableStudents.size < msg.room.bedsCount,
+        )
         is Message.SetRemovingStudentId -> copy(removingStudentId = msg.studentId)
     }
 }

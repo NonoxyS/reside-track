@@ -146,6 +146,8 @@ internal class RoomEditorExecutor(
     }
 
     private fun handleAddStudent() {
+        val currentState = state()
+        if (currentState.editableStudents.size >= (currentState.room?.bedsCount ?: Int.MAX_VALUE)) return
         val newStudent = State.EditableStudent(
             id = Uuid.random().toString(),
             studentId = null,
@@ -248,7 +250,8 @@ internal class RoomEditorExecutor(
                 editable.checkInDate.isBlank() ||
                 editable.checkOutDate.isBlank()
             ) {
-                continue
+                publish(Label.ShowError(kind = RoomEditorErrorKind.IncompleteStudentData))
+                return null
             }
 
             val streamNumber = editable.streamNumber.toIntOrNull()

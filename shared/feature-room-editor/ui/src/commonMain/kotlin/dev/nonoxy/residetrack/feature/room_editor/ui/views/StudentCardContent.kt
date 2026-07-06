@@ -9,16 +9,24 @@ import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import dev.nonoxy.residetrack.common.ui.common.datepicker.ResideTrackDatePicker
 import dev.nonoxy.residetrack.common.ui.common.textfield.ResideTrackTextField
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
+import dev.nonoxy.residetrack.common.utils.currentLocalDate
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiDateField
 import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.res.MR
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.plus
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, FormatStringsInDatetimeFormats::class)
 @Composable
 internal fun StudentCardContent(
     streamNumber: String,
@@ -51,6 +59,13 @@ internal fun StudentCardContent(
         )
     }
 
+    val focusManager = LocalFocusManager.current
+    val dateHintFormat = remember { LocalDate.Format { byUnicodePattern("dd.MM.yyyy") } }
+    val checkInPlaceholder = remember { dateHintFormat.format(currentLocalDate) }
+    val checkOutPlaceholder = remember {
+        dateHintFormat.format(currentLocalDate.plus(DatePeriod(months = 6)))
+    }
+
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
@@ -68,10 +83,15 @@ internal fun StudentCardContent(
         ResideTrackDatePicker(
             showDatePicker = openField == UiDateField.CHECK_IN,
             onShowDatePickerStateChange = { show ->
-                if (show) onOpenPicker(UiDateField.CHECK_IN) else onDismissPicker()
+                if (show) {
+                    focusManager.clearFocus()
+                    onOpenPicker(UiDateField.CHECK_IN)
+                } else {
+                    onDismissPicker()
+                }
             },
             value = checkInDate,
-            placeholder = stringResource(MR.strings.check_in_date_placeholder),
+            placeholder = checkInPlaceholder,
             datePickerState = checkInPickerState,
             onDateSelect = onCheckInDateMillisChange,
             saveButtonText = stringResource(MR.strings.save),
@@ -84,10 +104,15 @@ internal fun StudentCardContent(
         ResideTrackDatePicker(
             showDatePicker = openField == UiDateField.CHECK_OUT,
             onShowDatePickerStateChange = { show ->
-                if (show) onOpenPicker(UiDateField.CHECK_OUT) else onDismissPicker()
+                if (show) {
+                    focusManager.clearFocus()
+                    onOpenPicker(UiDateField.CHECK_OUT)
+                } else {
+                    onDismissPicker()
+                }
             },
             value = checkOutDate,
-            placeholder = stringResource(MR.strings.check_out_date_placeholder),
+            placeholder = checkOutPlaceholder,
             datePickerState = checkOutPickerState,
             onDateSelect = onCheckOutDateMillisChange,
             saveButtonText = stringResource(MR.strings.save),

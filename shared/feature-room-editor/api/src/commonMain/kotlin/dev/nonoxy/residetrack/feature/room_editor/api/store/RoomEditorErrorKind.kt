@@ -5,6 +5,7 @@ sealed interface RoomEditorErrorKind {
     data object FailedToSaveStudents : RoomEditorErrorKind
     data object RoomNotFound : RoomEditorErrorKind
     data object DraftRoomNotFound : RoomEditorErrorKind
+    data object IncompleteStudentData : RoomEditorErrorKind
     data object StreamNumberInvalid : RoomEditorErrorKind
     data object InvalidDateRange : RoomEditorErrorKind
     data object InvalidDateFormat : RoomEditorErrorKind

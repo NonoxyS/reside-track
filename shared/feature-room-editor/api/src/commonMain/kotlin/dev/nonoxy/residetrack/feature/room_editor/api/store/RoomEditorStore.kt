@@ -14,7 +14,10 @@ interface RoomEditorStore : Store<Intent, State, Label> {
         val errorKind: RoomEditorErrorKind? = null,
         val room: Room? = null,
         val editableStudents: List<EditableStudent> = emptyList(),
+        val initialStudentCount: Int = 0,
         val isDirty: Boolean = false,
+        val isSaveEnabled: Boolean = false,
+        val isAddStudentEnabled: Boolean = true,
         val showDiscardConfirm: Boolean = false,
         val openDatePicker: OpenPicker? = null,
         val showRoomParams: Boolean = false,
@@ -22,6 +25,7 @@ interface RoomEditorStore : Store<Intent, State, Label> {
         val showDeleteConfirm: Boolean = false,
         val removingStudentId: String? = null,
     ) {
+
         data class EditableStudent(
             val id: String,
             val studentId: Long?,

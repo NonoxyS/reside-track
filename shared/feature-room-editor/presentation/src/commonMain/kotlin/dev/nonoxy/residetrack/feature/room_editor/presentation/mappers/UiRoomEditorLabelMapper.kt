@@ -30,6 +30,8 @@ internal class UiRoomEditorLabelMapperImpl(
         )
         RoomEditorErrorKind.RoomNotFound -> stringConverter.convert(MR.strings.error_room_not_found)
         RoomEditorErrorKind.DraftRoomNotFound -> stringConverter.convert(MR.strings.error_draft_room_not_found)
+        RoomEditorErrorKind.IncompleteStudentData ->
+            stringConverter.convert(MR.strings.error_student_fields_required)
         RoomEditorErrorKind.StreamNumberInvalid -> stringConverter.convert(MR.strings.error_stream_number_invalid)
         RoomEditorErrorKind.InvalidDateRange -> stringConverter.convert(MR.strings.error_invalid_date_range)
         RoomEditorErrorKind.InvalidDateFormat -> stringConverter.convert(MR.strings.error_invalid_date_format)

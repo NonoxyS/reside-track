@@ -11,10 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_32
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import dev.icerock.moko.resources.compose.stringResource
 import dev.nonoxy.residetrack.res.MR
 
 @Composable

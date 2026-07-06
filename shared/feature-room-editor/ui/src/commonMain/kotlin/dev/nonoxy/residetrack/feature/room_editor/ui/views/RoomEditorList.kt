@@ -3,6 +3,8 @@ package dev.nonoxy.residetrack.feature.room_editor.ui.views
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,7 +26,6 @@ import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import dev.nonoxy.residetrack.common.ui.theme.padding_size_96
 import dev.nonoxy.residetrack.common.ui.theme.size_1
 import kotlinx.collections.immutable.ImmutableList
 import dev.icerock.moko.resources.compose.stringResource
@@ -35,6 +36,8 @@ internal fun RoomEditorList(
     students: ImmutableList<UiEditableStudent>,
     openDatePicker: UiOpenDatePicker?,
     onAddStudent: () -> Unit,
+    isAddStudentEnabled: Boolean,
+    bottomPadding: Dp = 0.dp,
     onRemoveStudent: (String) -> Unit,
     onStreamNumberChange: (String, String) -> Unit,
     onCheckInDateChange: (String, String) -> Unit,
@@ -51,7 +54,7 @@ internal fun RoomEditorList(
             start = padding_size_16,
             end = padding_size_16,
             top = padding_size_16,
-            bottom = padding_size_96,
+            bottom = padding_size_16 + bottomPadding,
         ),
         verticalArrangement = Arrangement.spacedBy(padding_size_12),
     ) {
@@ -98,27 +101,29 @@ internal fun RoomEditorList(
             )
         }
 
-        item {
-            OutlinedButton(
-                onClick = onAddStudent,
-                modifier = Modifier.fillMaxWidth(),
-                border = BorderStroke(
-                    width = size_1,
-                    color = ResideTrackTheme.colors.borderDefault,
-                ),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = ResideTrackTheme.colors.textPrimary,
-                ),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(MR.strings.add_student),
-                )
-                Spacer(modifier = Modifier.width(padding_size_8))
-                Text(
-                    text = stringResource(MR.strings.add_student),
-                    style = ResideTrackTheme.typography.paragraph,
-                )
+        if (isAddStudentEnabled) {
+            item {
+                OutlinedButton(
+                    onClick = onAddStudent,
+                    modifier = Modifier.fillMaxWidth(),
+                    border = BorderStroke(
+                        width = size_1,
+                        color = ResideTrackTheme.colors.borderDefault,
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = ResideTrackTheme.colors.textPrimary,
+                    ),
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(MR.strings.add_student),
+                    )
+                    Spacer(modifier = Modifier.width(padding_size_8))
+                    Text(
+                        text = stringResource(MR.strings.add_student),
+                        style = ResideTrackTheme.typography.paragraph,
+                    )
+                }
             }
         }
 

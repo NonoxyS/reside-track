@@ -191,6 +191,22 @@ class RoomEditorExecutorTest {
     }
 
     @Test
+    fun `save with blank student fields is rejected`() = runTest {
+        val repository = FakeRoomsRepository(rooms = listOf(room(id = 1)))
+        val store = createStore(repository, RoomEditorMode.ExistingRoom(roomId = "1"))
+        val labels = labelsOf(store)
+
+        store.accept(Intent.OnAddStudent)
+        store.accept(Intent.OnSaveAndClose)
+        advanceUntilIdle()
+
+        assertEquals(0, repository.saveRoomCallCount)
+        assertTrue(labels.contains(Label.ShowError(RoomEditorErrorKind.IncompleteStudentData)))
+
+        store.dispose()
+    }
+
+    @Test
     fun `save with duplicate stream numbers is rejected`() = runTest {
         val repository = FakeRoomsRepository(
             rooms = listOf(

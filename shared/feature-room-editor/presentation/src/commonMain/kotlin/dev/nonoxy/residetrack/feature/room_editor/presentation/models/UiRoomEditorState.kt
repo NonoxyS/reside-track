@@ -10,6 +10,8 @@ data class UiRoomEditorState(
     val errorKind: RoomEditorErrorKind? = null,
     val room: UiRoom? = null,
     val editableStudents: ImmutableList<UiEditableStudent> = persistentListOf(),
+    val isSaveEnabled: Boolean = false,
+    val isAddStudentEnabled: Boolean = true,
     val isDirty: Boolean = false,
     val showDiscardConfirm: Boolean = false,
     val openDatePicker: UiOpenDatePicker? = null,
