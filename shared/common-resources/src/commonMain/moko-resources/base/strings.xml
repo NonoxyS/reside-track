@@ -75,6 +75,7 @@
     <string name="students_total_count">Всего слушателей: %1$d</string>
     <string name="students_saved_successfully">Студенты успешно сохранены</string>
 
+    <string name="error_student_fields_required">Заполните все поля для каждого слушателя</string>
     <string name="error_stream_number_required">Номер потока обязателен</string>
     <string name="error_stream_number_invalid">Номер потока должен быть числом</string>
     <string name="error_check_in_date_required">Дата заселения обязательна</string>

@@ -1,12 +1,12 @@
 package dev.nonoxy.residetrack.feature.room_editor.ui.views
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiRoomEditorState
@@ -17,9 +17,9 @@ import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 internal fun RoomEditorContent(
     state: UiRoomEditorState,
     onRetryClick: () -> Unit,
-    onCloseClick: () -> Unit,
     onEditRoomParamsClick: () -> Unit,
     onAddStudent: () -> Unit,
+    isAddStudentEnabled: Boolean,
     onRemoveStudent: (String) -> Unit,
     onStreamNumberChange: (String, String) -> Unit,
     onCheckInDateChange: (String, String) -> Unit,
@@ -28,7 +28,7 @@ internal fun RoomEditorContent(
     onCheckOutDateMillisChange: (String, Long) -> Unit,
     onOpenPicker: (String, UiDateField) -> Unit,
     onDismissPicker: () -> Unit,
-    onSaveAndClose: () -> Unit,
+    bottomPadding: Dp = 0.dp,
     modifier: Modifier = Modifier,
 ) {
     ShowStateData(
@@ -50,28 +50,22 @@ internal fun RoomEditorContent(
                 )
             }
 
-            Box(modifier = Modifier.weight(1f).fillMaxSize()) {
-                RoomEditorList(
-                    students = currentState.editableStudents,
-                    openDatePicker = currentState.openDatePicker,
-                    onAddStudent = onAddStudent,
-                    onRemoveStudent = onRemoveStudent,
-                    onStreamNumberChange = onStreamNumberChange,
-                    onCheckInDateChange = onCheckInDateChange,
-                    onCheckOutDateChange = onCheckOutDateChange,
-                    onCheckInDateMillisChange = onCheckInDateMillisChange,
-                    onCheckOutDateMillisChange = onCheckOutDateMillisChange,
-                    onOpenPicker = onOpenPicker,
-                    onDismissPicker = onDismissPicker,
-                    modifier = Modifier.fillMaxSize(),
-                )
-
-                EditorActionButtons(
-                    onCloseClick = onCloseClick,
-                    onSaveAndClose = onSaveAndClose,
-                    modifier = Modifier.align(Alignment.BottomCenter),
-                )
-            }
+            RoomEditorList(
+                students = currentState.editableStudents,
+                openDatePicker = currentState.openDatePicker,
+                onAddStudent = onAddStudent,
+                isAddStudentEnabled = isAddStudentEnabled,
+                bottomPadding = bottomPadding,
+                onRemoveStudent = onRemoveStudent,
+                onStreamNumberChange = onStreamNumberChange,
+                onCheckInDateChange = onCheckInDateChange,
+                onCheckOutDateChange = onCheckOutDateChange,
+                onCheckInDateMillisChange = onCheckInDateMillisChange,
+                onCheckOutDateMillisChange = onCheckOutDateMillisChange,
+                onOpenPicker = onOpenPicker,
+                onDismissPicker = onDismissPicker,
+                modifier = Modifier.weight(1f).fillMaxSize(),
+            )
         }
     }
 }

@@ -19,16 +19,15 @@ import dev.nonoxy.residetrack.common.ui.common.button.ResideTrackButton
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
-import dev.nonoxy.residetrack.common.ui.theme.padding_size_24
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
 import dev.nonoxy.residetrack.common.ui.theme.size_1
 import dev.nonoxy.residetrack.res.MR
 
-/** Floating Cancel/Save row. Sits over the scrolling list; a top gradient scrim keeps the
- *  buttons legible as content scrolls under them. */
 @Composable
 internal fun EditorActionButtons(
     onCloseClick: () -> Unit,
     onSaveAndClose: () -> Unit,
+    isSaveEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -44,7 +43,7 @@ internal fun EditorActionButtons(
             )
             .navigationBarsPadding()
             .padding(horizontal = padding_size_16)
-            .padding(top = padding_size_24, bottom = padding_size_16),
+            .padding(vertical = padding_size_8),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(padding_size_12)) {
             OutlinedButton(
@@ -63,6 +62,7 @@ internal fun EditorActionButtons(
 
             ResideTrackButton(
                 onClick = onSaveAndClose,
+                enabled = isSaveEnabled,
                 modifier = Modifier.weight(1f),
             ) {
                 Text(
