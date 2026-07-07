@@ -45,6 +45,7 @@ include(
     ":shared:core-initializer",
     ":shared:core-rooms",
     ":shared:core-backup",
+    ":shared:core-notifications",
     ":shared:common-ui",
 
     // Features

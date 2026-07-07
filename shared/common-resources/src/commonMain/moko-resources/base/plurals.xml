@@ -24,4 +24,10 @@
         <item quantity="many">%1$d жильцов</item>
         <item quantity="other">%1$d жильцов</item>
     </plurals>
+    <plurals name="notification_checkout_places">
+        <item quantity="one">%1$d место</item>
+        <item quantity="few">%1$d места</item>
+        <item quantity="many">%1$d мест</item>
+        <item quantity="other">%1$d мест</item>
+    </plurals>
 </resources>
