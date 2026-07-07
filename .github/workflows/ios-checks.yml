@@ -9,7 +9,7 @@ jobs:
     name: SwiftLint + SwiftFormat
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install SwiftLint & SwiftFormat
         run: brew install swiftlint swiftformat
@@ -25,7 +25,7 @@ jobs:
     name: Unit Tests
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-java@v5
         with:
