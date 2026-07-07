@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.nonoxy.residetrack.common.ui.common.state.ShowStateData
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiDaysBadge
+import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiOverdueUnit
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingState
@@ -50,8 +52,8 @@ private fun Preview() {
                         roomNumber = "329",
                         floorNumber = "3",
                         streamNumber = "1234",
-                        checkOutDate = "2024-03-31",
-                        daysLeft = -2,
+                        checkOutDate = "31.03.2024",
+                        daysBadge = UiDaysBadge.Overdue(amount = 2, unit = UiOverdueUnit.DAYS),
                         bucket = UiUpcomingBucket.OVERDUE,
                     ),
                     UiUpcomingItem(
@@ -59,8 +61,8 @@ private fun Preview() {
                         roomNumber = "401",
                         floorNumber = "4",
                         streamNumber = "5646",
-                        checkOutDate = "2024-04-02",
-                        daysLeft = 1,
+                        checkOutDate = "02.04.2024",
+                        daysBadge = UiDaysBadge.Remaining(days = 1),
                         bucket = UiUpcomingBucket.TODAY_TOMORROW,
                     ),
                 )

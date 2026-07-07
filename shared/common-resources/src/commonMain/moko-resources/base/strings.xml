@@ -103,9 +103,12 @@
     <string name="upcoming_bucket_overdue">Просрочено</string>
     <string name="upcoming_bucket_today_tomorrow">Сегодня — завтра</string>
     <string name="upcoming_bucket_this_week">На этой неделе</string>
-    <string name="upcoming_room_label">%1$s · эт. %2$s</string>
+    <string name="upcoming_room_number">Комната %1$s</string>
+    <string name="upcoming_floor">Этаж %1$s</string>
     <string name="upcoming_days_left">Осталось дней: %1$s</string>
     <string name="upcoming_days_overdue">Просрочено на %1$s дн.</string>
+    <string name="upcoming_months_overdue">Просрочено на %1$s мес.</string>
+    <string name="upcoming_years_overdue">Просрочено на %1$s г.</string>
     <string name="rooms_tab">Комнаты</string>
     <string name="action_retry">Повторить</string>
 
