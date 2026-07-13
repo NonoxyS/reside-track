@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +22,7 @@ internal actual fun rememberBackupFilePicker(
 ): BackupFilePicker {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val currentOnExportCompleted by rememberUpdatedState(onExportCompleted)
     // rememberSaveable so a destination chosen after process death still finds its JSON to write.
     var pendingJson by rememberSaveable { mutableStateOf<String?>(null) }
 
@@ -65,7 +67,7 @@ internal actual fun rememberBackupFilePicker(
                 createLauncher.launch(name)
             },
             launchOpenPicker = { openLauncher.launch(arrayOf("application/json")) },
-            onExportCompleted = onExportCompleted,
+            onExportCompleted = { isSuccess -> currentOnExportCompleted(isSuccess) },
             clearPending = { pendingJson = null },
         )
     }
