@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 kotlin {
@@ -111,6 +112,9 @@ dependencies {
     debugImplementation(compose.uiTooling)
     implementation(compose.preview)
     implementation(libs.androidx.activity.compose)
+
+    implementation(libs.androidx.profileinstaller)
+    baselineProfile(projects.android.benchmark)
 }
 
 androidComponents {
