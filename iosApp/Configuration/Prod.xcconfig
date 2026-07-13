@@ -1,0 +1,3 @@
+#include "Config.xcconfig"
+APP_NAME = Reside Track
+BUNDLE_ID = dev.nonoxy.residetrack.ResideTrack
