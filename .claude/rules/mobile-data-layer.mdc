@@ -1,0 +1,64 @@
+---
+description: Data layer — Room DB, repositories, DTO/domain split, CoroutineDispatchers
+globs: **/*.kt
+alwaysApply: false
+---
+
+# Data Layer
+
+## Room Database
+
+Room 2.8.4 + sqliteBundled in `:shared:core-database`. Entities and DAOs live there. `ResideTrackDatabase` is the single DB instance.
+
+- Entities: `@Entity` classes with `@ColumnInfo`. No domain logic.
+- DAOs: `@Dao` with `suspend fun` or `Flow<T>` for live queries.
+- `core-rooms` and other modules consume DAOs — they don't depend on entity classes beyond the DAO boundary.
+
+## Repository Contract
+
+Repositories expose `suspend fun (): Result<T>` (one-shot). Use `Flow<T>` only when a feature genuinely observes a live stream.
+
+Canonical pattern (reference: `RoomsRepositoryImpl`):
+
+```kotlin
+override suspend fun getRooms(): Result<List<Room>> = withContext(dispatchers.io) {
+    coRunCatching(
+        tryBlock = { dao.getAll().map { it.toDomain() } },
+        catchBlock = { throwable ->
+            Napier.e(throwable = throwable, message = "RoomsRepositoryImpl.getRooms failed")
+            throwable.wrapResultFailure()
+        }
+    )
+}
+```
+
+Rules:
+- `coRunCatching(tryBlock, catchBlock)` from `common/utils/CoroutineUtils.kt` — NOT `runCatching`, NOT bare `try/catch`.
+- `wrapSuccess()` / `Throwable.wrapResultFailure()` from `common/utils/CommonUtils.kt`.
+- `Napier.e(throwable) { "..." }` in catchBlock — always.
+- Repositories NEVER throw to the caller — wrap everything in `Result.failure`.
+- `withContext(dispatchers.io)` for DB and IO work.
+
+## Dispatchers
+
+`CoroutineDispatchers` (interface in `:shared:common`) is the ONLY way to get dispatchers in `commonMain` — inject it. Never reference `Dispatchers.IO` / `Dispatchers.Default` directly in `commonMain`.
+
+Exception: platform-leaf code (Compose `actual` pickers, `androidMain` readers) may use raw `Dispatchers.IO` where Koin injection is unavailable (e.g. `AndroidFileResourceReader`). Prefer the top-level `ioDispatcher`/`defaultDispatcher` properties from `common/coroutines/Dispatchers.kt` over raw when possible.
+
+Tests: inject a custom `CoroutineDispatchers` backed by `UnconfinedTestDispatcher`.
+
+## DTO vs Domain
+
+| Layer | Location | Purpose |
+| --- | --- | --- |
+| DB entity | `core-database/entities/` | Wire format for Room (storage shape) |
+| Domain model | `core-rooms/domain/models/` or `core-domain/` | Domain shape consumed by features |
+
+- Entity → domain mapping is the repository's responsibility.
+- Domain models contain no Room annotations.
+- Everything outside the repository sees only domain types.
+
+## Mappers
+
+- DB → domain: free-standing `internal fun XxxEntity.toDomain(): DomainType` colocated with the repository or in a `mappers/` file alongside entities.
+- UI-state mappers (`Store.State/Label → Ui*State/Ui*Label`) under `<feature>/presentation/mappers/` as interface + `internal class Impl`, bound in `<feature>/impl/di/` with `singleOf<I>(::Impl)`.

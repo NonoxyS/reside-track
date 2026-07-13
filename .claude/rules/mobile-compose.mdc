@@ -1,0 +1,76 @@
+---
+description: Compose UI rules — design system, composable structure, FloatingBottomBar inset
+globs: **/*.kt
+alwaysApply: false
+---
+
+# Compose
+
+## Design System — ResideTrackTheme
+
+UI MUST use `ResideTrackTheme` from `:shared:common-ui`, NOT raw Material3.
+
+- Colors: `ResideTrackTheme.colors.*` — NEVER `MaterialTheme.colorScheme.*`.
+  Tokens: `textPrimary/textBody/textCaption/textError/textWarning/textSuccess`, `fillPrimary/fillError/fillWarning/fillSuccess`, `fillErrorBGSecondary/fillWarningBGSecondary/fillSuccessBGSecondary`, `primary/surface/background`.
+- Typography: `ResideTrackTheme.typography.*` — NEVER `MaterialTheme.typography.*`.
+  Styles: `caption / paragraphSM / paragraph / lead / head5..head1`.
+- Shapes: `ResideTrackTheme.shapes.cornerRadius4/8/12/16/24/40`.
+- Spacing/sizes: tokens from `Dimens.kt` (`padding_size_*`) and `Sizes.kt` (`size_*`). NEVER raw `16.dp` inline.
+- Cards: `.clip(shapes.cornerRadiusN).background(colors.primary)` — NOT `Surface(tonalElevation=...)`.
+
+Material components (AlertDialog, DatePicker, TextButton, TextField…) do NOT inherit brand colors — set each slot color explicitly from `ResideTrackTheme.colors`.
+
+Exception: `LocalTextSelectionColors` is provided globally in `Theme.kt` (covers cursor/selection handle across all text fields).
+
+Reference implementation: `feature-rooms/ui` and `common-ui`.
+
+## Shared Components
+
+Use built-ins instead of custom implementations:
+
+- `ShowStateData(isLoading, isError, onRetry) { /* content */ }` — loading/error/data tristate.
+- `ResideTrackLoader` — loading indicator.
+- `ErrorLoadingState` — error + retry button.
+- `ResideTrackButton` — branded button.
+- `ResideTrackSnackbar` — snackbar.
+
+## Screen Structure
+
+Canonical pattern (reference: `feature-rooms/ui`):
+
+```
+{Feature}Screen          — thin: koinViewModel, collectAsState, LaunchedEffect(labels)
+  └── {Feature}ScreenDetails  — ShowStateData wrapper
+        └── {Feature}List / {Feature}EmptyState / views/...
+```
+
+`{Feature}Screen` has no rendering logic beyond state collection and label handling.
+
+## Full-Screen vs Bottom Sheet
+
+- Full-screen destinations: `Box(Modifier.fillMaxSize())` + `ShowStateData` + `SnackbarHost` overlay. TopAppBar and action rows handle insets themselves.
+- `DialogScaffold` is ONLY for bottom sheets (wrap-content modal). Using it in a full-screen destination collapses inner `weight(1f)` boxes to 0 — the screen renders empty.
+
+## Composable Rules
+
+- Every non-root UI-emitting `@Composable` takes `modifier: Modifier = Modifier` as a parameter. Exception: root-screen composables that call `koinViewModel<T>()`.
+- State mirrors for dialog visibility, text-field local input: `remember` / `rememberSaveable`.
+- Previews: add `@Preview` for non-trivial composables with `ResideTrackTheme { ... }` wrapper.
+- String literals in `Text(...)` are forbidden — use moko-resources `stringResource(MR.strings.x)`.
+- `Color(0x...)` / `Color(0xFF...)` literals forbidden — use DS tokens.
+
+## FloatingBottomBar Inset
+
+`FloatingBottomBar` floats over content (Box, BottomCenter). Any scrollable content under tabs MUST consume `LocalFloatingBottomBarInset.current` as bottom padding:
+
+```kotlin
+LazyColumn(
+    contentPadding = PaddingValues(
+        bottom = LocalFloatingBottomBarInset.current + padding_size_8,
+    )
+)
+```
+
+- `LocalFloatingBottomBarInset` lives in `core-navigation`.
+- `TabContainerScreen` measures actual bar height (bar + vertical padding + navBars inset) via `onSizeChanged` and provides it via `CompositionLocalProvider`.
+- Never hardcode the clearance height — the measured value includes navBars inset which varies by device.
