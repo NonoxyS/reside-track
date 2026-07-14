@@ -15,46 +15,23 @@ iOS: open `iosApp/iosApp.xcodeproj` in Xcode.
 
 ## Stack
 
-- Kotlin 2.3.10, Compose Multiplatform 1.10.1 (material3 1.9.0), AGP 9.0.0, Java 17.
-- Gradle 9.4.1.
-- Android: compileSdk/targetSdk 36, minSdk 26. Flavors: `dev` / `prod`.
-- Room 2.8.4 + sqliteBundled 2.6.2 (local DB in `:shared:core-database`).
-- Coroutines 1.10.2, kotlinx.serialization 1.10.0, kotlinx-datetime 0.7.1, immutableCollections 0.4.0.
-- Koin 4.1.1. Per-module Koin module functions; `:shared:main/di/MainModule.kt` aggregates includes.
-- MVIKotlin 4.3.0 (BaseExecutor + `coreMVIKotlinModule` in `:shared:core-mvikotlin`, LoggingStoreFactory via Napier).
-- Napier 2.7.1.
-- moko-mvvm 0.16.1 (CFlow/CStateFlow for iOS contract on `BaseViewModel`).
-- moko-resources 0.26.0 in `:shared:common-resources` (generated `MR` in `dev.nonoxy.residetrack.common.resources`).
-- moko-permissions 0.20.1.
-- compose-navigation 2.9.2 + `Screen` marker interface + `@Serializable` route objects + per-feature `ScreenApi`.
-- Multi-module project (25 modules) under `android/` and `shared/`. `build-logic` composite build with `kmp-library`, `kmp-feature-setup`, `compose-multiplatform-setup`, `json-serialization` convention plugins.
+Exact versions → `gradle/libs.versions.toml`. Module layout, naming/package conventions → `.claude/rules/mobile-overview.mdc`.
+
+- Kotlin + Compose Multiplatform (material3), AGP, Java 17. Flavors: `dev` / `prod`. Targets: Android + iOS only.
+- Room + sqliteBundled (local DB in `:shared:core-database`).
+- Coroutines, kotlinx.serialization, kotlinx-datetime, immutableCollections.
+- Koin. Per-module Koin module functions; `:shared:main/di/MainModule.kt` aggregates.
+- MVIKotlin (BaseExecutor + `coreMVIKotlinModule` in `:shared:core-mvikotlin`, LoggingStoreFactory via Napier).
+- Napier.
+- moko-mvvm (CFlow/CStateFlow for iOS contract on `BaseViewModel`).
+- moko-resources in `:shared:common-resources` (generated `MR` in `dev.nonoxy.residetrack.common.resources`).
+- moko-permissions.
+- compose-navigation + `Screen` marker interface + `@Serializable` route objects + per-feature `ScreenApi`.
+- Multi-module project under `android/` and `shared/`. `build-logic` composite build with `kmp-library`, `kmp-feature-setup`, `compose-multiplatform-setup`, `json-serialization` convention plugins.
 
 ## Architecture
 
-25 modules under `android/` and `shared/`. KMP layout per module: `src/{commonMain,commonTest,androidMain,iosMain}/kotlin/...`. Targets: Android + iOS only.
-
-| Module | Type | Responsibility |
-|---|---|---|
-| `:android:app` | Android-only | `com.android.application` entry. `AndroidApp`, `AppActivity`, manifest. Package `dev.nonoxy.residetrack`. |
-| `:shared:main` | KMP shell | `App.kt`, `TabContainerNavHost`, `iosMain/MainViewController.kt`. Koin composition root (`initKoin()` + `MainModule`). Targets: Android + iOS. |
-| `:shared:common` | KMP | `coRunCatching`, `ResultExtensions`, `OneTimeEvent`, `CoroutineDispatchers`, `StringConverter`, `commonModule`. |
-| `:shared:common-ui` | KMP + Compose | Design system: `ResideTrackTheme` (colors/typography/shapes/dimens/sizes), `ShowStateData`, `ResideTrackLoader`, `ResideTrackButton`, `ResideTrackSnackbar`, `LoadingState`, `ErrorLoadingState`. |
-| `:shared:common-resources` | KMP + moko-resources | Shared strings/fonts/images. `MR` in `dev.nonoxy.residetrack.common.resources`. |
-| `:shared:core-domain` | KMP | App-wide pure domain models. |
-| `:shared:core-mvikotlin` | KMP | `BaseExecutor`, `coreMVIKotlinModule` (binds `StoreFactory` → `LoggingStoreFactory(DefaultStoreFactory())` via Napier). |
-| `:shared:core-presentation` | KMP | `BaseViewModel<S,L>`, `BaseIosViewModel`. |
-| `:shared:core-navigation` | KMP + Compose | `Screen` marker, `NavigationUtils` (`navigateOnResumed`, `popBackStackOnResumed`, `CheckNavigationResult`), `FloatingBottomBar`, `LocalFloatingBottomBarInset`, route helpers. |
-| `:shared:core-database` | KMP | Room 2.8.4 + sqliteBundled — DB entities, DAOs, `ResideTrackDatabase`. |
-| `:shared:core-initializer` | KMP | `AppInitializer` (priority-level init chain), room seeding from `MR.files`. |
-| `:shared:core-rooms` | KMP | `RoomsRepository`, `DraftRoomStorage` — rooms CRUD and draft state. |
-| `:shared:core-backup` | KMP | DB-level export/import (backup/restore). |
-| `:shared:core-notifications` | KMP | Local push notifications for checkout reminders (scheduled via WorkManager on Android). |
-| `:shared:feature-splash:*` | KMP | Splash screen (presentation + ui only — no Store). |
-| `:shared:feature-rooms:*` | KMP | Room list with check-in/out state. api/impl/presentation/ui. |
-| `:shared:feature-add-room:*` | KMP | Add new room (bottom sheet). api/impl/presentation/ui. |
-| `:shared:feature-room-editor:*` | KMP | Edit/delete room (full-screen). api/impl/presentation/ui. |
-| `:shared:feature-upcoming:*` | KMP | Upcoming checkouts bucketed by date (overdue/today-tomorrow/this-week). api/impl/presentation/ui. |
-| `:shared:template-module` | KMP | Blank module template. |
+Multi-module KMP project. Full module table → `.claude/rules/mobile-overview.mdc`.
 
 ### Dependency invariants
 
@@ -75,7 +52,7 @@ iOS: open `iosApp/iosApp.xcodeproj` in Xcode.
 | `mobile-compose.mdc` | Design system, recomposition, composable rules, `LocalFloatingBottomBarInset` |
 | `mobile-data-layer.mdc` | Room DB, repositories, DTO/domain split, `CoroutineDispatchers` |
 | `mobile-error-handling.mdc` | `coRunCatching`, `Result<T>`, Napier logging |
-| `mobile-resources.mdc` | moko-resources 0.26.x — `MR.strings/fonts/images`, `StringConverter` |
+| `mobile-resources.mdc` | moko-resources — `MR.strings/fonts/images`, `StringConverter` |
 | `mobile-code-rules.mdc` | Access modifiers, comments, NPE-safety |
 | `review-checklist.md` | Machine-readable LLM review checklist |
 

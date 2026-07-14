@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## moko-resources
 
-`:shared:common-resources` uses moko-resources 0.26.0. Generated accessor: `MR` in package `dev.nonoxy.residetrack.common.resources`.
+`:shared:common-resources` uses moko-resources 0.26.4. Generated accessor: `MR` in package `dev.nonoxy.residetrack.common.resources`.
 
 Asset locations under `src/commonMain/moko-resources/`:
 - `base/strings.xml` — all localizable strings.

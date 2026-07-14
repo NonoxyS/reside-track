@@ -8,17 +8,17 @@ alwaysApply: false
 
 ## Tech Stack
 
-- Kotlin 2.3.10 + Compose Multiplatform 1.10.1 (material3 1.9.0)
-- AGP 9.0.0, Android minSdk 26 / targetSdk 36 / compileSdk 36
-- Gradle 9.4.1, Java 17
-- Room 2.8.4 + sqliteBundled 2.6.2 (local DB)
-- kotlinx.coroutines 1.10.2, kotlinx.serialization 1.10.0, kotlinx-datetime 0.7.1
-- kotlinx-collections-immutable 0.4.0
+- Kotlin 2.4.0 + Compose Multiplatform 1.11.1 (material3 1.9.0)
+- AGP 9.2.1, Android minSdk 28 / targetSdk 37 / compileSdk 37
+- Gradle 9.6.1, Java 17
+- Room 2.8.4 + sqliteBundled 2.7.0 (local DB)
+- kotlinx.coroutines 1.11.0, kotlinx.serialization 1.11.0, kotlinx-datetime 0.8.0
+- kotlinx-collections-immutable 0.5.1
 - compose-navigation 2.9.2
-- Koin 4.1.1 (per-module Koin module functions; aggregated in `:shared:main`)
-- MVIKotlin 4.3.0 (BaseExecutor + `coreMVIKotlinModule` in `:shared:core-mvikotlin`)
+- Koin 4.2.2 (per-module Koin module functions; aggregated in `:shared:main`)
+- MVIKotlin 4.4.0 (BaseExecutor + `coreMVIKotlinModule` in `:shared:core-mvikotlin`)
 - moko-mvvm 0.16.1 (CFlow/CStateFlow for iOS contract on `BaseViewModel`)
-- moko-resources 0.26.0
+- moko-resources 0.26.4
 - moko-permissions 0.20.1
 - Napier 2.7.1
 
@@ -29,6 +29,7 @@ alwaysApply: false
 | Module | Type | Responsibility |
 |---|---|---|
 | `:android:app` | Android-only | Entry point, `AndroidApp`, `AppActivity`, manifest. |
+| `:android:benchmark` | Android-only | Baseline profile generator (`BaselineProfileGenerator`). |
 | `:shared:main` | KMP shell | `App.kt`, `TabContainerNavHost`, `iosMain/MainViewController.kt`. Koin composition root. |
 | `:shared:common` | KMP | `coRunCatching`, `ResultExtensions`, `CoroutineDispatchers`, `StringConverter`, `commonModule`. |
 | `:shared:common-ui` | KMP + Compose | `ResideTrackTheme`, `ShowStateData`, shared components. |
