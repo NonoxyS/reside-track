@@ -102,6 +102,10 @@ android {
         sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
         targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
+
+    lint {
+        lintConfig = file("$rootDir/linters/androidLint/config.xml")
+    }
 }
 
 dependencies {
