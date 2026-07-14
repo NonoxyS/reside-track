@@ -2,6 +2,7 @@ import com.android.build.api.variant.impl.VariantOutputImpl
 import com.android.build.gradle.internal.tasks.FinalizeBundleTask
 import utils.AppVersion
 import java.util.Locale
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -44,21 +45,20 @@ android {
     }
 
     signingConfigs {
-        // TODO: Create release keystore and uncomment this
-        // register("release").configure {
-        //     file("$rootDir/signing.properties").let { file ->
-        //         if (!file.canRead()) error("signing.properties file read error")
-        //
-        //         val properties = Properties().apply {
-        //             file.inputStream().use { stream -> load(stream) }
-        //         }
-        //
-        //         storeFile = file("$rootDir/keystores/release.keystore.jks")
-        //         storePassword = properties.getProperty("keystorePassword")
-        //         keyAlias = properties.getProperty("keyAlias")
-        //         keyPassword = properties.getProperty("keyPassword")
-        //     }
-        // }
+        register("release").configure {
+            file("$rootDir/signing.properties").let { file ->
+                if (!file.canRead()) error("signing.properties file read error")
+
+                val properties = Properties().apply {
+                    file.inputStream().use { stream -> load(stream) }
+                }
+
+                storeFile = file("$rootDir/keystores/release.keystore.jks")
+                storePassword = properties.getProperty("keystorePassword")
+                keyAlias = properties.getProperty("keyAlias")
+                keyPassword = properties.getProperty("keyPassword")
+            }
+        }
 
         named("debug").configure {
             val DEBUG_STORE_PASSWORD: String by project
@@ -80,8 +80,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            // TODO: After create release signing config change "debug" -> "release"
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

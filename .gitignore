@@ -21,5 +21,9 @@ captures
 app_db.db
 .claude/scheduled_tasks.lock
 
+# Signing (never commit — upload as GitHub Secrets)
+signing.properties
+keystores/release.keystore.jks
+
 # AI tooling (local only)
 .superpowers/
