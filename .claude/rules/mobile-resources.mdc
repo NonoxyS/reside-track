@@ -1,0 +1,50 @@
+---
+description: Resources — moko-resources 0.26.x, MR accessors, StringConverter, common-resources module
+globs: **/*.{kt,kts,xml}
+alwaysApply: false
+---
+
+# Resources
+
+## moko-resources
+
+`:shared:common-resources` uses moko-resources 0.26.4. Generated accessor: `MR` in package `dev.nonoxy.residetrack.common.resources`.
+
+Asset locations under `src/commonMain/moko-resources/`:
+- `base/strings.xml` — all localizable strings.
+- `base/colors.xml` — DS color tokens (read by `ResideTrackTheme`).
+- `fonts/` — font files (e.g. `NotoSans-Regular.ttf`).
+- `images/` — image files (require `@{n}x` scale suffix for Android drawables, e.g. `icon@1x.png`).
+
+**Basenames must be identifier-safe** — moko mirrors them verbatim:
+- `NotoSans-Regular.ttf` → `MR.fonts.notosans_regular`
+- `icon@1x.png` → `MR.images.icon`
+
+## Accessing Resources
+
+In `@Composable` context: `stringResource(MR.strings.x)` from `moko-resources-compose`.
+
+In non-Composable context (e.g. `Ui*LabelMapper`): inject `StringConverter` (`:shared:common`) and call `converter.convert(MR.strings.x)`.
+
+`StringConverter` resolves moko `StringResource` → `String` outside Composition. Implementation is platform-actual — on Android it holds `Context`.
+
+## Adding Strings
+
+All strings go in `:shared:common-resources/src/commonMain/moko-resources/base/strings.xml`. No per-feature string files.
+
+## Presentation with MR
+
+`:shared:feature-X:presentation` does NOT get `common-resources` auto-wired by `kmpFeatureSetup`. If a presentation module needs `MR` (e.g. `UiXLabelMapper` resolves strings), add manually:
+
+```kotlin
+// <feature>/presentation/build.gradle.kts
+commonMainDependencies {
+    implementations(projects.shared.commonResources)
+}
+```
+
+## Code Rules
+
+- String literals in `Text(...)` composables: forbidden — use `stringResource(MR.strings.x)`.
+- `Color(0x...)` literals: forbidden — use `ResideTrackTheme.colors.*` tokens.
+- Never construct CDN/file URLs on the client for resources managed by the backend.

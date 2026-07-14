@@ -15,16 +15,15 @@ androidLibraryConfig {
 
 commonMainDependencies {
     implementations(
+        projects.shared.common,
         libs.room.runtime,
         libs.sqliteBundled,
-        projects.shared.common,
     )
 }
 
 dependencies {
     add("kspAndroid", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
 }
 

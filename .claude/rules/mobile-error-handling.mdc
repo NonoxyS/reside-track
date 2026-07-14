@@ -1,0 +1,54 @@
+---
+description: Error handling — coRunCatching in suspend, Result<T>, Napier logging by layer
+globs: **/*.kt
+alwaysApply: false
+---
+
+# Error Handling
+
+## Repository contract
+
+Repositories return `suspend fun (): Result<T>`. They never throw to the caller.
+
+```kotlin
+override suspend fun getRoom(id: Long): Result<Room> = withContext(dispatchers.io) {
+    coRunCatching(
+        tryBlock = { dao.getById(id).toDomain() },
+        catchBlock = { throwable ->
+            Napier.e(throwable = throwable, message = "RoomsRepositoryImpl.getRoom failed")
+            throwable.wrapResultFailure()
+        }
+    )
+}
+```
+
+## Discipline
+
+- In `suspend` code: use `coRunCatching { ... }` from `common/utils/CoroutineUtils.kt`. It rethrows `CancellationException` (structured concurrency) and converts other throwables to `Result.failure`. Optional second param `catchBlock: (Throwable) -> Result<T>` defaults to `{ it.wrapResultFailure() }`.
+- `runCatching` only in **non-suspend** call paths.
+- Bare `try/catch` in suspend code is forbidden (swallows `CancellationException`).
+
+## Executor layer
+
+Executors fold `Result<T>` into `Message`s for the Reducer and (when appropriate) `Label`s for UI:
+
+```kotlin
+repository.getRoom(id)
+    .onSuccess { dispatch(Message.SetRoom(it)) }
+    .onFailure { throwable ->
+        Napier.e(throwable = throwable, message = "RoomEditorExecutor#loadRoom failed")
+        dispatch(Message.SetError(true))
+    }
+```
+
+Executors do not throw past the `BaseExecutor` boundary — every failure becomes a `Message`.
+
+## ViewModel / UI layer
+
+ViewModels never log errors — logging is a data-layer / executor responsibility. UI renders `Ui*State.isError` and routes one-shot effects through `Ui*Label`.
+
+`println(...)` is forbidden everywhere — use `Napier.v / d / i / w / e`.
+
+## Logging
+
+Napier initialized once per platform entry with `Napier.base(DebugAntilog(...))` **before** `initKoin(...)`. If the entry can be re-created (tests), call `Napier.takeLogarithm()` first to prevent duplicate sinks.

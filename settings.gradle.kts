@@ -32,6 +32,7 @@ includeBuild("build-logic")
 
 include(
     ":android:app",
+    ":android:benchmark",
     ":shared:main",
 
     // Core / Common
@@ -71,6 +72,4 @@ include(
     ":shared:feature-upcoming:impl",
     ":shared:feature-upcoming:presentation",
     ":shared:feature-upcoming:ui",
-
-    ":shared:template-module"
 )

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 kotlin {
@@ -101,6 +102,10 @@ android {
         sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
         targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
+
+    lint {
+        lintConfig = file("$rootDir/linters/androidLint/config.xml")
+    }
 }
 
 dependencies {
@@ -111,6 +116,9 @@ dependencies {
     debugImplementation(compose.uiTooling)
     implementation(compose.preview)
     implementation(libs.androidx.activity.compose)
+
+    implementation(libs.androidx.profileinstaller)
+    baselineProfile(projects.android.benchmark)
 }
 
 androidComponents {

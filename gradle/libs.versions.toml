@@ -1,62 +1,67 @@
 [versions]
 # Build
-agp = "9.0.0"
+agp = "9.2.1"
 javaVersion = "17"
 
 # Kotlin
-kotlin = "2.3.10"
-kotlin-coroutines = "1.10.2"
-kotlin-serialization = "1.10.0"
-kotlin-datetime = "0.7.1"
-kotlin-immutableCollections = "0.4.0"
+kotlin = "2.4.0"
+kotlin-coroutines = "1.11.0"
+kotlin-serialization = "1.11.0"
+kotlin-datetime = "0.8.0"
+kotlin-immutableCollections = "0.5.1"
 
 # KSP (KSP2, plain semver — 2.3.x line for Kotlin 2.3.x)
 ksp = "2.3.8"
 
 # Android
-android-compileSdk = "36"
-android-minSdk = "26"
-android-targetSdk = "36"
+android-compileSdk = "37"
+android-minSdk = "28"
+android-targetSdk = "37"
 
 # AppVersion
 appVersion-major = "1"
 appVersion-minor = "0"
 
 # Compose Multiplatform
-compose-multiplatform = "1.10.1"
+compose-multiplatform = "1.11.1"
 compose-multiplatform-material3 = "1.9.0"
 compose-multiplatform-navigation = "2.9.2"
 compose-icons-core = "1.7.3"
 
 # AndroidX
-androidx-activity = "1.12.4"
+androidx-activity = "1.13.0"
 androidx-appcompat = "1.7.1"
-androidx-core = "1.17.0"
-androidx-work = "2.10.1"
-androidx-lifecycle = "2.9.6"
+androidx-core = "1.19.0"
+androidx-work = "2.11.2"
+androidx-lifecycle = "2.10.0"
 
 # Room
 room = "2.8.4"
-sqliteBundled = "2.6.2"
+sqliteBundled = "2.7.0"
 
 # Test
 androidx-espresso = "3.7.0"
 androidx-testExt = "1.3.0"
 junit = "4.13.2"
 
+# Benchmark / Baseline Profiles
+androidx-benchmark = "1.5.0-alpha07"
+androidx-profileinstaller = "1.4.1"
+androidx-uiautomator = "2.3.0"
+
 # DI
-koin = "4.1.1"
+koin = "4.2.2"
 
 # Detekt
 detekt = "1.23.8"
 
 # Moko
-moko-resources = "0.26.0"
+moko-resources = "0.26.4"
 moko-mvvm = "0.16.1"
 moko-permissions = "0.20.1"
 
 # MVIKotlin
-mvikotlin = "4.3.0"
+mvikotlin = "4.4.0"
 
 # Logging
 napier = "2.7.1"
@@ -137,6 +142,11 @@ junit = { module = "junit:junit", version.ref = "junit" }
 androidx-testExt-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-testExt" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidx-espresso" }
 
+# Benchmark / Baseline Profiles
+androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }
+androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx-uiautomator" }
+androidx-profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "androidx-profileinstaller" }
+
 # Detekt
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 detekt-libraries = { group = "io.gitlab.arturbosch.detekt", name = "detekt-rules-libraries", version.ref = "detekt" }
@@ -151,6 +161,8 @@ conventionPlugin-jsonSerialization = { id = "json-serialization", version = "" }
 # Android
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidTest = { id = "com.android.test", version = "" }
+androidx-baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-benchmark" }
 
 # Kotlin
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

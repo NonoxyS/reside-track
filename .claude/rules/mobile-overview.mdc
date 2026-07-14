@@ -1,0 +1,81 @@
+---
+description: General project info — tech stack, module layout, naming conventions
+globs: **/*.{kt,kts}
+alwaysApply: false
+---
+
+# reside-track — Overview
+
+## Tech Stack
+
+- Kotlin 2.4.0 + Compose Multiplatform 1.11.1 (material3 1.9.0)
+- AGP 9.2.1, Android minSdk 28 / targetSdk 37 / compileSdk 37
+- Gradle 9.6.1, Java 17
+- Room 2.8.4 + sqliteBundled 2.7.0 (local DB)
+- kotlinx.coroutines 1.11.0, kotlinx.serialization 1.11.0, kotlinx-datetime 0.8.0
+- kotlinx-collections-immutable 0.5.1
+- compose-navigation 2.9.2
+- Koin 4.2.2 (per-module Koin module functions; aggregated in `:shared:main`)
+- MVIKotlin 4.4.0 (BaseExecutor + `coreMVIKotlinModule` in `:shared:core-mvikotlin`)
+- moko-mvvm 0.16.1 (CFlow/CStateFlow for iOS contract on `BaseViewModel`)
+- moko-resources 0.26.4
+- moko-permissions 0.20.1
+- Napier 2.7.1
+
+## Module Layout
+
+25 modules under `android/` and `shared/`. KMP layout per module: `src/{commonMain,commonTest,androidMain,iosMain}/kotlin/...`. Targets: Android + iOS only. Convention plugins (`kmp-library`, `kmp-feature-setup`, `compose-multiplatform-setup`, `json-serialization`) live in `build-logic`.
+
+| Module | Type | Responsibility |
+|---|---|---|
+| `:android:app` | Android-only | Entry point, `AndroidApp`, `AppActivity`, manifest. |
+| `:android:benchmark` | Android-only | Baseline profile generator (`BaselineProfileGenerator`). |
+| `:shared:main` | KMP shell | `App.kt`, `TabContainerNavHost`, `iosMain/MainViewController.kt`. Koin composition root. |
+| `:shared:common` | KMP | `coRunCatching`, `ResultExtensions`, `CoroutineDispatchers`, `StringConverter`, `commonModule`. |
+| `:shared:common-ui` | KMP + Compose | `ResideTrackTheme`, `ShowStateData`, shared components. |
+| `:shared:common-resources` | KMP + moko-resources | `MR` in `dev.nonoxy.residetrack.common.resources`. |
+| `:shared:core-domain` | KMP | App-wide pure domain models. |
+| `:shared:core-mvikotlin` | KMP | `BaseExecutor`, `coreMVIKotlinModule`. |
+| `:shared:core-presentation` | KMP | `BaseViewModel<S,L>`, `BaseIosViewModel`. |
+| `:shared:core-navigation` | KMP + Compose | `Screen` marker, `NavigationUtils`, `FloatingBottomBar`, `LocalFloatingBottomBarInset`. |
+| `:shared:core-database` | KMP | Room DB entities, DAOs, `ResideTrackDatabase`. |
+| `:shared:core-initializer` | KMP | `AppInitializer` (priority-level init), room seeding. |
+| `:shared:core-rooms` | KMP | `RoomsRepository`, `DraftRoomStorage`. |
+| `:shared:core-backup` | KMP | DB-level backup/restore. |
+| `:shared:core-notifications` | KMP | Local checkout reminder notifications. |
+| `:shared:feature-splash:{presentation,ui}` | KMP | Splash (no Store). |
+| `:shared:feature-rooms:{api,impl,presentation,ui}` | KMP | Room list with check-in/out state. |
+| `:shared:feature-add-room:{api,impl,presentation,ui}` | KMP | Add room (bottom sheet). |
+| `:shared:feature-room-editor:{api,impl,presentation,ui}` | KMP | Edit/delete room (full-screen). |
+| `:shared:feature-upcoming:{api,impl,presentation,ui}` | KMP | Upcoming checkouts by date bucket. |
+
+## Package Conventions
+
+Package root: `dev.nonoxy.residetrack`.
+
+| Module | Package |
+|---|---|
+| `:android:app` | `dev.nonoxy.residetrack` |
+| `:shared:main` | `dev.nonoxy.residetrack.{ui,di,navigation}` |
+| `:shared:common` | `dev.nonoxy.residetrack.common.*` |
+| `:shared:common-ui` | `dev.nonoxy.residetrack.common.ui.*` |
+| `:shared:common-resources` | `dev.nonoxy.residetrack.common.resources` (generated `MR`) |
+| `:shared:core-*` | `dev.nonoxy.residetrack.core.<name>.*` |
+| `:shared:feature-X:{api,impl,presentation,ui}` | `dev.nonoxy.residetrack.feature.<x>.{api,impl,presentation,ui}.*` |
+
+## Naming Conventions
+
+| Entity | Pattern | Example |
+| --- | --- | --- |
+| ViewModel | `{Feature}ViewModel` | `RoomsViewModel` |
+| Screen composable | `{Feature}Screen` | `RoomsScreen` |
+| Screen details | `{Feature}ScreenDetails` | `RoomsScreenDetails` |
+| Sub-views dir | `views/` | `rooms/ui/views/` |
+| Store interface | `{Feature}Store` | `RoomsStore` |
+| Store Intent/State/Label | `{Feature}Store.Intent/State/Label` | `RoomsStore.Intent` |
+| UI state | `Ui{Feature}State` | `UiRoomsState` |
+| UI label | `Ui{Feature}Label` | `UiRoomsLabel` |
+| State mapper | `Ui{Feature}StateMapper` | `UiRoomsStateMapper` |
+| Label mapper | `Ui{Feature}LabelMapper` | `UiRoomsLabelMapper` |
+| Repository contract | `{Topic}Repository` | `RoomsRepository` |
+| Koin module fun | `{moduleName}Module` | `commonModule`, `coreRoomsModule`, `featureRoomsImplModule` |

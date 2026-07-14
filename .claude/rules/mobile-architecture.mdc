@@ -1,0 +1,163 @@
+---
+description: Current architecture — MVIKotlin Store, BaseViewModel<State, Label>, Koin DI, Compose Navigation, build conventions
+globs: **/*.{kt,kts}
+alwaysApply: false
+---
+
+# Architecture
+
+## State Management — MVIKotlin
+
+Each feature exposes a `Store` through `<feature>/api/store/<Feature>Store.kt` and implements it under `<feature>/impl/domain`:
+
+- `<Feature>StoreFactory` — assembles `Store<Intent, State, Label>` via injected `StoreFactory` (provided by `core/mvikotlin/di/CoreMVIKotlinModule` as `LoggingStoreFactory(DefaultStoreFactory())` via Napier).
+- `<Feature>Executor` — extends `BaseExecutor<Intent, Action, State, Message, Label>`. Handles `Intent`s and `Action`s; dispatches `Message`s to the Reducer and publishes `Label`s for one-shot side effects.
+- `<Feature>Reducer` — `Reducer<State, Message>`; pure `State.copy(...)`.
+
+`Action` and `Message` sealed types live inside `StoreFactory` as `internal` companions.
+
+### Presentation layer
+
+- `<Feature>ViewModel` extends `BaseViewModel<UiState, UiLabel>` (extends `androidx.lifecycle.ViewModel`, exposes `state: CStateFlow<State>` + `label: CFlow<Label>` for iOS via moko-mvvm).
+- `bindAndStart { store.states.mapNotNull(stateMapper::map) bindTo ::acceptState; store.labels.mapNotNull(labelMapper::map) bindTo ::acceptLabel }` in `init`.
+- Public callbacks delegate to `store.accept(Intent.X)`.
+- `onCleared { store.dispose(); super.onCleared() }` — mandatory. Store does NOT auto-dispose.
+
+### UI layer
+
+- `<Feature>Screen` consumes VM via `koinViewModel<FeatureViewModel>()`.
+- `state by vm.state.collectAsState()` + `LaunchedEffect(vm) { vm.label.collect { ... } }`.
+- `<Feature>Screen` is thin — collects state and labels, delegates rendering to `<Feature>ScreenDetails`.
+- `<Feature>ScreenDetails` renders `ShowStateData(isLoading, isError, ...) { /* content */ }`.
+- Sub-views go under `views/` directory.
+
+### Visibility
+
+- `Store`, `Intent`, `State`, `Label` — public.
+- `StoreFactory`, `Executor`, `Reducer`, `Action`, `Message` — `internal`.
+- Mapper interfaces public, `Impl` classes `internal`.
+- `<Feature>ImplModule` (`<feature>/impl/di/`) is the only Koin entry consumed by `MainModule`.
+
+Loading: `Store.State.isLoading: Boolean`. Errors: `Store.State.isError: Boolean`. One-shot effects: `Label`.
+
+### Feature template invariants
+
+`Store.Label`, `UiXLabel`, `UiXLabelMapper(Impl)` are always present — even if the sealed interface is empty. Never remove these empty slots; the next one-shot effect reuses them without scaffolding.
+
+## Koin DI
+
+Core bindings in `:shared:main/di/MainModule.kt`; per-feature in `<feature>/impl/di/<Feature>ImplModule.kt`. `MainModule` aggregates all via `includes(...)`.
+
+- `single<T> { ... }` for datasources, repositories.
+- `factory { <Feature>StoreFactory(get(), ...).create() }` to expose a feature Store (StoreFactory is `internal`).
+- `viewModelOf(::SomeViewModel)` for view-models.
+
+Binding interfaces to implementations — choose by constructor params:
+
+- **No constructor params** → `singleOf<I>(::Impl)` / `factoryOf<I>(::Impl)` (typed target).
+- **Has constructor params** → `single<I> { new(::Impl) }` / `factory<I> { new(::Impl) }`.
+- **NEVER** `factoryOf(::Impl) { bind<I>() }` / `singleOf(::Impl) { bind<I>() }` — registers `Impl` as primary key, `I` as secondary → impl leaks into the graph.
+
+Resolve dependencies:
+- In classes (repos, StoreFactories, executors, view-models): via **constructor parameters** only. No `get()` inside class bodies.
+- In composables: `val vm: RoomsViewModel = koinViewModel()`.
+- Avoid `KoinPlatform.getKoin().get()` outside DI modules.
+
+`initKoin(appDeclaration)` is the single entry point (idempotent via `KoinPlatform.getKoinOrNull()` guard). Called from:
+- `AndroidApp.onCreate` with `androidContext(this)`.
+- iOS `MainViewController` factory inside `ComposeUIViewController(configure = { initKoin() })`.
+
+## Compose Navigation
+
+Type-safe routes based on the `Screen` marker interface in `:shared:core-navigation`.
+
+- `Screen` — empty marker interface.
+- Route objects: `@Serializable data object XxxRoute : Screen` (or `data class` for routes with args).
+- Per-feature `ScreenApi` in `<feature>/ui/api/Feature<X>ScreenApi.kt`. Strict top-to-bottom order:
+
+```kotlin
+@Serializable
+data object <X>Route : Screen
+
+fun NavController.navigateTo<X>Screen(
+    popUpInclusive: Boolean = true,
+    popUpToScreen: Screen? = null,
+) {
+    navigateOnResumed(<X>Route) {
+        launchSingleTop = true
+        popUpToScreen?.let { screen -> popUpTo(screen) { inclusive = popUpInclusive } }
+    }
+}
+
+fun NavGraphBuilder.composable<X>Screen(
+    // onNavigateTo<Y>: () -> Unit = {},
+) {
+    composable<<X>Route> { <X>Screen(/* callbacks */) }
+}
+```
+
+Route objects live in `ScreenApi.kt`, NOT in `:shared:core-navigation`.
+
+`NavigationUtils` helpers (`navigateOnResumed`, `popBackStackOnResumed`, `CheckNavigationResult`) are for screen-to-screen navigation. **`navigateOnResumed` silently drops calls from modal sheets** (FloatingWindow entry never reaches RESUMED) — navigate directly from sheets without the resumed guard.
+
+## Presentation Layer Discipline
+
+### UiX models are mandatory
+
+Domain types must never reach `@Composable`. Map them to `Ui*` models in `<feature>/presentation/models/` via `Ui*StateMapper` / `Ui*LabelMapper`. Mapper is a pure function (`Store.State → UiXState`) — no suspend, no Repository calls.
+
+### ImmutableList / ImmutableMap only in UiX models
+
+`List<T>` / `Map<K,V>` in domain and `Store.State`. `ImmutableList<T>` / `ImmutableMap<K,V>` only in `Ui*` models (converted in the mapper via `.toImmutableList()`).
+
+### Enum → UiEnum with lazy resource getter
+
+When an enum needs a resource in the UI, declare a `UiX`-enum with a **lazy getter** (NOT a constructor field):
+
+```kotlin
+enum class UiUpcomingBucket {
+    OVERDUE, TODAY_TOMORROW, THIS_WEEK;
+    val title: StringResource get() = when (this) {
+        OVERDUE -> MR.strings.upcoming_bucket_overdue
+        TODAY_TOMORROW -> MR.strings.upcoming_bucket_today_tomorrow
+        THIS_WEEK -> MR.strings.upcoming_bucket_this_week
+    }
+}
+```
+
+Constructor-field MR access triggers static-init on K/N in unit tests → `FileFailedToInitializeException`. Lazy getter defers MR access to actual UI call where the resource bundle is present.
+
+### No mapping in @Composable
+
+`when(domainEnum) -> MR.strings.x` inside a composable is forbidden. Map to UI-enum in presentation; composable reads `item.bucket.title`.
+
+Colors from `ResideTrackTheme.colors.*` cannot be extracted to presentation (composition-scoped) — `when(uiEnum) -> themeColor` is the only legal mapping left in UI, since the domain type is already gone at that point.
+
+### Snackbar strings resolved in presentation
+
+`Ui*LabelMapper` injects `StringConverter`, resolves semantic kind → message String, puts it in `Ui*Label.ShowX(message: String)`. UI only calls `label.message`. No `koinInject<StringConverter>()` in `@Composable`.
+
+Presentation module that needs `MR` or `StringConverter` must add `projects.shared.commonResources` in its `build.gradle.kts` — it is NOT auto-wired to presentation by `kmpFeatureSetup`.
+
+### Mapper never calls Repository
+
+Everything the Mapper needs must be in `Store.State`. If mapper needs an external call, the fix is enriching State in the Executor.
+
+## Build Conventions
+
+Every `:shared:feature-X:{api,impl,presentation,ui}` submodule applies exactly one convention plugin: `alias(libs.plugins.conventionPlugin.kmpFeatureSetup)` (plus `alias(libs.plugins.conventionPlugin.jsonSerialization)` on `:impl` that reads JSON, and `alias(libs.plugins.conventionPlugin.composeMultiplatformSetup)` on `:ui`). Module name must be `api`/`impl`/`presentation`/`ui` — build fails otherwise.
+
+Auto-wired by `kmp-feature-setup` (do **NOT** redeclare in the module's `build.gradle.kts`):
+
+| Submodule | `commonMain` auto-wired |
+| --- | --- |
+| `api` | `core-domain`, `core-mvikotlin`, compose-compiler plugin |
+| `impl` | `core-domain`, `common`, sibling `:api`, `core-mvikotlin` |
+| `presentation` | `core-domain`, `common`, sibling `:api`, `core-mvikotlin`, `core-presentation`, `koin.core.viewmodel` (via api()), compose-compiler plugin |
+| `ui` | `core-domain`, `common`, sibling `:api`, `core-navigation`, `common-resources`, `common-ui`, `koin.compose.viewmodel`, `moko.resources.compose`, composeBundle (runtime + foundation + ui + material3), sibling `:presentation` |
+
+Notes:
+- `:ui` must additionally apply `composeMultiplatformSetup` — `kmpFeatureSetup` does NOT auto-apply it.
+- Each module sets its own namespace via `androidLibraryConfig { namespace = "..." }`.
+- Apply `kmp-library` only to `:shared:common*` / `:shared:core-*`. Never apply it directly to feature submodules.
+- Feature-specific deps (e.g. `immutableCollections`, `datetime`, `compose.icons.core`, `core-rooms`, `core-database`) stay in the module's `build.gradle.kts`.

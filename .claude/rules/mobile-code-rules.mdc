@@ -1,0 +1,47 @@
+---
+description: Code quality — access modifiers, comments, NPE-safety, member ordering
+globs: **/*.kt
+alwaysApply: false
+---
+
+# Code Rules
+
+## Access Modifiers
+
+- `internal` for: `StoreFactory`, `Executor`, `Reducer`, `Action`, `Message`, mapper `Impl` classes, `*ImplModule` is the only public Koin entry per feature.
+- `private` for implementation details inside a class.
+- `public` (default) only where the type is part of a public contract (`Store`, `Intent`, `State`, `Label`, mapper interfaces, `Repository` interface).
+
+## Comments
+
+Write comments ONLY when the WHY is non-obvious — a hidden constraint, a subtle invariant, a workaround for a specific external bug.
+
+- On declarations (classes, functions, properties): KDoc `/** */` format.
+- Inside function bodies: inline `//` for explaining non-obvious logic.
+- **NEVER** downgrade KDoc to inline `//` — that's a format regression, not a cleanup.
+- **NEVER** write comments that restate what the name already says.
+- No AI-generated comment blocks, no "added for X", no "handles the case from issue #N".
+
+## NPE Safety
+
+- `!!` is forbidden without a preceding null-filter or exhaustive when-check that proves non-null.
+- Prefer `?: return`, `?: error("...")`, or `requireNotNull(...)` over `!!`.
+
+## Member Ordering
+
+Suggested order inside a class:
+1. Companion object / constants
+2. Injected/constructor properties
+3. Overridden properties
+4. Private properties
+5. `init` block
+6. Public functions (overrides first, then own)
+7. Private functions
+
+## Misc
+
+- No `println(...)` — use `Napier.v/d/i/w/e`.
+- No hardcoded `Dispatchers.IO/Default` in `commonMain` — inject `CoroutineDispatchers`.
+- No version literals in `build.gradle.kts` — all deps via `gradle/libs.versions.toml`.
+- No AI-generated footers in commits/PRs ("Generated with Claude Code", "Co-Authored-By: Claude").
+- No "Test Plan" section in PRs.
