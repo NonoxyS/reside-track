@@ -17,9 +17,6 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# Local artifacts
-app_db.db
-.claude/scheduled_tasks.lock
-
-# AI tooling (local only)
-.superpowers/
+# Signing (never commit — upload as GitHub Secrets)
+signing.properties
+keystores/release.keystore.jks
