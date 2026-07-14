@@ -46,8 +46,8 @@ android {
 
     val signingPropertiesFile = rootProject.file("signing.properties")
     signingConfigs {
-        if (signingPropertiesFile.canRead()) {
-            register("release").configure {
+        register("release").configure {
+            if (signingPropertiesFile.canRead()) {
                 val properties = Properties().apply {
                     signingPropertiesFile.inputStream().use { stream -> load(stream) }
                 }
@@ -78,7 +78,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.findByName("release")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
