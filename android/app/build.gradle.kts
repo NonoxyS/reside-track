@@ -44,15 +44,13 @@ android {
         }
     }
 
+    val signingPropertiesFile = rootProject.file("signing.properties")
     signingConfigs {
-        register("release").configure {
-            file("$rootDir/signing.properties").let { file ->
-                if (!file.canRead()) error("signing.properties file read error")
-
+        if (signingPropertiesFile.canRead()) {
+            register("release").configure {
                 val properties = Properties().apply {
-                    file.inputStream().use { stream -> load(stream) }
+                    signingPropertiesFile.inputStream().use { stream -> load(stream) }
                 }
-
                 storeFile = file("$rootDir/keystores/release.keystore.jks")
                 storePassword = properties.getProperty("keystorePassword")
                 keyAlias = properties.getProperty("keyAlias")
@@ -80,7 +78,7 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
