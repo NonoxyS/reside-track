@@ -370,8 +370,15 @@ internal class RoomEditorExecutor(
             return
         }
 
-        val existingRooms = roomsRepository.getAllRooms().getOrElse { emptyList() }
+        dispatch(Message.SetIsLoading(isLoading = true))
+
+        val existingRooms = roomsRepository.getAllRooms().getOrElse {
+            dispatch(Message.SetIsLoading(isLoading = false))
+            publish(Label.ShowError(kind = RoomEditorErrorKind.FailedToUpdateRoom))
+            return
+        }
         if (RoomNumberConflict.exists(existingRooms, floor, number, excludeRoomId = room.id)) {
+            dispatch(Message.SetIsLoading(isLoading = false))
             dispatch(Message.SetRoomParams(params.copy(roomNumberError = true)))
             publish(Label.ShowError(kind = RoomEditorErrorKind.RoomNumberTaken))
             return
@@ -383,10 +390,12 @@ internal class RoomEditorExecutor(
             roomNumber = number,
             bedsCount = beds,
         ).onSuccess {
+            dispatch(Message.SetIsLoading(isLoading = false))
             dispatch(Message.SetRoom(room.copy(floorNumber = floor, roomNumber = number, bedsCount = beds)))
             dispatch(Message.SetShowRoomParams(show = false))
             publish(Label.ShowSuccess(kind = RoomEditorSuccessKind.RoomUpdated))
         }.onFailure {
+            dispatch(Message.SetIsLoading(isLoading = false))
             publish(Label.ShowError(kind = RoomEditorErrorKind.FailedToUpdateRoom))
         }
     }
@@ -394,6 +403,7 @@ internal class RoomEditorExecutor(
     private suspend fun handleDeleteRoom() {
         if (mode !is RoomEditorMode.ExistingRoom) return
         val room = state().room ?: return
+        dispatch(Message.SetIsLoading(isLoading = true))
         roomsRepository.deleteRoom(roomId = room.id)
             .onSuccess {
                 dispatch(Message.SetShowDeleteConfirm(show = false))
@@ -401,6 +411,7 @@ internal class RoomEditorExecutor(
                 publish(Label.NavigateBack)
             }
             .onFailure {
+                dispatch(Message.SetIsLoading(isLoading = false))
                 dispatch(Message.SetShowDeleteConfirm(show = false))
                 publish(Label.ShowError(kind = RoomEditorErrorKind.FailedToDeleteRoom))
             }

@@ -28,6 +28,7 @@ import dev.nonoxy.residetrack.res.MR
 @Composable
 internal fun RoomParamsSheet(
     params: UiRoomParams,
+    isLoading: Boolean,
     onFloorChange: (String) -> Unit,
     onRoomNumberChange: (String) -> Unit,
     onBedsChange: (String) -> Unit,
@@ -88,7 +89,7 @@ internal fun RoomParamsSheet(
                     .padding(top = padding_size_12),
                 verticalArrangement = Arrangement.spacedBy(padding_size_4),
             ) {
-                ResideTrackButton(onClick = onSave, modifier = Modifier.fillMaxWidth()) {
+                ResideTrackButton(onClick = onSave, enabled = !isLoading, modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = stringResource(MR.strings.room_editor_save_params),
                         style = ResideTrackTheme.typography.paragraph,

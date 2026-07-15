@@ -22,6 +22,7 @@ internal class UiRoomEditorStateMapperImpl(
         isError = item.isError,
         errorKind = item.errorKind,
         room = item.room?.let(uiRoomMapper::map),
+        initialStudentCount = item.initialStudentCount,
         isSaveEnabled = item.isSaveEnabled,
         isAddStudentEnabled = item.isAddStudentEnabled,
         editableStudents = item.editableStudents.map { st ->
