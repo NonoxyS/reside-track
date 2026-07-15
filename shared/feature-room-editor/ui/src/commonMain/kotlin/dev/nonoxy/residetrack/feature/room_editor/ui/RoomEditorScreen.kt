@@ -56,6 +56,7 @@ internal fun RoomEditorScreen(
     if (state.showRoomParams && state.roomParams != null) {
         RoomParamsSheet(
             params = state.roomParams!!,
+            isLoading = state.isLoading,
             onFloorChange = viewModel::onRoomParamsFloorChange,
             onRoomNumberChange = viewModel::onRoomParamsRoomNumberChange,
             onBedsChange = viewModel::onRoomParamsBedsChange,
@@ -75,7 +76,8 @@ internal fun RoomEditorScreen(
     if (state.showDeleteConfirm) {
         DeleteRoomDialog(
             roomNumber = state.room?.roomNumber.orEmpty(),
-            studentCount = state.editableStudents.size,
+            studentCount = state.initialStudentCount,
+            isLoading = state.isLoading,
             onConfirm = viewModel::onDeleteRoomConfirm,
             onDismiss = viewModel::onDeleteRoomDismiss,
         )

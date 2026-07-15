@@ -12,6 +12,7 @@ import dev.nonoxy.residetrack.res.MR
 internal fun DeleteRoomDialog(
     roomNumber: String,
     studentCount: Int,
+    isLoading: Boolean,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -27,7 +28,7 @@ internal fun DeleteRoomDialog(
             Text(text = stringResource(MR.strings.room_editor_delete_confirm_message, studentCount))
         },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
+            TextButton(onClick = onConfirm, enabled = !isLoading) {
                 Text(
                     text = stringResource(MR.strings.delete),
                     color = ResideTrackTheme.colors.textError,
