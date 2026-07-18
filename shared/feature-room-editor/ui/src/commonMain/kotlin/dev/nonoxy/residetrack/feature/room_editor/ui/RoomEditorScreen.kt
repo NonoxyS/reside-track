@@ -40,7 +40,7 @@ internal fun RoomEditorScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
-    var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.INFO) }
+    var currentSnackbarType by rememberSaveable { mutableStateOf(SnackbarType.ERROR) }
 
     BackHandler(enabled = state.isDirty && !state.isLoading) {
         viewModel.onDismissRequested()
@@ -94,14 +94,6 @@ internal fun RoomEditorScreen(
                     withDismissAction = true,
                 )
             }
-            is UiRoomEditorLabel.ShowSuccess -> {
-                currentSnackbarType = SnackbarType.INFO
-                snackbarHostState.currentSnackbarData?.dismiss()
-                snackbarHostState.showSnackbar(
-                    message = label.message,
-                    withDismissAction = true,
-                )
-            }
         }
     }
 
@@ -123,8 +115,7 @@ internal fun RoomEditorScreen(
                 snackbar = { snackbarData ->
                     when (currentSnackbarType) {
                         SnackbarType.ERROR -> ResideTrackErrorSnackbar(snackbarData = snackbarData)
-                        SnackbarType.INFO -> ResideTrackSnackbar(snackbarData = snackbarData)
-                        else -> Unit
+                        else -> ResideTrackSnackbar(snackbarData = snackbarData)
                     }
                 },
             )

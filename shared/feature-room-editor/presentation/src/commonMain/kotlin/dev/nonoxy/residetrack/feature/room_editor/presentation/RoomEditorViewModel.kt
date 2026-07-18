@@ -1,28 +1,49 @@
 package dev.nonoxy.residetrack.feature.room_editor.presentation
 
+import androidx.lifecycle.viewModelScope
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.states
+import dev.nonoxy.residetrack.core.presentation.snackbar.SnackbarBus
+import dev.nonoxy.residetrack.core.presentation.snackbar.SnackbarEvent
+import dev.nonoxy.residetrack.core.presentation.snackbar.SnackbarEventType
+import dev.nonoxy.residetrack.core.presentation.viewmodel.BaseViewModel
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.DateField
 import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorStore.Intent
+import dev.nonoxy.residetrack.feature.room_editor.api.store.RoomEditorSuccessKind
 import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiRoomEditorLabelMapper
 import dev.nonoxy.residetrack.feature.room_editor.presentation.mappers.UiRoomEditorStateMapper
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiDateField
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiRoomEditorLabel
 import dev.nonoxy.residetrack.feature.room_editor.presentation.models.UiRoomEditorState
-import dev.nonoxy.residetrack.core.presentation.viewmodel.BaseViewModel
+import dev.nonoxy.residetrack.res.MR
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.launch
 
 class RoomEditorViewModel internal constructor(
     private val store: RoomEditorStore,
     private val stateMapper: UiRoomEditorStateMapper,
     private val labelMapper: UiRoomEditorLabelMapper,
+    private val snackbarBus: SnackbarBus,
 ) : BaseViewModel<UiRoomEditorState, UiRoomEditorLabel>(initialState = UiRoomEditorState()) {
 
     init {
         bindAndStart {
             store.states.mapNotNull(stateMapper::map) bindTo ::acceptState
             store.labels.mapNotNull(labelMapper::map) bindTo ::acceptLabel
+        }
+        viewModelScope.launch {
+            store.labels
+                .filterIsInstance<RoomEditorStore.Label.ShowSuccess>()
+                .collect { label ->
+                    snackbarBus.send(
+                        SnackbarEvent(
+                            message = label.kind.toStringResource(),
+                            type = SnackbarEventType.SUCCESS,
+                        )
+                    )
+                }
         }
     }
 
@@ -85,5 +106,11 @@ class RoomEditorViewModel internal constructor(
     private fun UiDateField.toDomain(): DateField = when (this) {
         UiDateField.CHECK_IN -> DateField.CHECK_IN
         UiDateField.CHECK_OUT -> DateField.CHECK_OUT
+    }
+
+    private fun RoomEditorSuccessKind.toStringResource() = when (this) {
+        RoomEditorSuccessKind.StudentsSaved -> MR.strings.students_saved_successfully
+        RoomEditorSuccessKind.RoomUpdated -> MR.strings.room_updated_successfully
+        RoomEditorSuccessKind.RoomDeleted -> MR.strings.room_deleted_successfully
     }
 }

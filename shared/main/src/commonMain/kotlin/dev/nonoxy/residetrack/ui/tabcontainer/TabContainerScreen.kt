@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -22,11 +25,16 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackErrorSnackbar
+import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSnackbar
+import dev.nonoxy.residetrack.common.ui.common.snackbar.ResideTrackSuccessSnackbar
+import dev.nonoxy.residetrack.common.ui.common.utils.CollectFlow
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_12
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
 import dev.nonoxy.residetrack.core.navigation.bottombar.BottomBarItem
 import dev.nonoxy.residetrack.core.navigation.bottombar.FloatingBottomBar
 import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
+import dev.nonoxy.residetrack.core.presentation.snackbar.SnackbarEventType
 import dev.nonoxy.residetrack.feature.rooms.ui.api.RoomsRoute
 import dev.nonoxy.residetrack.feature.upcoming.ui.api.UpcomingRoute
 import dev.nonoxy.residetrack.navigation.TabContainerNavHost
@@ -46,6 +54,15 @@ internal fun TabContainerScreen(
     val innerNavController = rememberNavController()
     val backStackEntry by innerNavController.currentBackStackEntryAsState()
     val badgeCount by viewModel.upcomingCount.collectAsStateWithLifecycle()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    var currentSnackbarType by remember { mutableStateOf(SnackbarEventType.INFO) }
+
+    viewModel.snackbarEvents.CollectFlow { event ->
+        currentSnackbarType = event.type
+        snackbarHostState.currentSnackbarData?.dismiss()
+        snackbarHostState.showSnackbar(message = event.message, withDismissAction = true)
+    }
 
     val selectedKey = if (backStackEntry?.destination?.hasRoute(UpcomingRoute::class) == true) {
         UPCOMING_KEY
@@ -95,6 +112,19 @@ internal fun TabContainerScreen(
                 .onSizeChanged { barHeightPx = it.height }
                 .navigationBarsPadding()
                 .padding(horizontal = padding_size_16, vertical = padding_size_12),
+        )
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = barInset),
+            snackbar = { snackbarData ->
+                when (currentSnackbarType) {
+                    SnackbarEventType.SUCCESS -> ResideTrackSuccessSnackbar(snackbarData = snackbarData)
+                    SnackbarEventType.ERROR -> ResideTrackErrorSnackbar(snackbarData = snackbarData)
+                    SnackbarEventType.INFO -> ResideTrackSnackbar(snackbarData = snackbarData)
+                }
+            },
         )
     }
 }
