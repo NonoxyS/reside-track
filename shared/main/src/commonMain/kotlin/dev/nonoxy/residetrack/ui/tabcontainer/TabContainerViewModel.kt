@@ -36,6 +36,6 @@ class TabContainerViewModel internal constructor(
             .catch { emit(0) }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 
-    val snackbarEvents: Flow<SnackbarUiEvent> = snackbarBus.events
+    internal val snackbarEvents: Flow<SnackbarUiEvent> = snackbarBus.events
         .map { event -> SnackbarUiEvent(stringConverter.convert(event.message), event.type) }
 }
