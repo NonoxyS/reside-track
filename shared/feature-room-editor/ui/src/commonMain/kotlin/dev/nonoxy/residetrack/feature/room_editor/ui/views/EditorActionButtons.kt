@@ -49,9 +49,10 @@ internal fun EditorActionButtons(
             OutlinedButton(
                 onClick = onCloseClick,
                 modifier = Modifier.weight(1f),
-                border = BorderStroke(width = size_1, color = ResideTrackTheme.colors.borderDefault),
+                border = BorderStroke(width = size_1, color = ResideTrackTheme.colors.fillSecondaryHover),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = ResideTrackTheme.colors.textCaption,
+                    containerColor = ResideTrackTheme.colors.background.copy(alpha = 0.6f),
+                    contentColor = ResideTrackTheme.colors.textPrimary,
                 ),
             ) {
                 Text(
