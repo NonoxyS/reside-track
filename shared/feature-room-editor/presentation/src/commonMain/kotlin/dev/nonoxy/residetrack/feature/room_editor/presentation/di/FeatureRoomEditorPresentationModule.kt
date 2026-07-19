@@ -26,6 +26,7 @@ val featureRoomEditorPresentationModule = module {
             store = get { parametersOf(mode) },
             stateMapper = get(),
             labelMapper = get(),
+            snackbarBus = get(),
         )
     }
 }

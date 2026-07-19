@@ -17,6 +17,7 @@ commonMainDependencies {
 
         libs.mvikotlin.core,
         libs.mvikotlin.coroutines,
+        libs.moko.resources.core,
     )
 
     apis(
