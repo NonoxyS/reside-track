@@ -49,8 +49,3 @@ fun Modifier.visiblePadding(
     isVisible: Boolean,
     paddingValues: PaddingValues,
 ): Modifier = if (isVisible) padding(paddingValues) else this
-
-fun Modifier.thenIf(
-    condition: Boolean,
-    other: Modifier.() -> Modifier,
-): Modifier = if (condition) this.other() else this
