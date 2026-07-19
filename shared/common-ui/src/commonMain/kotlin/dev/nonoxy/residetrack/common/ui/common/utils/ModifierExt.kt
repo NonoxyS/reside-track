@@ -5,4 +5,4 @@ import androidx.compose.ui.Modifier
 fun Modifier.thenIf(
     condition: Boolean,
     other: Modifier.() -> Modifier,
-): Modifier = if (condition) this.other() else this
+): Modifier = if (condition) then(other(Modifier)) else this
