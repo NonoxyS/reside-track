@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.statusBars
+import dev.nonoxy.residetrack.common.ui.common.utils.statusBarHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -36,7 +34,7 @@ internal fun UpcomingList(
         contentPadding = PaddingValues(
             start = padding_size_16,
             end = padding_size_16,
-            top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding() + padding_size_8,
+            top = statusBarHeight + padding_size_8,
             bottom = LocalFloatingBottomBarInset.current + padding_size_8,
         ),
         verticalArrangement = Arrangement.spacedBy(padding_size_8),
