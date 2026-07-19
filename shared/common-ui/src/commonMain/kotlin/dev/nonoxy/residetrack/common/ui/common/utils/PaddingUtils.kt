@@ -1,4 +1,4 @@
-package dev.nonoxy.d2buildhelper.common.ui.compose.utils
+package dev.nonoxy.residetrack.common.ui.common.utils
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
@@ -48,4 +48,9 @@ val WindowInsets.Companion.Zero: WindowInsets
 fun Modifier.visiblePadding(
     isVisible: Boolean,
     paddingValues: PaddingValues,
-): Modifier = if (isVisible) padding(paddingValues) else padding()
+): Modifier = if (isVisible) padding(paddingValues) else this
+
+fun Modifier.thenIf(
+    condition: Boolean,
+    other: Modifier.() -> Modifier,
+): Modifier = if (condition) this.other() else this
