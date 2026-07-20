@@ -12,11 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.icerock.moko.resources.compose.stringResource
+import dev.nonoxy.residetrack.common.ui.common.utils.statusBarHeight
 import dev.nonoxy.residetrack.common.ui.theme.ResideTrackTheme
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_16
+import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_4
 import dev.nonoxy.residetrack.common.ui.theme.padding_size_8
-import dev.nonoxy.residetrack.common.ui.theme.padding_size_20
 import dev.nonoxy.residetrack.core.navigation.bottombar.LocalFloatingBottomBarInset
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingBucket
 import dev.nonoxy.residetrack.feature.upcoming.presentation.models.UiUpcomingItem
@@ -33,7 +34,7 @@ internal fun UpcomingList(
         contentPadding = PaddingValues(
             start = padding_size_16,
             end = padding_size_16,
-            top = padding_size_8,
+            top = statusBarHeight + padding_size_8,
             bottom = LocalFloatingBottomBarInset.current + padding_size_8,
         ),
         verticalArrangement = Arrangement.spacedBy(padding_size_8),

@@ -2,7 +2,6 @@ package dev.nonoxy.residetrack.common.ui.common.snackbar
 
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarData
-import androidx.compose.material3.SnackbarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,12 +17,12 @@ fun ResideTrackSnackbar(
     snackbarData: SnackbarData,
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
-    shape: Shape = SnackbarDefaults.shape,
-    containerColor: Color = ResideTrackTheme.colors.fillSecondary,
-    contentColor: Color = ResideTrackTheme.colors.white,
-    actionColor: Color = ResideTrackTheme.colors.textAccent,
-    actionContentColor: Color = ResideTrackTheme.colors.textAccent,
-    dismissActionContentColor: Color = ResideTrackTheme.colors.textCaption
+    shape: Shape = ResideTrackTheme.shapes.cornerRadius12,
+    containerColor: Color = ResideTrackTheme.colors.textPrimary,
+    contentColor: Color = ResideTrackTheme.colors.background,
+    actionColor: Color = ResideTrackTheme.colors.fillPrimary,
+    actionContentColor: Color = ResideTrackTheme.colors.fillPrimary,
+    dismissActionContentColor: Color = ResideTrackTheme.colors.fillSecondaryHover,
 ) {
     Snackbar(
         snackbarData = snackbarData,
@@ -34,7 +33,7 @@ fun ResideTrackSnackbar(
         contentColor = contentColor,
         actionColor = actionColor,
         actionContentColor = actionContentColor,
-        dismissActionContentColor = dismissActionContentColor
+        dismissActionContentColor = dismissActionContentColor,
     )
 }
 
@@ -43,7 +42,7 @@ fun ResideTrackSuccessSnackbar(
     snackbarData: SnackbarData,
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
-    shape: Shape = SnackbarDefaults.shape
+    shape: Shape = ResideTrackTheme.shapes.cornerRadius12,
 ) {
     ResideTrackSnackbar(
         snackbarData = snackbarData,
@@ -54,7 +53,7 @@ fun ResideTrackSuccessSnackbar(
         contentColor = ResideTrackTheme.colors.white,
         actionColor = ResideTrackTheme.colors.white,
         actionContentColor = ResideTrackTheme.colors.white,
-        dismissActionContentColor = ResideTrackTheme.colors.white
+        dismissActionContentColor = ResideTrackTheme.colors.white,
     )
 }
 
@@ -63,7 +62,7 @@ fun ResideTrackErrorSnackbar(
     snackbarData: SnackbarData,
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
-    shape: Shape = SnackbarDefaults.shape
+    shape: Shape = ResideTrackTheme.shapes.cornerRadius12,
 ) {
     ResideTrackSnackbar(
         snackbarData = snackbarData,
@@ -74,6 +73,6 @@ fun ResideTrackErrorSnackbar(
         contentColor = ResideTrackTheme.colors.white,
         actionColor = ResideTrackTheme.colors.white,
         actionContentColor = ResideTrackTheme.colors.white,
-        dismissActionContentColor = ResideTrackTheme.colors.white
+        dismissActionContentColor = ResideTrackTheme.colors.white,
     )
 }
